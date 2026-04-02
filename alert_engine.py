@@ -8,7 +8,8 @@ and exposes retrieval and statistics functions.
 """
 
 import logging
-from typing import Literal, Optional
+import os
+from typing import Any, Literal, Optional
 from database import get_db
 
 logger = logging.getLogger(__name__)
@@ -17,11 +18,104 @@ logger = logging.getLogger(__name__)
 SourceType = Literal["chat", "video_frame", "transcript", "audio"]
 
 
+def _read_env_int(name: str, default: int, minimum: int = 0) -> int:
+    """Read integer env var safely with lower-bound clamping."""
+    raw_value = os.getenv(name, str(default)).strip()
+    try:
+        return max(minimum, int(raw_value))
+    except ValueError:
+        return default
+
+
+_DB_MESSAGE_MAX_CHARS = _read_env_int("MWG_DB_MESSAGE_MAX_CHARS", 0, minimum=0)
+_ALERT_PREVIEW_CHARS = _read_env_int("MWG_ALERT_PREVIEW_CHARS", 0, minimum=0)
+
+
+def _message_for_storage(message: str) -> str:
+    """Preserve full message by default; optional cap via env var."""
+    if _DB_MESSAGE_MAX_CHARS > 0 and len(message) > _DB_MESSAGE_MAX_CHARS:
+        return message[:_DB_MESSAGE_MAX_CHARS]
+    return message
+
+
+def _message_for_console(message: str) -> str:
+    """Format message for console output with optional preview cap."""
+    normalized = " ".join(str(message or "").split())
+    if _ALERT_PREVIEW_CHARS > 0 and len(normalized) > _ALERT_PREVIEW_CHARS:
+        return normalized[:_ALERT_PREVIEW_CHARS].rstrip() + "..."
+    return normalized
+
+
+def _build_confidence_by_reason(alert: dict) -> dict[str, float]:
+    """Build confidence map keyed by reason type for dashboard and storage."""
+    reasons = [str(r) for r in (alert.get("reasons") or [])]
+    confidence_map: dict[str, float] = {}
+
+    toxicity_score = float(alert.get("confidence") or 0.0)
+    if any(reason.startswith("toxicity:") for reason in reasons):
+        confidence_map["toxicity"] = toxicity_score
+
+    if any(reason.startswith("pii:") for reason in reasons):
+        confidence_map["pii"] = 1.0
+
+    if any(reason == "profanity" for reason in reasons):
+        confidence_map["profanity"] = 1.0
+
+    sentiment_score = float(alert.get("sentiment_score") or 0.0)
+    if any("sentiment" in reason for reason in reasons):
+        confidence_map["sentiment"] = sentiment_score or 1.0
+
+    if any(reason.startswith("emotion:") for reason in reasons):
+        confidence_map["emotion"] = 1.0
+
+    if any(reason.startswith("nsfw:") for reason in reasons):
+        confidence_map["nsfw"] = float(alert.get("nsfw_score") or 0.0)
+
+    return confidence_map
+
+
+def _normalize_entities_for_storage(entities: list[Any] | None) -> list[dict[str, str]]:
+    """Normalize entity payload to [{'text': ..., 'label': ...}] shape."""
+    normalized: list[dict[str, str]] = []
+    for item in entities or []:
+        if isinstance(item, dict):
+            text = str(item.get("text") or "").strip()
+            if not text:
+                continue
+            normalized.append(
+                {
+                    "text": text,
+                    "label": str(item.get("label") or "ENTITY"),
+                }
+            )
+            continue
+
+        text = str(item).strip()
+        if text:
+            normalized.append({"text": text, "label": "ENTITY"})
+
+    return normalized
+
+
+def _build_alert_data(alert: dict) -> dict[str, Any]:
+    """Build optional metadata blob persisted with generic alert row."""
+    data: dict[str, Any] = {}
+    health_status = alert.get("health_status")
+    if isinstance(health_status, dict) and health_status:
+        data["health_status"] = health_status
+    return data
+
+
 # ─────────────────────────────────────────────
 # ALERT LOGGING
 # ─────────────────────────────────────────────
 
-def log_chat_alert(alert: dict, print_summary: bool = True) -> Optional[int]:
+def log_chat_alert(
+    alert: dict,
+    print_summary: bool = True,
+    commit: bool = True,
+    run_id: Optional[str] = None,
+) -> Optional[int]:
     """
     Logs a chat analysis alert to the database.
 
@@ -37,31 +131,40 @@ def log_chat_alert(alert: dict, print_summary: bool = True) -> Optional[int]:
         message = alert.get("message", "")
         flagged = alert.get("flagged", False)
         confidence = alert.get("confidence")
-        reasons = ", ".join(alert.get("reasons", []))
-        severity = _determine_severity(alert.get("reasons", []))
+        reason_list = alert.get("reasons", [])
+        reasons = ", ".join(reason_list)
+        severity = _determine_severity(reason_list)
+        confidence_by_reason = _build_confidence_by_reason(alert)
 
         # Insert main alert
         alert_id = db.insert_alert(
+            run_id=run_id,
             source="chat",
-            message=message[:500],
+            message=_message_for_storage(message),
             flagged=flagged,
             severity=severity,
             category="chat_safety",
             confidence=confidence or 0.0,
+            confidence_by_reason=confidence_by_reason,
+            reasons=reason_list,
+            data=_build_alert_data(alert),
+            commit=False,
         )
 
         # Insert chat-specific details
         db.insert_chat_alert(
+            run_id=run_id,
             alert_id=alert_id,
             text=message,
-            has_profanity="profanity" in alert.get("reasons", []),
-            has_pii=any("pii:" in r for r in alert.get("reasons", [])),
-            pii_types=[r.split(":")[1] for r in alert.get("reasons", []) if r.startswith("pii:")],
+            has_profanity="profanity" in reason_list,
+            has_pii=any("pii:" in r for r in reason_list),
+            pii_types=[r.split(":")[1] for r in reason_list if r.startswith("pii:")],
             toxicity_score=confidence or 0.0,
             toxicity_label="toxic" if ("toxicity:" in reasons) else "non_toxic",
             sentiment=alert.get("sentiment") or "",
             sentiment_score=float(alert.get("sentiment_score") or 0.0),
-            entities=[e.get("text") for e in alert.get("entities", [])],
+            entities=_normalize_entities_for_storage(alert.get("entities")),
+            commit=commit,
         )
 
         if print_summary:
@@ -73,7 +176,12 @@ def log_chat_alert(alert: dict, print_summary: bool = True) -> Optional[int]:
         return None
 
 
-def log_video_alert(alert: dict, print_summary: bool = True) -> Optional[int]:
+def log_video_alert(
+    alert: dict,
+    print_summary: bool = True,
+    commit: bool = True,
+    run_id: Optional[str] = None,
+) -> Optional[int]:
     """
     Logs a video frame analysis alert to the database.
 
@@ -95,21 +203,28 @@ def log_video_alert(alert: dict, print_summary: bool = True) -> Optional[int]:
         reasons = ", ".join(alert.get("reasons", []))
 
         alert_id = db.insert_alert(
+            run_id=run_id,
             source="video_frame",
             message=f"Frame {frame_number} @ {timestamp_sec:.1f}s",
             flagged=flagged,
             severity=_determine_severity(alert.get("reasons", [])),
             category="video_safety",
             confidence=nsfw_score,
+            confidence_by_reason=_build_confidence_by_reason(alert),
+            reasons=alert.get("reasons", []),
+            data=_build_alert_data(alert),
+            commit=False,
         )
 
         db.insert_video_alert(
+            run_id=run_id,
             alert_id=alert_id,
             frame_number=frame_number,
             timestamp_sec=timestamp_sec,
             nsfw_label=nsfw_label,
             nsfw_score=nsfw_score,
             emotion=emotion,
+            commit=commit,
         )
 
         if print_summary:
@@ -121,7 +236,12 @@ def log_video_alert(alert: dict, print_summary: bool = True) -> Optional[int]:
         return None
 
 
-def log_audio_alert(alert: dict, print_summary: bool = True) -> Optional[int]:
+def log_audio_alert(
+    alert: dict,
+    print_summary: bool = True,
+    commit: bool = True,
+    run_id: Optional[str] = None,
+) -> Optional[int]:
     """
     Logs an audio analysis alert to the database.
 
@@ -139,15 +259,21 @@ def log_audio_alert(alert: dict, print_summary: bool = True) -> Optional[int]:
         severity = _determine_severity(reasons)
 
         alert_id = db.insert_alert(
+            run_id=run_id,
             source="audio",
             message=", ".join(reasons) if reasons else "No issues detected",
             flagged=flagged,
             severity=severity,
             category="audio_safety",
+            confidence_by_reason=_build_confidence_by_reason(alert),
+            reasons=reasons,
+            data=_build_alert_data(alert),
+            commit=False,
         )
 
         volume_stats = alert.get("volume_stats", {})
         db.insert_audio_alert(
+            run_id=run_id,
             alert_id=alert_id,
             max_volume_db=volume_stats.get("max_db", 0.0),
             mean_volume_db=volume_stats.get("mean_db", 0.0),
@@ -155,6 +281,7 @@ def log_audio_alert(alert: dict, print_summary: bool = True) -> Optional[int]:
             speech_rate_wpm=alert.get("speech_rate_wpm", 0.0),
             background_noise_db=alert.get("background_noise_db", 0.0),
             speaker_count=alert.get("estimated_speakers", 1),
+            commit=commit,
         )
 
         if print_summary:
@@ -166,7 +293,13 @@ def log_audio_alert(alert: dict, print_summary: bool = True) -> Optional[int]:
         return None
 
 
-def log_transcript_alert(message: str, alert: dict, print_summary: bool = True) -> Optional[int]:
+def log_transcript_alert(
+    message: str,
+    alert: dict,
+    print_summary: bool = True,
+    commit: bool = True,
+    run_id: Optional[str] = None,
+) -> Optional[int]:
     """
     Logs a transcript (from video audio) analysis alert to the database.
 
@@ -182,27 +315,49 @@ def log_transcript_alert(message: str, alert: dict, print_summary: bool = True) 
     try:
         flagged = alert.get("flagged", False)
         confidence = alert.get("confidence")
-        reasons = ", ".join(alert.get("reasons", []))
-        severity = _determine_severity(alert.get("reasons", []))
+        reason_list = alert.get("reasons", [])
+        reasons = ", ".join(reason_list)
+        severity = _determine_severity(reason_list)
+        confidence_by_reason = _build_confidence_by_reason(alert)
 
         alert_id = db.insert_alert(
+            run_id=run_id,
             source="transcript",
-            message=message[:500],
+            message=_message_for_storage(message),
             flagged=flagged,
             severity=severity,
             category="transcript_safety",
             confidence=confidence or 0.0,
+            confidence_by_reason=confidence_by_reason,
+            reasons=reason_list,
+            data=_build_alert_data(alert),
+            commit=False,
         )
 
         # Insert chat-specific details (transcript is analyzed like chat)
         db.insert_chat_alert(
+            run_id=run_id,
             alert_id=alert_id,
             text=message,
-            has_profanity="profanity" in alert.get("reasons", []),
-            has_pii=any("pii:" in r for r in alert.get("reasons", [])),
+            has_profanity="profanity" in reason_list,
+            has_pii=any("pii:" in r for r in reason_list),
+            pii_types=[r.split(":")[1] for r in reason_list if r.startswith("pii:")],
             toxicity_score=confidence or 0.0,
+            toxicity_label="toxic" if ("toxicity:" in reasons) else "non_toxic",
             sentiment=alert.get("sentiment") or "",
             sentiment_score=float(alert.get("sentiment_score") or 0.0),
+            entities=_normalize_entities_for_storage(alert.get("entities")),
+            commit=commit,
+        )
+
+        db.insert_transcript_segment(
+            run_id=run_id,
+            alert_id=alert_id,
+            segment_text=message,
+            confidence=float(alert.get("segment_confidence") or confidence or 0.0),
+            start_time=alert.get("segment_start_time"),
+            end_time=alert.get("segment_end_time"),
+            commit=commit,
         )
 
         if print_summary:
@@ -222,6 +377,7 @@ def log_alerts(
     alerts: list[dict],
     source: SourceType,
     print_summary: bool = True,
+    run_id: Optional[str] = None,
 ) -> list[int]:
     """
     Tags a batch of alert dicts with `source` and persists them to database.
@@ -242,20 +398,26 @@ def log_alerts(
     for alert in alerts:
         alert_id = None
         if source == "chat":
-            alert_id = log_chat_alert(alert, print_summary=print_summary)
+            alert_id = log_chat_alert(alert, print_summary=print_summary, commit=False, run_id=run_id)
         elif source == "video_frame":
-            alert_id = log_video_alert(alert, print_summary=print_summary)
+            alert_id = log_video_alert(alert, print_summary=print_summary, commit=False, run_id=run_id)
         elif source == "audio":
-            alert_id = log_audio_alert(alert, print_summary=print_summary)
+            alert_id = log_audio_alert(alert, print_summary=print_summary, commit=False, run_id=run_id)
         elif source == "transcript":
             alert_id = log_transcript_alert(
                 alert.get("message", ""),
                 alert,
                 print_summary=print_summary,
+                commit=False,
+                run_id=run_id,
             )
 
         if alert_id:
             inserted_ids.append(alert_id)
+
+    # Single commit for the whole batch significantly reduces write overhead.
+    db = get_db()
+    db.commit()
 
     logger.info(
         f"Logged {len(inserted_ids)} alert(s) from source={source!r} to database"
@@ -284,7 +446,7 @@ def _determine_severity(reasons: list[str]) -> str:
 def _print_chat_alert(alert: dict) -> None:
     """Prints formatted chat alert."""
     reasons_str = ", ".join(alert.get("reasons", []))
-    msg = alert.get("message", "")[:80].replace("\n", " ")
+    msg = _message_for_console(str(alert.get("message", "")))
     sentiment = alert.get("sentiment", "N/A")
     print(
         f"[CHAT ALERT] | {msg} | Sentiment: {sentiment} | Reasons: {reasons_str}"
@@ -317,7 +479,7 @@ def _print_audio_alert(alert: dict) -> None:
 
 def _print_transcript_alert(alert: dict) -> None:
     """Prints formatted transcript alert."""
-    msg = alert.get("message", "")[:80].replace("\n", " ")
+    msg = _message_for_console(str(alert.get("message", "")))
     reasons = ", ".join(alert.get("reasons", []))
     print(f"[TRANSCRIPT ALERT] | {msg} | {reasons}")
 
@@ -326,7 +488,7 @@ def _print_transcript_alert(alert: dict) -> None:
 # RETRIEVAL & STATISTICS
 # ─────────────────────────────────────────────
 
-def get_all_alerts() -> list[dict]:
+def get_all_alerts(run_id: Optional[str] = None) -> list[dict]:
     """
     Returns all alerts from the database.
 
@@ -334,10 +496,10 @@ def get_all_alerts() -> list[dict]:
         List of alert dicts sorted by timestamp (descending).
     """
     db = get_db()
-    return db.get_all_alerts()
+    return db.get_all_alerts(run_id=run_id)
 
 
-def get_alert_stats() -> dict:
+def get_alert_stats(run_id: Optional[str] = None) -> dict:
     """
     Computes summary statistics over all persisted alerts.
 
@@ -349,7 +511,7 @@ def get_alert_stats() -> dict:
           - by_severity (dict[severity → count])
     """
     db = get_db()
-    return db.get_alert_stats()
+    return db.get_alert_stats(run_id=run_id)
 
 
 def clear_alerts() -> None:

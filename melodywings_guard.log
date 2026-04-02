@@ -590,3 +590,1054 @@ Trying to resume download...
 2026-04-02T11:55:09 | INFO     | __main__ |   - Run the dashboard: streamlit run dashboard.py
 2026-04-02T11:55:09 | INFO     | __main__ |   - View detailed charts and analytics
 2026-04-02T11:55:09 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T12:10:03 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T12:10:03 | INFO     | __main__ | Database initialized.
+2026-04-02T12:10:03 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T12:10:03 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T12:10:03 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T12:10:03 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T12:10:03 | INFO     | database | All alerts cleared from database
+2026-04-02T12:10:03 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T12:10:17 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T12:10:20 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T12:10:21 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T12:10:21 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T12:10:22 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T12:10:23 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T12:10:23 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T12:10:24 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T12:10:24 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T12:10:24 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T12:10:24 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T12:10:25 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T12:11:56 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T12:11:56 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T12:11:56 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T12:11:57 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T12:11:57 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp2l9nd_ke.wav
+2026-04-02T12:11:58 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T12:11:58 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T12:12:00 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T12:12:02 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T12:12:52 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T12:12:52 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T12:12:52 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T12:12:57 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T12:12:57 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T12:12:57 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T12:12:58 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpjqydr6qi\extracted_audio.wav
+2026-04-02T12:12:59 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T12:13:00 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T12:13:00 | INFO     | __main__ | 
+2026-04-02T12:13:00 | INFO     | __main__ | Next steps:
+2026-04-02T12:13:00 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T12:13:00 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T12:13:00 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T12:13:00 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T12:18:53 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T12:18:53 | INFO     | __main__ | Database initialized.
+2026-04-02T12:18:53 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T12:18:53 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T12:18:53 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T12:18:53 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T12:18:53 | INFO     | database | All alerts cleared from database
+2026-04-02T12:18:53 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T12:19:06 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T12:19:09 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T12:19:10 | ERROR    | chat_analyzer | Failed to load toxicity model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: 727b41dd-e1b6-4bfe-8f55-ca5c9d990f4e)')
+2026-04-02T12:19:10 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T12:19:11 | ERROR    | chat_analyzer | Failed to load sentiment model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: 9dc66c14-035d-4410-838c-da25bf78d577)')
+2026-04-02T12:19:12 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T12:19:12 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T12:19:12 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T12:19:13 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T12:19:13 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T12:19:14 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T12:19:15 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T12:19:15 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T12:19:15 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T12:19:15 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T12:19:16 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T12:20:39 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T12:20:39 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T12:20:39 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T12:20:40 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T12:20:41 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpt37qmvja.wav
+2026-04-02T12:20:41 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T12:20:41 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T12:20:43 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T12:20:46 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T12:21:34 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T12:21:34 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T12:21:34 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T12:21:40 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T12:21:40 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T12:21:40 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T12:21:42 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpk1vdo0zo\extracted_audio.wav
+2026-04-02T12:21:43 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T12:21:43 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T12:21:43 | INFO     | __main__ | 
+2026-04-02T12:21:43 | INFO     | __main__ | Next steps:
+2026-04-02T12:21:43 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T12:21:43 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T12:21:43 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T12:21:43 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T12:29:52 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T12:29:52 | INFO     | __main__ | Database initialized.
+2026-04-02T12:29:52 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T12:29:52 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T12:29:52 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T12:29:52 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T12:29:52 | INFO     | database | All alerts cleared from database
+2026-04-02T12:29:52 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T12:30:05 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T12:30:08 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T12:30:09 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T12:30:09 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T12:30:11 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T12:30:11 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T12:30:12 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T12:30:12 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T12:30:12 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T12:30:12 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T12:30:12 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T12:30:14 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T12:31:41 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T12:31:41 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T12:31:41 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T12:31:42 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T12:31:42 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpt6ppk5x6.wav
+2026-04-02T12:31:43 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T12:31:43 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T12:31:45 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T12:31:48 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T12:32:41 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T12:32:41 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T12:32:41 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T12:32:46 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T12:32:46 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T12:32:46 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T12:32:48 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpr8ma2b88\extracted_audio.wav
+2026-04-02T12:32:50 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T12:32:50 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T12:32:50 | INFO     | __main__ | 
+2026-04-02T12:32:50 | INFO     | __main__ | Next steps:
+2026-04-02T12:32:50 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T12:32:50 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T12:32:50 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T12:32:50 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T12:41:56 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T12:41:56 | INFO     | __main__ | Database initialized.
+2026-04-02T12:41:56 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T12:41:56 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T12:41:56 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T12:41:56 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T12:41:56 | INFO     | database | All alerts cleared from database
+2026-04-02T12:41:56 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T12:42:08 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T12:42:11 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T12:42:12 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T12:42:12 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T12:42:13 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T12:42:14 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T12:42:14 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T12:42:15 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T12:42:15 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T12:42:15 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T12:42:15 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T12:42:16 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T12:43:30 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T12:43:30 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T12:43:30 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T12:43:31 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T12:43:32 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp6sx9x55m.wav
+2026-04-02T12:43:32 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T12:43:32 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T12:43:34 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T12:43:37 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T12:44:24 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T12:44:24 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T12:44:24 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T12:44:24 | INFO     | chat_analyzer | Analyzing 9 chat message(s)...
+2026-04-02T12:44:28 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/9
+2026-04-02T12:44:28 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T12:44:28 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T12:44:28 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T12:44:30 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmphr3k3k87\extracted_audio.wav
+2026-04-02T12:44:31 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T12:44:31 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T12:44:31 | INFO     | __main__ | 
+2026-04-02T12:44:31 | INFO     | __main__ | Next steps:
+2026-04-02T12:44:31 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T12:44:31 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T12:44:31 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T12:44:31 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T12:47:50 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T12:47:50 | INFO     | __main__ | Database initialized.
+2026-04-02T12:47:50 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T12:47:50 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T12:47:50 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T12:47:50 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T12:47:50 | INFO     | database | All alerts cleared from database
+2026-04-02T12:47:50 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T12:47:58 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T12:48:02 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T12:48:02 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T12:48:03 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T12:48:04 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T12:48:05 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T12:48:05 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T12:48:06 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T12:48:06 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T12:48:06 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T12:48:06 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T12:48:07 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T12:49:28 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T12:49:28 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T12:49:28 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T12:49:28 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T12:49:29 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpn2bfw6_1.wav
+2026-04-02T12:49:30 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T12:49:30 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T12:49:31 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T12:49:34 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T12:50:27 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T12:50:27 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T12:50:27 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T12:50:27 | INFO     | chat_analyzer | Analyzing 9 chat message(s)...
+2026-04-02T12:50:31 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/9
+2026-04-02T12:50:31 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T12:50:31 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T12:50:31 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T12:50:32 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmplslf8yzp\extracted_audio.wav
+2026-04-02T12:50:33 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T12:50:33 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T12:50:33 | INFO     | __main__ | 
+2026-04-02T12:50:33 | INFO     | __main__ | Next steps:
+2026-04-02T12:50:33 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T12:50:33 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T12:50:33 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T12:50:33 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T13:08:20 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T13:08:20 | INFO     | __main__ | Database initialized.
+2026-04-02T13:08:20 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T13:08:20 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T13:08:20 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T13:08:20 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T13:08:20 | INFO     | database | All alerts cleared from database
+2026-04-02T13:08:20 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T13:08:54 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T13:08:54 | INFO     | __main__ | Database initialized.
+2026-04-02T13:08:54 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T13:08:54 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T13:08:54 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T13:08:54 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T13:08:54 | INFO     | database | All alerts cleared from database
+2026-04-02T13:08:54 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T13:09:05 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T13:09:07 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T13:09:08 | ERROR    | chat_analyzer | Failed to load toxicity model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: a7fbb694-050a-4e79-bc8f-70f5661bbff3)')
+2026-04-02T13:09:08 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T13:09:09 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T13:09:09 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T13:09:10 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T13:09:10 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T13:09:10 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T13:09:10 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T13:09:10 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T13:09:11 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T13:09:11 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T13:09:11 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-04-02T13:09:11 | WARNING  | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-02T13:09:11 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T13:09:11 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T13:09:11 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:09:12 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T13:09:12 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T13:09:12 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:09:12 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T13:09:12 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T13:09:12 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T13:09:46 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T13:09:46 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T13:09:46 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T13:09:46 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T13:09:46 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T13:09:48 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T13:09:48 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:09:48 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/config.json "HTTP/1.1 200 OK"
+2026-04-02T13:09:49 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T13:09:49 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:09:49 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:09:49 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T13:09:50 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:09:50 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:09:50 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T13:10:19 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T13:10:19 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T13:10:19 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T13:10:20 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T13:10:20 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp29x6l03e.wav
+2026-04-02T13:10:21 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T13:10:21 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T13:10:24 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T13:10:27 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T13:10:35 | WARNING  | tensorflow | From D:\Melodywings\melodywings_guard\.venv\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T13:11:28 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T13:11:28 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T13:11:28 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T13:11:28 | INFO     | chat_analyzer | Analyzing 9 chat message(s)...
+2026-04-02T13:11:28 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T13:11:30 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T13:11:33 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/9
+2026-04-02T13:11:33 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T13:11:33 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T13:11:33 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T13:11:35 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpp06nboax\extracted_audio.wav
+2026-04-02T13:11:37 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T13:11:37 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T13:11:37 | INFO     | __main__ | 
+2026-04-02T13:11:37 | INFO     | __main__ | Next steps:
+2026-04-02T13:11:37 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T13:11:37 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T13:11:37 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T13:11:37 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T13:11:57 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T13:11:57 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T13:11:57 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T13:11:58 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T13:11:58 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpacggwjxc.wav
+2026-04-02T13:11:59 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T13:11:59 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T13:12:00 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:12:00 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/config.json "HTTP/1.1 200 OK"
+2026-04-02T13:12:01 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:12:01 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/generation_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:12:01 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T13:12:01 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T13:12:02 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T13:12:02 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:12:02 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:12:02 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T13:12:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:12:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:12:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T13:12:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:12:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:12:03 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T13:12:26 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T13:13:41 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T13:13:49 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T13:13:50 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T13:13:51 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:13:51 | WARNING  | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-02T13:13:51 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:13:51 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T13:13:51 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:13:51 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:13:51 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T13:13:57 | WARNING  | tensorflow | From D:\Melodywings\melodywings_guard\.venv\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T13:14:55 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T13:14:55 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T13:14:55 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T13:14:55 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T13:14:55 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp2j4s34gd.wav
+2026-04-02T13:14:56 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T13:14:56 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T13:14:56 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:14:56 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/config.json "HTTP/1.1 200 OK"
+2026-04-02T13:14:57 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:14:57 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/generation_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:14:57 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T13:14:57 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T13:14:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T13:14:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:14:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:14:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T13:14:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:14:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:14:59 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T13:14:59 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:14:59 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T13:14:59 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T13:15:01 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T13:16:05 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T13:16:05 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T13:16:05 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T13:16:05 | INFO     | chat_analyzer | Analyzing 9 chat message(s)...
+2026-04-02T13:16:05 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T13:16:06 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/unitary/toxic-bert/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:16:06 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unitary/toxic-bert/4d6c22e74ba2fdd26bc4f7238f50766b045a0d94/config.json "HTTP/1.1 200 OK"
+2026-04-02T13:16:07 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T13:16:07 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T13:16:07 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T13:16:09 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T13:16:10 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-04-02T13:16:10 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:16:11 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T13:16:11 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:16:11 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T13:16:11 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T13:16:13 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T13:16:13 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T13:16:14 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/9
+2026-04-02T13:16:14 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T13:16:14 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T13:16:14 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T13:16:14 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T13:16:15 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp_4uqp6n7\extracted_audio.wav
+2026-04-02T13:16:20 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T13:33:48 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T13:33:56 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T13:33:57 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/unitary/toxic-bert/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:33:57 | WARNING  | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-02T13:33:57 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unitary/toxic-bert/4d6c22e74ba2fdd26bc4f7238f50766b045a0d94/config.json "HTTP/1.1 200 OK"
+2026-04-02T13:33:57 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T13:33:57 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T13:33:57 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T13:33:58 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T13:33:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-04-02T13:33:58 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:33:59 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T13:33:59 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T13:33:59 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T13:33:59 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T13:34:00 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T13:34:00 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T13:34:00 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T13:51:33 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T13:51:33 | INFO     | __main__ | Database initialized.
+2026-04-02T13:51:33 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T13:51:33 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T13:51:33 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T13:51:33 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T13:51:33 | INFO     | database | All alerts cleared from database
+2026-04-02T13:51:33 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T13:51:45 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T13:51:49 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T13:51:49 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T13:51:50 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T13:51:51 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T13:51:51 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T13:51:52 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T13:51:52 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T13:51:52 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T13:51:52 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T13:51:53 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T13:51:53 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T13:52:54 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T13:52:54 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T13:52:54 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T13:52:55 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T13:52:55 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpzfupbh5y.wav
+2026-04-02T13:52:56 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T13:52:56 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T13:52:58 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T13:53:00 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T13:53:49 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T13:53:49 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T13:53:49 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T13:53:49 | INFO     | chat_analyzer | Analyzing 9 chat message(s)...
+2026-04-02T13:53:51 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/9
+2026-04-02T13:53:51 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T13:53:51 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T13:53:51 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T13:53:53 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpzhjoms0s\extracted_audio.wav
+2026-04-02T13:53:55 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T13:53:55 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T13:53:55 | INFO     | __main__ | 
+2026-04-02T13:53:55 | INFO     | __main__ | Next steps:
+2026-04-02T13:53:55 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T13:53:55 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T13:53:55 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T13:53:55 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T14:04:50 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T14:04:50 | ERROR    | database | Database initialization failed: no such column: run_id
+2026-04-02T14:05:30 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T14:05:30 | INFO     | __main__ | Database initialized.
+2026-04-02T14:05:30 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T14:05:30 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T14:05:30 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T14:05:30 | INFO     | __main__ | Run ID: c847a8c2-da9c-4686-8e54-ad92f2592663
+2026-04-02T14:05:30 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T14:05:30 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T14:05:38 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T14:05:38 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/unitary/toxic-bert/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:05:38 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unitary/toxic-bert/4d6c22e74ba2fdd26bc4f7238f50766b045a0d94/config.json "HTTP/1.1 200 OK"
+2026-04-02T14:05:39 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T14:05:39 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T14:05:39 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T14:05:39 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T14:05:40 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-04-02T14:05:40 | WARNING  | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-02T14:05:40 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:05:40 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T14:05:41 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:05:41 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T14:05:41 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T14:05:42 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T14:05:42 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T14:05:42 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T14:05:42 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T14:05:43 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T14:05:44 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp637z100d\extracted_audio.wav
+2026-04-02T14:05:44 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T14:05:44 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:05:44 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/config.json "HTTP/1.1 200 OK"
+2026-04-02T14:05:45 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:05:45 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/generation_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:05:45 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T14:05:45 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T14:05:45 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T14:05:46 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:05:46 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:05:46 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T14:05:46 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:05:46 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:05:47 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T14:05:47 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:05:47 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:05:47 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T14:05:49 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T14:06:49 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T14:06:49 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T14:06:50 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T14:06:50 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:06:50 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:06:51 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T14:06:51 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:06:51 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:06:51 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T14:06:58 | WARNING  | tensorflow | From D:\Melodywings\melodywings_guard\.venv\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T14:07:57 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T14:07:57 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1
+2026-04-02T14:07:57 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T14:07:57 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T14:07:57 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T14:07:57 | INFO     | chat_analyzer | Analyzing 9 chat message(s)...
+2026-04-02T14:07:58 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T14:07:58 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T14:07:58 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/9
+2026-04-02T14:07:58 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T14:07:58 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T14:08:00 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T14:08:00 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T14:08:00 | INFO     | __main__ | 
+2026-04-02T14:08:00 | INFO     | __main__ | Next steps:
+2026-04-02T14:08:00 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T14:08:00 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T14:08:00 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T14:08:00 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T14:09:46 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T14:09:46 | INFO     | __main__ | Database initialized.
+2026-04-02T14:09:46 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T14:09:46 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T14:09:46 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T14:09:46 | INFO     | __main__ | Run ID: 5c90d5c9-07ab-41d6-afe1-349780c4ba85
+2026-04-02T14:09:46 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T14:09:46 | INFO     | database | All alerts cleared from database
+2026-04-02T14:09:46 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T14:09:53 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T14:09:54 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T14:09:54 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T14:09:55 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T14:09:55 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-04-02T14:09:55 | WARNING  | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-02T14:09:55 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:09:56 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T14:09:56 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:09:56 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T14:09:56 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T14:09:57 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T14:09:57 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T14:09:57 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T14:09:58 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T14:09:58 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T14:09:59 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp2rtou0kz\extracted_audio.wav
+2026-04-02T14:09:59 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T14:09:59 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:09:59 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/config.json "HTTP/1.1 200 OK"
+2026-04-02T14:10:00 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:10:00 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/generation_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:10:00 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T14:10:00 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T14:10:01 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T14:10:01 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:10:01 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:10:02 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T14:10:02 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:10:02 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:10:02 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T14:10:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:10:03 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:10:03 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T14:10:05 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T14:11:03 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T14:11:03 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T14:11:04 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:11:04 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/config.json "HTTP/1.1 200 OK"
+2026-04-02T14:11:04 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T14:11:04 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:11:04 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:11:05 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T14:11:05 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T14:11:05 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T14:11:05 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T14:11:12 | WARNING  | tensorflow | From D:\Melodywings\melodywings_guard\.venv\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T14:12:13 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T14:12:13 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1
+2026-04-02T14:12:13 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T14:12:13 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T14:12:13 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T14:12:13 | INFO     | chat_analyzer | Analyzing 9 chat message(s)...
+2026-04-02T14:12:14 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T14:12:14 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T14:12:15 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/9
+2026-04-02T14:12:15 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T14:12:15 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T14:12:16 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T14:12:16 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T14:12:16 | INFO     | __main__ | 
+2026-04-02T14:12:16 | INFO     | __main__ | Next steps:
+2026-04-02T14:12:16 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T14:12:16 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T14:12:16 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T14:12:16 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T14:31:26 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T14:31:38 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T14:31:42 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T14:31:42 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T14:31:43 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T14:31:45 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T14:31:45 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T14:31:46 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T14:31:46 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T14:32:14 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T14:32:22 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T14:32:25 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T14:32:26 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T14:32:26 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T14:32:27 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T14:32:28 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T14:32:28 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T14:32:28 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T14:32:46 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T14:32:54 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T14:32:57 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T14:32:57 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T14:32:57 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T14:32:58 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T14:32:59 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T14:32:59 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T14:32:59 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T14:33:52 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T14:34:02 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T14:34:06 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T14:34:07 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T14:35:53 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 512
+2026-04-02T14:35:53 | INFO     | video_analyzer | Frame analysis done. Total: 512 | Flagged: 4
+2026-04-02T14:35:53 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T14:35:53 | WARNING  | video_analyzer | Transcript extraction failed. Skipping transcript analysis.
+2026-04-02T14:38:44 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T14:38:44 | INFO     | __main__ | Database initialized.
+2026-04-02T14:38:44 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T14:38:44 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T14:38:44 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T14:38:44 | INFO     | __main__ | Run ID: ad689e09-fe32-4836-b2d8-7b54be364d50
+2026-04-02T14:38:44 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T14:38:44 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T14:38:52 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T14:38:54 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T14:38:55 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T14:38:56 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T14:38:58 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T14:38:59 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T14:38:59 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T14:38:59 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T14:38:59 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T14:39:00 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T14:39:01 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T14:39:02 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp4of9lbvb\extracted_audio.wav
+2026-04-02T14:39:02 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T14:39:05 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T14:39:08 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T14:39:58 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T14:39:59 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T14:40:01 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T14:41:03 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T14:41:03 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1
+2026-04-02T14:41:03 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T14:41:03 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T14:41:03 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T14:41:03 | INFO     | chat_analyzer | Analyzing 9 chat message(s)...
+2026-04-02T14:41:05 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/9
+2026-04-02T14:41:05 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T14:41:05 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T14:41:06 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T14:41:06 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T14:41:06 | INFO     | __main__ | 
+2026-04-02T14:41:06 | INFO     | __main__ | Next steps:
+2026-04-02T14:41:06 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T14:41:06 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T14:41:06 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T14:41:06 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T14:49:09 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T14:49:09 | INFO     | __main__ | Database initialized.
+2026-04-02T14:49:09 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T14:49:09 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T14:49:09 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T14:49:09 | INFO     | __main__ | Run ID: 036d7cc9-2e6f-476d-9127-be18338cf092
+2026-04-02T14:49:09 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T14:49:09 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T14:49:20 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T14:49:22 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T14:49:23 | ERROR    | chat_analyzer | Failed to load toxicity model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: 0d779187-8ee2-4561-92a7-da453f942ff2)')
+2026-04-02T14:49:23 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T14:49:25 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T14:49:25 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T14:49:26 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T14:49:27 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T14:49:27 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T14:49:27 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T14:49:28 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T14:49:28 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T14:49:28 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T14:49:30 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp9mvnc3z5\extracted_audio.wav
+2026-04-02T14:49:30 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T14:49:32 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T14:49:34 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T14:50:18 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T14:50:19 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T14:50:20 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T14:51:23 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T14:51:23 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1
+2026-04-02T14:51:23 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T14:51:23 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T14:51:23 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T14:51:23 | INFO     | chat_analyzer | Analyzing 1 chat message(s)...
+2026-04-02T14:51:25 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 1/1
+2026-04-02T14:51:25 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T14:51:25 | INFO     | alert_engine | Logged 1 alert(s) from source='transcript' to database
+2026-04-02T14:51:26 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T14:51:26 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T14:51:26 | INFO     | __main__ | 
+2026-04-02T14:51:26 | INFO     | __main__ | Next steps:
+2026-04-02T14:51:26 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T14:51:26 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T14:51:26 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T14:51:26 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T14:56:46 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T14:56:46 | INFO     | __main__ | Database initialized.
+2026-04-02T14:56:46 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T14:56:46 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T14:56:46 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T14:56:46 | INFO     | __main__ | Run ID: da06ae1c-ea93-432c-9974-3c07d11cd7b8
+2026-04-02T14:56:46 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T14:56:46 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T14:56:55 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T14:56:58 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T14:56:59 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T14:56:59 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T14:57:00 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T14:57:01 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T14:57:01 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T14:57:02 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T14:57:02 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T14:57:02 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T14:57:03 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T14:57:04 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmphkbsgr4t\extracted_audio.wav
+2026-04-02T14:57:04 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T14:57:06 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T14:57:08 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T14:57:52 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T14:57:53 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T14:57:54 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T14:58:54 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T14:58:54 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1
+2026-04-02T14:58:54 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T14:58:54 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T14:58:54 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T14:58:54 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T14:58:58 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T14:58:58 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T14:58:58 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T14:58:59 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T14:58:59 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T14:58:59 | INFO     | __main__ | 
+2026-04-02T14:58:59 | INFO     | __main__ | Next steps:
+2026-04-02T14:58:59 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T14:58:59 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T14:58:59 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T14:58:59 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T15:12:19 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T15:12:19 | INFO     | __main__ | Database initialized.
+2026-04-02T15:12:19 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T15:12:19 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T15:12:19 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T15:12:19 | INFO     | __main__ | Run ID: b25d60f3-d0f0-4bad-bc72-1333bafbe92c
+2026-04-02T15:12:19 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T15:12:19 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T15:12:36 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T15:12:40 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T15:12:41 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T15:12:42 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T15:12:43 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T15:12:45 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T15:12:46 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T15:12:46 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T15:12:46 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T15:12:46 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T15:12:48 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T15:12:50 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp_950jzzn\extracted_audio.wav
+2026-04-02T15:12:50 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T15:12:52 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T15:12:56 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T15:14:02 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T15:14:03 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T15:14:05 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T15:15:56 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T15:15:56 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1
+2026-04-02T15:15:56 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T15:15:56 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T15:15:56 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T15:15:56 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T15:16:04 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T15:16:04 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T15:16:04 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T15:16:06 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T15:16:06 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T15:16:06 | INFO     | __main__ | 
+2026-04-02T15:16:06 | INFO     | __main__ | Next steps:
+2026-04-02T15:16:06 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T15:16:06 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T15:16:06 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T15:16:06 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T15:43:39 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T15:43:39 | INFO     | __main__ | Database initialized.
+2026-04-02T15:43:39 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T15:43:39 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T15:43:39 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T15:43:39 | INFO     | __main__ | Run ID: 40a6ec8d-4fdb-4dd1-985f-5a30de463ca6
+2026-04-02T15:43:39 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T15:43:39 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T15:43:49 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T15:43:52 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T15:43:53 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T15:43:53 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T15:43:54 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T15:43:55 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T15:43:56 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T15:43:56 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T15:43:56 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T15:43:56 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T15:43:57 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T15:43:58 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpz28y0kw0\extracted_audio.wav
+2026-04-02T15:43:58 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T15:44:00 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T15:44:03 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T15:45:03 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T15:45:03 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T15:45:04 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T15:45:37 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T15:45:37 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 0 | Effective FPS: 7.42
+2026-04-02T15:45:37 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T15:45:37 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T15:45:37 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T15:45:37 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T15:45:42 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T15:45:42 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T15:45:42 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T15:45:43 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T15:45:43 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T15:45:43 | INFO     | __main__ | 
+2026-04-02T15:45:43 | INFO     | __main__ | Next steps:
+2026-04-02T15:45:43 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T15:45:43 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T15:45:43 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T15:45:43 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T15:50:54 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T15:50:54 | INFO     | __main__ | Database initialized.
+2026-04-02T15:50:54 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T15:50:54 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T15:50:54 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T15:50:54 | INFO     | __main__ | Run ID: 4744bae7-ab9e-4382-8a75-fc16f6d29e6d
+2026-04-02T15:50:54 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T15:50:54 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T15:51:05 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T15:51:08 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T15:51:09 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T15:51:10 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T15:51:11 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T15:51:11 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T15:51:12 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T15:51:12 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T15:51:12 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T15:51:12 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T15:51:13 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T15:51:14 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp76m5rsgn\extracted_audio.wav
+2026-04-02T15:51:14 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T15:51:16 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T15:51:18 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T15:52:14 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T15:52:14 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T15:52:15 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T15:52:48 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T15:52:48 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 0 | Effective FPS: 7.55
+2026-04-02T15:52:48 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T15:52:48 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T15:52:48 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T15:52:48 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T15:52:52 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T15:52:52 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T15:52:52 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T15:52:53 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T15:52:53 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T15:52:53 | INFO     | __main__ | 
+2026-04-02T15:52:53 | INFO     | __main__ | Next steps:
+2026-04-02T15:52:53 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T15:52:53 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T15:52:53 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T15:52:53 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T15:55:46 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T15:55:46 | INFO     | __main__ | Database initialized.
+2026-04-02T15:55:46 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T15:55:46 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T15:55:46 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T15:55:46 | INFO     | __main__ | Run ID: c96f5102-f84e-4f71-a86a-a7e058568c42
+2026-04-02T15:55:46 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T15:55:46 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T15:55:56 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T15:55:59 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T15:55:59 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T15:56:00 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T15:56:01 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T15:56:02 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T15:56:03 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T15:56:03 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T15:56:03 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T15:56:03 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T15:56:04 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T15:56:05 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpy7r0aoom\extracted_audio.wav
+2026-04-02T15:56:05 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T15:56:07 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T15:56:09 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T15:57:17 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T15:57:18 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T15:57:20 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T15:58:03 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T15:58:03 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 0 | Effective FPS: 5.67
+2026-04-02T15:58:03 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T15:58:03 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T15:58:03 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T15:58:03 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T15:58:07 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T15:58:08 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T15:58:08 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T15:58:09 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T15:58:09 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T15:58:09 | INFO     | __main__ | 
+2026-04-02T15:58:09 | INFO     | __main__ | Next steps:
+2026-04-02T15:58:09 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T15:58:09 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T15:58:09 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T15:58:09 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T16:05:10 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T16:05:10 | INFO     | __main__ | Database initialized.
+2026-04-02T16:05:10 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T16:05:10 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T16:05:10 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T16:05:10 | INFO     | __main__ | Run ID: 1a62b81b-69e9-4fbe-8be7-b2d87f7ff0ea
+2026-04-02T16:05:10 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T16:05:10 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T16:05:31 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T16:05:40 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T16:05:41 | ERROR    | chat_analyzer | Failed to load toxicity model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: a28859e8-ff11-4404-b9ea-12d3dea38350)')
+2026-04-02T16:05:41 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T16:05:43 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T16:05:44 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T16:05:45 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T16:05:48 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T16:05:48 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T16:05:49 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 5/10
+2026-04-02T16:05:50 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T16:05:50 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T16:05:52 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T16:05:56 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpv4fcbtzq\extracted_audio.wav
+2026-04-02T16:05:56 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T16:05:58 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T16:06:05 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T16:07:06 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T16:07:06 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T16:07:08 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T16:08:02 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T16:08:02 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 0 | Effective FPS: 4.56
+2026-04-02T16:08:02 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T16:08:02 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T16:08:02 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T16:08:02 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T16:08:08 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T16:08:08 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T16:08:08 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T16:08:09 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T16:08:09 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T16:08:09 | INFO     | __main__ | 
+2026-04-02T16:08:09 | INFO     | __main__ | Next steps:
+2026-04-02T16:08:09 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T16:08:09 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T16:08:09 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T16:08:09 | INFO     | __main__ |   - For setup and usage: read README.md

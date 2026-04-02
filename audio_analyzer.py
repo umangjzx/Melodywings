@@ -44,6 +44,7 @@ def analyze_audio_features(audio_path: str) -> Optional[dict]:
     try:
         # Load audio
         y, sr = librosa.load(audio_path, sr=16000, mono=True)
+        sr = int(sr)
         
         # === Volume Analysis ===
         volume_stats = _analyze_volume(y, sr)
@@ -102,13 +103,9 @@ def _analyze_volume(y: np.ndarray, sr: int) -> dict:
     """
     try:
         import librosa
-        
-        # Compute RMS energy
-        S = librosa.feature.melspectrogram(y=y, sr=sr)
-        S_db = librosa.power_to_db(S, ref=np.max)
-        
+
+        # RMS captures volume profile and is significantly cheaper than full mel spectrogram.
         # Flatten and compute statistics
-        flat = S_db.flatten()
         rms = librosa.feature.rms(y=y)[0]
         rms_db = 20 * np.log10(np.maximum(1e-5, rms))
         
@@ -168,6 +165,19 @@ def _detect_silence(y: np.ndarray, sr: int) -> list[dict]:
                         "end_sec": round(end_sec, 2),
                         "duration_sec": round(duration, 2),
                     })
+
+        if in_silence:
+            start_sec = start_frame * hop_length / sr
+            end_sec = len(y) / sr
+            duration = end_sec - start_sec
+            if duration > 1.0:
+                silence_periods.append(
+                    {
+                        "start_sec": round(start_sec, 2),
+                        "end_sec": round(end_sec, 2),
+                        "duration_sec": round(duration, 2),
+                    }
+                )
         
         return silence_periods
     except Exception as exc:

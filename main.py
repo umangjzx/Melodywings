@@ -12,6 +12,7 @@ Runs:
 import logging
 import os
 import sys
+import uuid
 from datetime import datetime, timezone
 
 # ─────────────────────────────────────────────
@@ -38,8 +39,21 @@ logger = logging.getLogger(__name__)
 # IMPORTS
 # ─────────────────────────────────────────────
 from database import init_db, get_db
-from chat_analyzer import analyze_messages
-from video_analyzer import analyze_video
+from chat_analyzer import (
+    analyze_messages,
+    evaluate_chat_results,
+    format_chat_evaluation_report,
+    export_confusion_matrix_html,
+)
+from video_analyzer import (
+    analyze_video,
+    extract_audio,
+    transcribe_audio_with_fallback,
+    evaluate_video_results,
+    format_video_evaluation_report,
+    get_last_video_analysis_metrics,
+    load_video_ground_truth_flags,
+)
 from audio_analyzer import analyze_audio_features
 from alert_engine import log_alerts, log_audio_alert, log_transcript_alert, get_alert_stats, clear_alerts
 
@@ -67,13 +81,31 @@ SAMPLE_MESSAGES: list[str] = [
     "I finished practicing for 30 minutes! Can we do the bird song next week?",
 ]
 
+# Ground-truth labels for SAMPLE_MESSAGES (False=safe, True=flagged)
+SAMPLE_CHAT_EXPECTED_FLAGS: list[bool] = [
+    False,
+    False,
+    False,
+    False,
+    True,
+    True,
+    True,
+    True,
+    True,
+    False,
+]
+
 VIDEO_PATH = "D:\\319cf974-f244-4575-9fa7-5040020427d5.mp4"
 
 # ─────────────────────────────────────────────
 # PIPELINE STEPS
 # ─────────────────────────────────────────────
 
-def run_chat_pipeline(messages: list[str]) -> list[dict]:
+def run_chat_pipeline(
+    messages: list[str],
+    run_id: str,
+    expected_flags: list[bool] | None = None,
+) -> tuple[list[dict], dict | None]:
     """
     Runs the chat analysis pipeline and logs results to the alert engine.
 
@@ -81,20 +113,38 @@ def run_chat_pipeline(messages: list[str]) -> list[dict]:
         messages: List of raw chat message strings to analyse.
 
     Returns:
-        List of analysis result dicts for all messages.
+        A tuple of:
+          - analysis result dicts for all messages
+          - optional evaluation metrics dict
     """
     print("\n" + "╔" + "═" * 68 + "╗")
     print("║  PART 1 — CHAT MESSAGE ANALYSIS" + " " * 36 + "║")
     print("╚" + "═" * 68 + "╝\n")
 
     results = analyze_messages(messages)
+    evaluation: dict | None = None
+
+    if expected_flags is not None:
+        try:
+            evaluation = evaluate_chat_results(results, expected_flags)
+            print(format_chat_evaluation_report(evaluation))
+
+            matrix_html = export_confusion_matrix_html(
+                evaluation,
+                output_path="chat_confusion_matrix.html",
+            )
+            if matrix_html:
+                evaluation["confusion_matrix_html_path"] = matrix_html
+                print(f"Confusion matrix HTML: {matrix_html}")
+        except ValueError as exc:
+            logger.warning(f"Chat evaluation skipped: {exc}")
 
     # Log ALL results (including safe ones) so dashboard can show totals
-    log_alerts(results, source="chat", print_summary=True)
-    return results
+    log_alerts(results, source="chat", print_summary=True, run_id=run_id)
+    return results, evaluation
 
 
-def run_video_pipeline(video_path: str) -> tuple[list[dict], list[dict], dict]:
+def run_video_pipeline(video_path: str, run_id: str) -> tuple[list[dict], list[dict], dict]:
     """
     Runs the video analysis pipeline if the video file exists.
     Includes: frame analysis, transcript analysis, and audio analysis.
@@ -118,29 +168,49 @@ def run_video_pipeline(video_path: str) -> tuple[list[dict], list[dict], dict]:
         logger.warning(f"Video file missing: {video_path}")
         return [], [], {}
 
-    frame_results, transcript_results = analyze_video(video_path)
-
-    if frame_results:
-        log_alerts(frame_results, source="video_frame", print_summary=True)
-    if transcript_results:
-        log_alerts(transcript_results, source="transcript", print_summary=True)
-
-    # Audio analysis
-    print("\n" + "─" * 70)
-    print("  AUDIO-LEVEL ANALYSIS")
-    print("─" * 70 + "\n")
-    
     import tempfile
+
     audio_result = {}
     with tempfile.TemporaryDirectory() as tmp_dir:
-        from video_analyzer import extract_audio
         audio_path = os.path.join(tmp_dir, "extracted_audio.wav")
+
+        shared_audio: dict = {
+            "audio_path": None,
+            "transcript": None,
+            "word_data": None,
+            "transcription_confidence": 0.0,
+            "transcription_engine": "none",
+        }
+
         if extract_audio(video_path, audio_path):
-            audio_result = analyze_audio_features(audio_path) or {}
-            if audio_result:
-                log_audio_alert(audio_result, print_summary=True)
+            transcript, word_data, confidence, engine = transcribe_audio_with_fallback(audio_path)
+            shared_audio = {
+                "audio_path": audio_path,
+                "transcript": transcript,
+                "word_data": word_data,
+                "transcription_confidence": confidence,
+                "transcription_engine": engine,
+            }
         else:
-            logger.warning("Audio extraction failed for audio analysis.")
+            logger.warning("Audio extraction failed for shared video/audio analysis.")
+
+        frame_results, transcript_results = analyze_video(video_path, shared_audio=shared_audio)
+
+        if frame_results:
+            log_alerts(frame_results, source="video_frame", print_summary=True, run_id=run_id)
+        if transcript_results:
+            log_alerts(transcript_results, source="transcript", print_summary=True, run_id=run_id)
+
+        print("\n" + "─" * 70)
+        print("  AUDIO-LEVEL ANALYSIS")
+        print("─" * 70 + "\n")
+
+        if shared_audio.get("audio_path") and os.path.exists(shared_audio["audio_path"]):
+            audio_result = analyze_audio_features(shared_audio["audio_path"]) or {}
+            if audio_result:
+                log_audio_alert(audio_result, print_summary=True, run_id=run_id)
+        else:
+            logger.warning("Shared audio path unavailable; skipping audio feature analysis.")
 
     return frame_results, transcript_results, audio_result
 
@@ -154,6 +224,10 @@ def print_final_summary(
     frame_results: list[dict],
     transcript_results: list[dict],
     audio_result: dict | None = None,
+    chat_evaluation: dict | None = None,
+    video_metrics: dict | None = None,
+    video_evaluation: dict | None = None,
+    run_id: str | None = None,
 ) -> None:
     """
     Prints a comprehensive end-of-run summary to the console.
@@ -163,11 +237,16 @@ def print_final_summary(
         frame_results:      Frame-level analysis results from video pipeline.
         transcript_results: Transcript analysis results from video pipeline.
         audio_result:       Audio analysis result dict from video pipeline.
+        chat_evaluation:    Optional metrics from chat prediction evaluation.
+        video_metrics:      Optional runtime/performance metrics from video analyzer.
+        video_evaluation:   Optional frame-level quality metrics against ground truth.
     """
     if audio_result is None:
         audio_result = {}
+    if video_metrics is None:
+        video_metrics = {}
 
-    stats = get_alert_stats()
+    stats = get_alert_stats(run_id=run_id)
 
     chat_flagged = sum(1 for r in chat_results if r.get("flagged"))
     frame_flagged = sum(1 for r in frame_results if r.get("flagged"))
@@ -210,6 +289,53 @@ def print_final_summary(
             line = f"  {source:<35} → {count} alert(s)"
             print(f"║{line:<69}║")
 
+    if chat_evaluation:
+        print("╠" + "═" * 68 + "╣")
+        print("║  CHAT EVALUATION METRICS" + " " * 43 + "║")
+        metrics_line = (
+            f"  Accuracy: {chat_evaluation.get('accuracy', 0.0):.4f} | "
+            f"Precision: {chat_evaluation.get('precision', 0.0):.4f}"
+        )
+        print(f"║{metrics_line:<69}║")
+        metrics_line = (
+            f"  Recall: {chat_evaluation.get('recall', 0.0):.4f} | "
+            f"F1-score: {chat_evaluation.get('f1_score', 0.0):.4f}"
+        )
+        print(f"║{metrics_line:<69}║")
+
+    if video_metrics:
+        print("╠" + "═" * 68 + "╣")
+        print("║  VIDEO PIPELINE PERFORMANCE" + " " * 41 + "║")
+        metrics_line = (
+            f"  Frame stage: {video_metrics.get('frame_stage_seconds', 0.0):.2f}s | "
+            f"Effective FPS: {video_metrics.get('effective_processing_fps', 0.0):.2f}"
+        )
+        print(f"║{metrics_line:<69}║")
+        metrics_line = (
+            f"  Avg frame latency: {video_metrics.get('avg_frame_processing_ms', 0.0):.2f}ms | "
+            f"Total runtime: {video_metrics.get('total_seconds', 0.0):.2f}s"
+        )
+        print(f"║{metrics_line:<69}║")
+        metrics_line = (
+            f"  NSFW infer: {video_metrics.get('nsfw_inference_seconds', 0.0):.2f}s | "
+            f"Emotion infer: {video_metrics.get('emotion_inference_seconds', 0.0):.2f}s"
+        )
+        print(f"║{metrics_line:<69}║")
+
+    if video_evaluation:
+        print("╠" + "═" * 68 + "╣")
+        print("║  VIDEO EVALUATION METRICS" + " " * 42 + "║")
+        metrics_line = (
+            f"  Accuracy: {video_evaluation.get('accuracy', 0.0):.4f} | "
+            f"Precision: {video_evaluation.get('precision', 0.0):.4f}"
+        )
+        print(f"║{metrics_line:<69}║")
+        metrics_line = (
+            f"  Recall: {video_evaluation.get('recall', 0.0):.4f} | "
+            f"F1-score: {video_evaluation.get('f1_score', 0.0):.4f}"
+        )
+        print(f"║{metrics_line:<69}║")
+
     print("╠" + "═" * 68 + "╣")
     print(f"║  Database       : melodywings_guard.db" + " " * 29 + "║")
     print(f"║  Python log     : melodywings_guard.log" + " " * 27 + "║")
@@ -234,23 +360,57 @@ def main() -> None:
     logger.info("MelodyWings Guard — Starting Content Safety Pipeline")
     logger.info("═" * 60)
 
-    # Fresh run: optionally clear old alerts
-    # (comment out to accumulate alerts across runs)
-    clear_alerts()
+    run_id = str(uuid.uuid4())
+    logger.info(f"Run ID: {run_id}")
+
+    # Optional hard clear for development-only workflows.
+    clear_on_run = os.getenv("MWG_CLEAR_ON_RUN", "false").strip().lower() in {"1", "true", "yes"}
+    if clear_on_run:
+        clear_alerts()
+    else:
+        logger.info("Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.")
 
     # ── Part 1: Chat ─────────────
-    chat_results = run_chat_pipeline(SAMPLE_MESSAGES)
+    chat_results, chat_evaluation = run_chat_pipeline(
+        SAMPLE_MESSAGES,
+        run_id=run_id,
+        expected_flags=SAMPLE_CHAT_EXPECTED_FLAGS,
+    )
 
     # ── Part 2: Video ────────────
-    frame_results, transcript_results, audio_result = run_video_pipeline(VIDEO_PATH)
+    frame_results, transcript_results, audio_result = run_video_pipeline(VIDEO_PATH, run_id=run_id)
+    video_metrics = get_last_video_analysis_metrics()
+    video_evaluation: dict | None = None
+
+    video_ground_truth_path = os.getenv("MWG_VIDEO_FRAME_GROUND_TRUTH", "").strip()
+    if video_ground_truth_path and frame_results:
+        try:
+            expected_flags = load_video_ground_truth_flags(
+                video_ground_truth_path,
+                expected_length=len(frame_results),
+            )
+            video_evaluation = evaluate_video_results(frame_results, expected_flags)
+            print(format_video_evaluation_report(video_evaluation))
+        except ValueError as exc:
+            logger.warning(f"Video evaluation skipped: {exc}")
 
     # ── Part 4: Summary ──────────
-    print_final_summary(chat_results, frame_results, transcript_results, audio_result)
+    print_final_summary(
+        chat_results,
+        frame_results,
+        transcript_results,
+        audio_result,
+        chat_evaluation,
+        video_metrics,
+        video_evaluation,
+        run_id=run_id,
+    )
 
     logger.info("MelodyWings Guard pipeline complete.")
     logger.info("")
     logger.info("Next steps:")
-    logger.info("  - Run the dashboard: streamlit run dashboard.py")
+    logger.info("  - Run HTML dashboard: python html_dashboard.py")
+    logger.info("  - Or Streamlit dashboard: streamlit run dashboard.py")
     logger.info("  - View detailed charts and analytics")
     logger.info("  - For setup and usage: read README.md")
 

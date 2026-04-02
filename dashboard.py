@@ -15,7 +15,7 @@ Run with: streamlit run dashboard.py
 import time
 from collections import Counter
 from datetime import datetime, timedelta
-from typing import Any
+from typing import Any, Optional
 
 import pandas as pd
 import plotly.express as px
@@ -33,7 +33,7 @@ st.set_page_config(
 TOXICITY_THRESHOLD = 0.75
 STRONG_NEGATIVE_THRESHOLD = 0.98
 NSFW_THRESHOLD = 0.70
-FLAGGED_VIDEO_EMOTIONS = {"fear", "disgust", "sad", "angry"}
+FLAGGED_VIDEO_EMOTIONS = {"disgust", "angry"}
 
 
 def apply_theme() -> None:
@@ -175,6 +175,37 @@ def _content_text(row: dict[str, Any]) -> str:
     return ""
 
 
+def _primary_reason_key(reason_tags: list[str]) -> Optional[str]:
+    """Map reason tag to confidence_by_reason key."""
+    if not reason_tags:
+        return None
+
+    first = str(reason_tags[0]).lower()
+    if first.startswith("toxicity:"):
+        return "toxicity"
+    if first.startswith("pii:"):
+        return "pii"
+    if first == "profanity":
+        return "profanity"
+    if "sentiment" in first:
+        return "sentiment"
+    if first.startswith("emotion:"):
+        return "emotion"
+    if first.startswith("nsfw:"):
+        return "nsfw"
+    return None
+
+
+def _display_confidence(row: dict[str, Any]) -> float:
+    """Display confidence aligned to the row's primary reason."""
+    confidence_map = row.get("confidence_by_reason")
+    if isinstance(confidence_map, dict):
+        reason_key = _primary_reason_key(row.get("reason_tags") or [])
+        if reason_key and reason_key in confidence_map:
+            return float(_safe_float(confidence_map.get(reason_key)) or 0.0)
+    return float(_safe_float(row.get("confidence")) or 0.0)
+
+
 @st.cache_data(ttl=3)
 def load_alerts_df() -> pd.DataFrame:
     """Load and normalize detailed alerts into a dataframe."""
@@ -190,7 +221,7 @@ def load_alerts_df() -> pd.DataFrame:
         row["content_text"] = _content_text(row)
         row["reason_tags"] = _derive_reason_tags(row)
         row["reason_text"] = ", ".join(row["reason_tags"]) if row["reason_tags"] else "safe"
-        row["confidence_value"] = _safe_float(row.get("confidence")) or 0.0
+        row["confidence_value"] = _display_confidence(row)
         row["emotion"] = (row.get("emotion") or "none").lower()
         row["sentiment"] = (row.get("sentiment") or "").lower()
         row["flagged"] = bool(row.get("flagged"))
@@ -597,7 +628,13 @@ def render_detail_panel(df: pd.DataFrame) -> None:
         d3.metric("Sentiment", row.get("sentiment") or "n/a")
         d4.metric("Sentiment score", f"{_safe_float(row.get('sentiment_score')) or 0.0:.4f}")
         st.write(f"PII types: {', '.join(row.get('pii_types') or []) or 'none'}")
-        st.write(f"Entities: {', '.join([e.get('text', '') for e in (row.get('entities') or [])]) or 'none'}")
+        entity_values = []
+        for item in (row.get("entities") or []):
+            if isinstance(item, str):
+                item = {"text": item, "label": "unknown"}
+            if isinstance(item, dict):
+                entity_values.append(str(item.get("text", "")))
+        st.write(f"Entities: {', '.join([e for e in entity_values if e]) or 'none'}")
 
     elif source == "video_frame":
         st.markdown("**Video frame details**")
