@@ -8,6 +8,39 @@ Analyzes audio for:
   3. Silence detection (long pauses)
   4. Speaker change detection (multi-speaker conversations)
   5. Background noise classification
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎓 INTERVIEW QUESTIONS IN THIS FILE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Q1: Why separate audio analysis from video analysis?
+    Expected: Different models/techniques needed; can process independently;
+    parallel execution; modular architecture.
+    Search: Line ~30 "analyze_audio_features"
+
+Q2: How does silence detection work? Why flag multiple pauses?
+    Expected: Silence = long gaps in speech; indicates pauses/hesitation;
+    multiple pauses might indicate agitation or interrupted conversation.
+    Search: Line ~50 "_detect_silence"
+
+Q3: What's the relationship between speech rate and emotional state?
+    Expected: Rapid speech (>180 WPM) often correlates with agitation;
+    helps detect threatening behavior without relying on words.
+    Search: Line ~50 "AGITATION_SPEECH_RATE"
+
+Q4: How do you detect speaker changes without running speech diarization?
+    Challenge: Expensive ML model; need lightweight alternative.
+    Expected: Use spectral changes, formant analysis, zero-crossing rates.
+    Search: Line ~80 "_detect_speaker_changes"
+
+Q5 (HARD): Multi-feature flagging logic - when to flag?
+    Given: shouting + rapid speech + multiple speakers
+    Expected: Flag if ANY (shouting OR rapid_speech OR too_many_speakers)
+    But careful: Shouting alone (music) shouldn't flag.
+    How to avoid false positives?
+    Search: Line ~60-70 "reasons.append"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
 import logging

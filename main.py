@@ -67,32 +67,87 @@ SAMPLE_MESSAGES: list[str] = [
     "I really loved the butterfly song we learned in class today 🦋",
     "What time does the online session start tomorrow?",
     "Thank you for helping me practice the piano scales!",
+    "I finished practicing for 30 minutes! Can we do the bird song next week?",
+    "The new composition assignment looks really fun and creative!",
+    "I would like to schedule a lesson for next Tuesday if you have time.",
+    "These sheet music arrangements are absolutely beautiful and inspiring.",
+    "Could you please explain the music notation rules one more time?",
+    "I'm excited to perform at the recital next month!",
     # ── PII: phone number ───────────────────────────────────────────────
     "My mom said you can call her at 555-867-5309 if you need to reschedule.",
+    "You can reach me at 1-800-555-0123 for any updates about the concert.",
+    "Please contact my guardian at 202-555-0147 before our next session.",
     # ── PII: email address ──────────────────────────────────────────────
     "Please send the sheet music to littlestar2015@gmail.com",
+    "My alternate email is musiclover.jane@yahoo.com if you need it.",
+    "Forward the assignment details to myname456@hotmail.com please.",
+    # ── PII: address ───────────────────────────────────────────────────
+    "My address is 123 Maple Street, Springfield, IL 62701 for mail.",
+    "We live at 456 Oak Avenue, Brooklyn, New York 11201 if needed.",
     # ── Profanity ───────────────────────────────────────────────────────
     "This damn exercise is so stupid, I hate it!",
+    "What the hell is this nonsense? I'm so frustrated with this crap!",
+    "This freakin' piece is impossible! I can't get it right, screw this!",
     # ── Grooming-style / manipulative language ──────────────────────────
     "Don't tell anyone about our special friendship — it's just between us, okay?",
-    # ── Combined: mild toxicity + partial PII ───────────────────────────
+    "I think you're very mature for your age. Let's keep our chats private, okay?",
+    "Nobody else understands you like I do. You can trust me completely.",
+    "Let's meet somewhere private where no one will see us, alright?",
+    # ── Toxicity / Mild aggression ──────────────────────────────────────
     "You are the worst teacher ever. Call me on 020 7946 0958 if you dare.",
-    # ── Safe ────────────────────────────────────────────────────────────
-    "I finished practicing for 30 minutes! Can we do the bird song next week?",
+    "Your teaching methods are terrible and I hate every second of your class!",
+    "You're so incompetent. Everyone thinks you're a fraud.",
+    # ── Combined: toxicity + sentiment ──────────────────────────────────
+    "This is absolutely pathetic. You're wasting everyone's time here.",
+    "I despise everything about this lesson. You're the worst!",
+    # ── Negative sentiment but safe ─────────────────────────────────────
+    "I'm feeling really sad today and don't feel like practicing.",
+    "I'm struggling a lot with this new song and feeling discouraged.",
+    # ── Safe: questions and learning ────────────────────────────────────
+    "How do I improve my sight-reading skills faster?",
+    "What are some good practice techniques for beginners?",
+    "Can you recommend some famous composers I should study?",
+    "What's the best way to memorize complex pieces?",
 ]
 
 # Ground-truth labels for SAMPLE_MESSAGES (False=safe, True=flagged)
 SAMPLE_CHAT_EXPECTED_FLAGS: list[bool] = [
-    False,
-    False,
-    False,
-    False,
-    True,
-    True,
-    True,
-    True,
-    True,
-    False,
+    False,  # Safe
+    False,  # Safe
+    False,  # Safe
+    False,  # Safe
+    False,  # Safe
+    False,  # Safe
+    False,  # Safe
+    False,  # Safe
+    False,  # Safe
+    False,  # Safe
+    True,   # PII: phone
+    True,   # PII: phone
+    True,   # PII: phone
+    True,   # PII: email
+    True,   # PII: email
+    True,   # PII: email
+    True,   # PII: address
+    True,   # PII: address
+    True,   # Profanity
+    True,   # Profanity
+    True,   # Profanity
+    True,   # Grooming
+    True,   # Grooming
+    True,   # Grooming
+    True,   # Grooming
+    True,   # Toxicity
+    True,   # Toxicity
+    True,   # Toxicity
+    True,   # Combined
+    True,   # Combined
+    False,  # Negative but safe
+    False,  # Negative but safe
+    False,  # Safe
+    False,  # Safe
+    False,  # Safe
+    False,  # Safe
 ]
 
 VIDEO_PATH = "D:\\319cf974-f244-4575-9fa7-5040020427d5.mp4"

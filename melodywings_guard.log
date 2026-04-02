@@ -1641,3 +1641,565 @@ pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/
 2026-04-02T16:08:09 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
 2026-04-02T16:08:09 | INFO     | __main__ |   - View detailed charts and analytics
 2026-04-02T16:08:09 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T16:32:14 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_stream, resource_exists
+
+2026-04-02T16:32:14 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T16:32:16 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpulshz9o4\extracted_audio.wav
+2026-04-02T16:32:27 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T16:32:31 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T16:32:33 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T16:32:35 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T16:32:52 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:32:52] "GET /dashboard/overview HTTP/1.1" 200 -
+2026-04-02T16:32:52 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:32:52] "GET /static/dashboard.css HTTP/1.1" 200 -
+2026-04-02T16:32:52 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:32:52] "GET /static/dashboard.js HTTP/1.1" 200 -
+2026-04-02T16:32:52 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:32:52] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:32:57 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:32:57] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:03 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:03] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:08 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:08] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:13 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:13] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:18 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:18] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:23 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:23] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:28 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:28] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:33 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:33] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:38 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:38] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:50 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:50] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:50 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:50] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:53 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:53] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:33:58 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:33:58] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:34:11 | INFO     | video_analyzer | Starting video analysis: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpmdwbfsj2\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T16:34:11 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T16:34:13 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T16:34:17 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:34:17] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:35:05 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T16:35:05 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 0 | Effective FPS: 4.73
+2026-04-02T16:35:05 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T16:35:05 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T16:35:05 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T16:35:05 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T16:35:05 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T16:35:06 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T16:35:09 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T16:35:10 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T16:35:13 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T16:35:13 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T16:35:14 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T16:35:14 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T16:35:14 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T16:35:15 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T16:35:15 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:15] "POST /api/process-video HTTP/1.1" 200 -
+2026-04-02T16:35:17 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:17] "GET /api/dashboard-data?status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:35:40 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:40] "GET /api/dashboard-data?run_id=1a62b81b-69e9-4fbe-8be7-b2d87f7ff0ea&run_id=c96f5102-f84e-4f71-a86a-a7e058568c42&run_id=4744bae7-ab9e-4382-8a75-fc16f6d29e6d&run_id=40a6ec8d-4fdb-4dd1-985f-5a30de463ca6&run_id=b25d60f3-d0f0-4bad-bc72-1333bafbe92c&run_id=da06ae1c-ea93-432c-9974-3c07d11cd7b8&run_id=036d7cc9-2e6f-476d-9127-be18338cf092&run_id=ad689e09-fe32-4836-b2d8-7b54be364d50&run_id=5c90d5c9-07ab-41d6-afe1-349780c4ba85&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:35:41 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:41] "GET /dashboard/chat HTTP/1.1" 200 -
+2026-04-02T16:35:41 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:41] "[36mGET /static/dashboard.css HTTP/1.1[0m" 304 -
+2026-04-02T16:35:41 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:41] "[36mGET /static/dashboard.js HTTP/1.1[0m" 304 -
+2026-04-02T16:35:41 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:41] "GET /api/dashboard-data?source=chat&source=transcript&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:35:43 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:43] "GET /dashboard/video HTTP/1.1" 200 -
+2026-04-02T16:35:43 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:43] "[36mGET /static/dashboard.css HTTP/1.1[0m" 304 -
+2026-04-02T16:35:43 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:43] "[36mGET /static/dashboard.js HTTP/1.1[0m" 304 -
+2026-04-02T16:35:44 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:44] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:35:49 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:49] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:35:50 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:50] "GET /dashboard/chat HTTP/1.1" 200 -
+2026-04-02T16:35:50 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:50] "[36mGET /static/dashboard.css HTTP/1.1[0m" 304 -
+2026-04-02T16:35:50 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:50] "[36mGET /static/dashboard.js HTTP/1.1[0m" 304 -
+2026-04-02T16:35:50 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:50] "GET /api/dashboard-data?source=chat&source=transcript&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:35:54 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:54] "GET /dashboard/video HTTP/1.1" 200 -
+2026-04-02T16:35:54 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:54] "[36mGET /static/dashboard.css HTTP/1.1[0m" 304 -
+2026-04-02T16:35:54 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:54] "[36mGET /static/dashboard.js HTTP/1.1[0m" 304 -
+2026-04-02T16:35:54 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:54] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:35:56 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:56] "GET /dashboard/chat HTTP/1.1" 200 -
+2026-04-02T16:35:56 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:56] "[36mGET /static/dashboard.css HTTP/1.1[0m" 304 -
+2026-04-02T16:35:56 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:56] "[36mGET /static/dashboard.js HTTP/1.1[0m" 304 -
+2026-04-02T16:35:56 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:56] "GET /api/dashboard-data?source=chat&source=transcript&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:35:59 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:59] "GET /dashboard/video HTTP/1.1" 200 -
+2026-04-02T16:35:59 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:59] "[36mGET /static/dashboard.js HTTP/1.1[0m" 304 -
+2026-04-02T16:35:59 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:59] "[36mGET /static/dashboard.css HTTP/1.1[0m" 304 -
+2026-04-02T16:35:59 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:35:59] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:05 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:05] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:10 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:10] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:15 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:15] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:20 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:20] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:25 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:25] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:30 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:30] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:35 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:35] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:40 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:40] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:45 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:45] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:50 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:50] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:36:55 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:36:55] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:00 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:00] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:05 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:05] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:10 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:10] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:15 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:15] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:20 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:20] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:25 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:25] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:30 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:30] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:35 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:35] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:40 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:40] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:45 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:45] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:50 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:50] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:37:55 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:37:55] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:38:00 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:38:00] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:38:05 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:38:05] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:38:10 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:38:10] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:38:10 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T16:38:10 | INFO     | __main__ | Database initialized.
+2026-04-02T16:38:10 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T16:38:10 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T16:38:10 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T16:38:10 | INFO     | __main__ | Run ID: 800f6730-9859-4c10-bc3d-12643f587a9d
+2026-04-02T16:38:10 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T16:38:10 | INFO     | chat_analyzer | Analyzing 36 chat message(s)...
+2026-04-02T16:38:15 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:38:15] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:38:20 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:38:20] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:38:22 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T16:38:25 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:38:25] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:38:25 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T16:38:26 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T16:38:27 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T16:38:28 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T16:38:29 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T16:38:29 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T16:38:30 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 17/36
+2026-04-02T16:38:30 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:38:30] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:38:30 | INFO     | alert_engine | Logged 36 alert(s) from source='chat' to database
+2026-04-02T16:38:30 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T16:38:31 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T16:38:32 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpjjuky8go\extracted_audio.wav
+2026-04-02T16:38:32 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T16:38:34 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T16:38:35 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:38:35] "GET /api/dashboard-data?source=video_frame&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:38:37 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T16:38:40 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:38:40] "GET /api/dashboard-data?run_id=de9a4e81-d73f-4c72-a7d1-df9ad607d589&run_id=1a62b81b-69e9-4fbe-8be7-b2d87f7ff0ea&run_id=c96f5102-f84e-4f71-a86a-a7e058568c42&run_id=4744bae7-ab9e-4382-8a75-fc16f6d29e6d&run_id=40a6ec8d-4fdb-4dd1-985f-5a30de463ca6&run_id=b25d60f3-d0f0-4bad-bc72-1333bafbe92c&run_id=da06ae1c-ea93-432c-9974-3c07d11cd7b8&run_id=036d7cc9-2e6f-476d-9127-be18338cf092&run_id=ad689e09-fe32-4836-b2d8-7b54be364d50&run_id=5c90d5c9-07ab-41d6-afe1-349780c4ba85&source=video_frame&reason=emotion:angry&reason=flagged_unspecified&reason=multiple_long_pauses(51)&reason=multiple_speakers(4)&reason=pii:email_address&reason=pii:phone_number&reason=profanity&reason=strong_negative_sentiment&reason=toxicity:toxic&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:39:08 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:08] "GET /api/dashboard-data?run_id=de9a4e81-d73f-4c72-a7d1-df9ad607d589&run_id=1a62b81b-69e9-4fbe-8be7-b2d87f7ff0ea&run_id=c96f5102-f84e-4f71-a86a-a7e058568c42&run_id=4744bae7-ab9e-4382-8a75-fc16f6d29e6d&run_id=40a6ec8d-4fdb-4dd1-985f-5a30de463ca6&run_id=b25d60f3-d0f0-4bad-bc72-1333bafbe92c&run_id=da06ae1c-ea93-432c-9974-3c07d11cd7b8&run_id=036d7cc9-2e6f-476d-9127-be18338cf092&run_id=ad689e09-fe32-4836-b2d8-7b54be364d50&run_id=5c90d5c9-07ab-41d6-afe1-349780c4ba85&source=video_frame&reason=emotion:angry&reason=flagged_unspecified&reason=multiple_long_pauses(51)&reason=multiple_speakers(4)&reason=pii:email_address&reason=pii:phone_number&reason=profanity&reason=strong_negative_sentiment&reason=toxicity:toxic&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:39:09 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:09] "GET /api/dashboard-data?run_id=de9a4e81-d73f-4c72-a7d1-df9ad607d589&run_id=1a62b81b-69e9-4fbe-8be7-b2d87f7ff0ea&run_id=c96f5102-f84e-4f71-a86a-a7e058568c42&run_id=4744bae7-ab9e-4382-8a75-fc16f6d29e6d&run_id=40a6ec8d-4fdb-4dd1-985f-5a30de463ca6&run_id=b25d60f3-d0f0-4bad-bc72-1333bafbe92c&run_id=da06ae1c-ea93-432c-9974-3c07d11cd7b8&run_id=036d7cc9-2e6f-476d-9127-be18338cf092&run_id=ad689e09-fe32-4836-b2d8-7b54be364d50&run_id=5c90d5c9-07ab-41d6-afe1-349780c4ba85&source=video_frame&reason=emotion:angry&reason=flagged_unspecified&reason=multiple_long_pauses(51)&reason=multiple_speakers(4)&reason=pii:email_address&reason=pii:phone_number&reason=profanity&reason=strong_negative_sentiment&reason=toxicity:toxic&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:39:13 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:13] "GET /dashboard/chat HTTP/1.1" 200 -
+2026-04-02T16:39:13 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:13] "[36mGET /static/dashboard.css HTTP/1.1[0m" 304 -
+2026-04-02T16:39:13 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:13] "[36mGET /static/dashboard.js HTTP/1.1[0m" 304 -
+2026-04-02T16:39:13 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:13] "GET /api/dashboard-data?source=chat&source=transcript&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:39:18 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:18] "GET /api/dashboard-data?source=chat&source=transcript&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:39:23 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:23] "GET /api/dashboard-data?source=chat&source=transcript&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:39:28 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:28] "GET /api/dashboard-data?source=chat&source=transcript&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:39:31 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T16:39:31 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T16:39:32 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T16:39:33 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:33] "GET /api/dashboard-data?source=chat&source=transcript&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:39:38 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:38] "GET /api/dashboard-data?source=chat&source=transcript&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:39:43 | INFO     | werkzeug | 127.0.0.1 - - [02/Apr/2026 16:39:43] "GET /api/dashboard-data?source=chat&source=transcript&status=all&confidence_min=0&confidence_max=1&start_date=&end_date=&search=&limit=1000 HTTP/1.1" 200 -
+2026-04-02T16:40:15 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T16:40:15 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 0 | Effective FPS: 5.79
+2026-04-02T16:40:15 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T16:40:15 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T16:40:15 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T16:40:15 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T16:40:20 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T16:40:20 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T16:40:20 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T16:40:21 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T16:40:21 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T16:40:21 | INFO     | __main__ | 
+2026-04-02T16:40:21 | INFO     | __main__ | Next steps:
+2026-04-02T16:40:21 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T16:40:21 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T16:40:21 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T16:40:21 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T17:42:29 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T17:42:29 | INFO     | __main__ | Database initialized.
+2026-04-02T17:42:29 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T17:42:29 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T17:42:29 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T17:42:29 | INFO     | __main__ | Run ID: 2aa42bfe-366c-4060-bf97-9b2116132341
+2026-04-02T17:42:29 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T17:42:29 | INFO     | chat_analyzer | Analyzing 36 chat message(s)...
+2026-04-02T17:42:40 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T17:42:43 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T17:42:44 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T17:42:45 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T17:42:46 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T17:42:47 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T17:42:47 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T17:42:47 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 17/36
+2026-04-02T17:42:48 | INFO     | alert_engine | Logged 36 alert(s) from source='chat' to database
+2026-04-02T17:42:48 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T17:42:49 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T17:42:50 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpuhr_kr5l\extracted_audio.wav
+2026-04-02T17:42:50 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T17:42:51 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T17:42:54 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T17:43:44 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T17:43:44 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T17:43:46 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T17:44:37 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T17:44:37 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1 | Effective FPS: 4.84
+2026-04-02T17:44:37 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T17:44:37 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T17:44:37 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T17:44:37 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T17:44:41 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T17:44:41 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T17:44:41 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T17:44:42 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T17:44:42 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T17:44:42 | INFO     | __main__ | 
+2026-04-02T17:44:42 | INFO     | __main__ | Next steps:
+2026-04-02T17:44:42 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T17:44:42 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T17:44:42 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T17:44:42 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T17:48:24 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T17:48:24 | INFO     | __main__ | Database initialized.
+2026-04-02T17:48:24 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T17:48:24 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T17:48:24 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T17:48:24 | INFO     | __main__ | Run ID: cda9bd1d-3f94-4ef6-9284-a4fc2c129eae
+2026-04-02T17:48:24 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T17:48:24 | INFO     | chat_analyzer | Analyzing 36 chat message(s)...
+2026-04-02T17:48:37 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T17:48:41 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T17:48:42 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T17:48:43 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T17:48:44 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T17:48:46 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T17:48:47 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T17:48:47 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 17/36
+2026-04-02T17:48:47 | INFO     | alert_engine | Logged 36 alert(s) from source='chat' to database
+2026-04-02T17:48:48 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T17:48:48 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T17:48:50 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpqojd3atl\extracted_audio.wav
+2026-04-02T17:48:50 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T17:48:52 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T17:48:54 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T17:49:50 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T17:49:50 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T17:49:52 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T17:50:50 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T17:50:50 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1 | Effective FPS: 4.23
+2026-04-02T17:50:50 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T17:50:50 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T17:50:50 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T17:50:50 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T17:50:54 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T17:50:54 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T17:50:54 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T17:50:55 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T17:50:55 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T17:50:55 | INFO     | __main__ | 
+2026-04-02T17:50:55 | INFO     | __main__ | Next steps:
+2026-04-02T17:50:55 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T17:50:55 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T17:50:55 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T17:50:55 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T17:56:49 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T17:56:49 | INFO     | __main__ | Database initialized.
+2026-04-02T17:56:49 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T17:56:49 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T17:56:49 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T17:56:49 | INFO     | __main__ | Run ID: fd42f972-17d1-4e0d-8690-e6ddc0f19b49
+2026-04-02T17:56:49 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T17:56:49 | INFO     | chat_analyzer | Analyzing 36 chat message(s)...
+2026-04-02T17:56:57 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T17:56:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/unitary/toxic-bert/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T17:56:58 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unitary/toxic-bert/4d6c22e74ba2fdd26bc4f7238f50766b045a0d94/config.json "HTTP/1.1 200 OK"
+2026-04-02T17:56:58 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T17:56:58 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T17:56:58 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T17:56:59 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T17:57:00 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-04-02T17:57:00 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T17:57:00 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T17:57:00 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T17:57:01 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T17:57:01 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T17:57:02 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T17:57:02 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T17:57:03 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 17/36
+2026-04-02T17:57:03 | INFO     | alert_engine | Logged 36 alert(s) from source='chat' to database
+2026-04-02T17:57:03 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T17:57:04 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpx6xxc7z6\extracted_audio.wav
+2026-04-02T17:57:04 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T17:57:05 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T17:57:05 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/config.json "HTTP/1.1 200 OK"
+2026-04-02T17:57:05 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T17:57:05 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/generation_config.json "HTTP/1.1 200 OK"
+2026-04-02T17:57:06 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T17:57:06 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T17:57:06 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T17:57:06 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T17:57:07 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T17:57:07 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T17:57:07 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T17:57:07 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T17:57:07 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T17:57:08 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T17:57:08 | WARNING  | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-02T17:57:08 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T17:57:08 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T17:57:10 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T17:58:12 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T17:58:13 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T17:58:13 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T17:58:14 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T17:58:14 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T17:58:14 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T17:58:14 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T17:58:14 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T17:58:14 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T17:58:22 | WARNING  | tensorflow | From D:\Melodywings\melodywings_guard\.venv\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T17:59:21 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T17:59:21 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1 | Effective FPS: 3.71
+2026-04-02T17:59:21 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T17:59:21 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T17:59:21 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T17:59:21 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T17:59:25 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T17:59:25 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T17:59:25 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T17:59:25 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T17:59:25 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T17:59:26 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T17:59:26 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T17:59:26 | INFO     | __main__ | 
+2026-04-02T17:59:26 | INFO     | __main__ | Next steps:
+2026-04-02T17:59:26 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T17:59:26 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T17:59:26 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T17:59:26 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T18:02:08 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T18:02:08 | INFO     | __main__ | Database initialized.
+2026-04-02T18:02:08 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T18:02:08 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T18:02:08 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T18:02:08 | INFO     | __main__ | Run ID: d96fee8b-4a20-42e4-88bd-7bba3be30f66
+2026-04-02T18:02:08 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T18:02:08 | INFO     | chat_analyzer | Analyzing 36 chat message(s)...
+2026-04-02T18:02:15 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T18:02:16 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T18:02:16 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T18:02:16 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T18:02:17 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T18:02:17 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-04-02T18:02:17 | WARNING  | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-02T18:02:18 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:02:18 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T18:02:18 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:02:18 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T18:02:19 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T18:02:20 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T18:02:20 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T18:02:20 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 17/36
+2026-04-02T18:02:21 | INFO     | alert_engine | Logged 36 alert(s) from source='chat' to database
+2026-04-02T18:02:21 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T18:02:22 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpx4m8hx1l\extracted_audio.wav
+2026-04-02T18:02:22 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T18:02:22 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:02:22 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/config.json "HTTP/1.1 200 OK"
+2026-04-02T18:02:23 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:02:23 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/generation_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:02:23 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T18:02:23 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T18:02:24 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:02:24 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:02:24 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:02:24 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:02:24 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:02:24 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:02:25 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:02:25 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:02:25 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:02:25 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T18:02:27 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T18:03:30 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T18:03:30 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T18:03:31 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:03:31 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:03:31 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:03:31 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:03:32 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:03:32 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:03:32 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T18:03:39 | WARNING  | tensorflow | From D:\Melodywings\melodywings_guard\.venv\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T18:04:35 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T18:04:35 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1 | Effective FPS: 3.93
+2026-04-02T18:04:35 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T18:04:35 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T18:04:35 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T18:04:35 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T18:04:38 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T18:04:38 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T18:04:38 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T18:04:38 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T18:04:38 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T18:04:39 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T18:04:39 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T18:04:39 | INFO     | __main__ | 
+2026-04-02T18:04:39 | INFO     | __main__ | Next steps:
+2026-04-02T18:04:39 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T18:04:39 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T18:04:39 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T18:04:39 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T18:08:16 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T18:08:16 | INFO     | __main__ | Database initialized.
+2026-04-02T18:08:16 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T18:08:16 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T18:08:16 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T18:08:16 | INFO     | __main__ | Run ID: 54fdaa84-4b70-41c4-b016-081ac4063360
+2026-04-02T18:08:16 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T18:08:16 | INFO     | chat_analyzer | Analyzing 36 chat message(s)...
+2026-04-02T18:08:23 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T18:08:23 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/unitary/toxic-bert/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T18:08:24 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T18:08:25 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T18:08:25 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-04-02T18:08:25 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:08:25 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T18:08:26 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:08:26 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T18:08:26 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T18:08:28 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T18:08:28 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T18:08:28 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 17/36
+2026-04-02T18:08:28 | INFO     | alert_engine | Logged 36 alert(s) from source='chat' to database
+2026-04-02T18:08:28 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T18:08:30 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp5q1v9inu\extracted_audio.wav
+2026-04-02T18:08:30 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T18:08:30 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:08:30 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/config.json "HTTP/1.1 200 OK"
+2026-04-02T18:08:30 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:08:30 | WARNING  | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-02T18:08:30 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/generation_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:08:31 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T18:08:31 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T18:08:31 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:08:32 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:08:32 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:08:32 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:08:32 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:08:32 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:08:32 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:08:33 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:08:33 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:08:33 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T18:08:35 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T18:09:38 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T18:09:38 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T18:09:39 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:09:39 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/config.json "HTTP/1.1 200 OK"
+2026-04-02T18:09:39 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:09:40 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:09:40 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:09:40 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:09:40 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:09:40 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:09:40 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T18:09:48 | WARNING  | tensorflow | From D:\Melodywings\melodywings_guard\.venv\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T18:10:47 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T18:10:47 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 1 | Effective FPS: 3.69
+2026-04-02T18:10:47 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T18:10:47 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T18:10:47 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T18:10:47 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T18:10:50 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T18:10:50 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T18:10:51 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T18:10:51 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T18:10:51 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T18:10:52 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T18:10:52 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T18:10:52 | INFO     | __main__ | 
+2026-04-02T18:10:52 | INFO     | __main__ | Next steps:
+2026-04-02T18:10:52 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T18:10:52 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T18:10:52 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T18:10:52 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T18:12:30 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T18:12:30 | INFO     | __main__ | Database initialized.
+2026-04-02T18:12:30 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T18:12:30 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T18:12:30 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T18:12:30 | INFO     | __main__ | Run ID: 19ca5816-1e1b-4811-93cb-6894771bd65c
+2026-04-02T18:12:30 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T18:12:30 | INFO     | chat_analyzer | Analyzing 36 chat message(s)...
+2026-04-02T18:12:38 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T18:12:38 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T18:12:39 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T18:12:39 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-04-02T18:12:40 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:12:40 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T18:12:40 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:12:41 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T18:12:41 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T18:12:42 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T18:12:42 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T18:12:42 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 17/36
+2026-04-02T18:12:43 | INFO     | alert_engine | Logged 36 alert(s) from source='chat' to database
+2026-04-02T18:12:43 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T18:12:44 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpzhytkmor\extracted_audio.wav
+2026-04-02T18:12:44 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T18:12:44 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:12:44 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/config.json "HTTP/1.1 200 OK"
+2026-04-02T18:12:45 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:12:45 | WARNING  | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-02T18:12:45 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/generation_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:12:45 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-02T18:12:45 | INFO     | httpx | HTTP Request: GET https://huggingface.co/api/models/openai/whisper-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-02T18:12:46 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:12:46 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:12:46 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:12:46 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:12:47 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:12:47 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:12:47 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:12:47 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/openai/whisper-base/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:12:47 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/openai/whisper-base/e37978b90ca9030d5170a5c07aadb050351a65bb/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:12:47 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T18:12:49 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T18:13:52 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T18:13:52 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T18:13:52 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:13:52 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/config.json "HTTP/1.1 200 OK"
+2026-04-02T18:13:53 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:13:53 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:13:53 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:13:54 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+2026-04-02T18:13:54 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/Falconsai/nsfw_image_detection/resolve/main/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-02T18:13:54 | INFO     | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Falconsai/nsfw_image_detection/04367978d3474804ab1a00a9bd6548b741764069/preprocessor_config.json "HTTP/1.1 200 OK"
+2026-04-02T18:13:54 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T18:14:02 | WARNING  | tensorflow | From D:\Melodywings\melodywings_guard\.venv\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T18:15:01 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T18:15:01 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 19 | Effective FPS: 3.69
+2026-04-02T18:15:01 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T18:15:01 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T18:15:01 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T18:15:01 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T18:15:04 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T18:15:04 | ERROR    | chat_analyzer | Failed to load spaCy model: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+2026-04-02T18:15:05 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T18:15:05 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T18:15:05 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T18:15:06 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T18:15:06 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T18:15:06 | INFO     | __main__ | 
+2026-04-02T18:15:06 | INFO     | __main__ | Next steps:
+2026-04-02T18:15:06 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T18:15:06 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T18:15:06 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T18:15:06 | INFO     | __main__ |   - For setup and usage: read README.md
