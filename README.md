@@ -1,302 +1,355 @@
 # MelodyWings Guard
 
-Real-time multimodal content safety pipeline for chat and video moderation.
+<p align="center">
+  <a href="#"><img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/AI%2FML-Transformers%20%7C%20DeepFace-FF6F61" alt="AI/ML" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/Backend-Flask%20%7C%20Streamlit-0E1117" alt="Backend" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/Database-SQLite%20%7C%20PostgreSQL-336791" alt="Database" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/Status-Production%20Ready%20Prototype-2EA44F" alt="Status" /></a>
+</p>
 
-## What This Project Does
+Multimodal content-safety platform that analyzes **video, audio, and text** end-to-end.  
+It turns raw media into structured moderation intelligence using a pipeline of computer vision, speech recognition, NLP, alert scoring, and dashboard analytics.
 
-MelodyWings Guard analyzes four signal streams:
+---
 
-1. Chat messages: profanity, PII, toxicity, sentiment, entities.
-2. Video frames: NSFW classification and dominant emotion detection.
-3. Video transcript: audio transcription followed by the same chat safety pipeline.
-4. Audio features: loudness, silence patterns, speech rate, and speaker-change heuristics.
+## 🎯 Project Overview
 
-All alerts are persisted to SQLite and visualized in an interactive Streamlit dashboard.
+### What the Video Analyzer Does
 
-## Problem Statement Alignment
+MelodyWings Guard processes uploaded video content and automatically identifies potential safety risks. It combines:
 
-Status against `MelodyWings Problem Statement.docx`:
+- **Visual analysis** of sampled frames (NSFW + emotion signals)
+- **Audio behavior analysis** (volume, silence, speech rate, speaker-change heuristics)
+- **Speech-to-text transcription** from extracted audio
+- **NLP moderation** on transcript text (toxicity, profanity, PII, sentiment, entity checks)
+- **Unified alerting + storage** with severity, confidence, and category metadata
 
-1. Chat safety analysis (profanity, PII, inappropriate language): Matched
-2. Open-source NLP pipeline (spaCy + regex + optional transformer toxicity): Matched
-3. Video frame extraction with OpenCV: Matched
-4. Inappropriate visual content detection (NSFW model): Matched
-5. Person sentiment signal from video: Matched via emotion-to-sentiment mapping
-6. Video transcript offensive-language analysis: Matched
-7. Integrated alerting with timestamps + issue types: Matched
-8. Dashboard / UI visibility: Matched (Streamlit + Flask HTML dashboard)
+### Core Pipeline
 
-Notes:
+**Video → Audio → Text → Insights**
 
-1. The implementation goes beyond the basic prototype with confidence scoring, persistence, metrics, and evaluation reports.
-2. Real-time behavior is simulated from streams/batches; deploy-time streaming adapters can be layered on top.
+1. Ingest video file
+2. Extract frames and audio
+3. Transcribe speech into text
+4. Run NLP moderation and multimodal risk checks
+5. Generate risk insights, alerts, and dashboard-ready analytics
 
-## Architecture Diagram
+---
+
+## 🆕 Latest Improvements (New)
+
+### 1) Model Performance Improvements
+
+- Added **batch NSFW inference** to reduce model call overhead and improve throughput
+- Introduced **temporal NSFW smoothing (EMA)** + **consecutive confirmation logic** to reduce noisy spikes
+- Added **high-confidence bypass** for critical NSFW frames to preserve sensitivity on strong signals
+- Improved transcript safety classification with **segment-level confidence-aware NLP checks**
+
+### 2) Enhanced Preprocessing & Feature Extraction
+
+- Added frame preprocessing pipeline:
+  - adaptive resize for faster inference
+  - optional CLAHE contrast normalization
+- Added frame quality gating for emotion analysis:
+  - blur variance checks
+  - brightness checks
+  - optional face-region-first emotion inference
+- Upgraded audio analysis heuristics for:
+  - loudness anomalies
+  - silence pattern detection
+  - speech-rate agitation signals
+  - speaker-change estimation
+
+### 3) Improved Pipeline Integration
+
+- Introduced **shared audio extraction payload** reused across video, transcript, and audio analyzers
+- Added robust transcription fallback chain:
+  - Whisper (primary)
+  - chunked SpeechRecognition fallback with overlap merging
+- Added run-level traceability with **`run_id`** propagation across all alert tables
+
+### 4) New / Upgraded AI-ML Models
+
+- **Transformers**:
+  - `unitary/toxic-bert` for toxicity
+  - `distilbert-base-uncased-finetuned-sst-2-english` for sentiment
+  - `openai/whisper-base` (configurable) for speech-to-text
+- **Vision models**:
+  - `Falconsai/nsfw_image_detection` for frame safety
+  - `DeepFace` emotion inference (CNN-based facial feature extraction)
+- **NLP enrichment**:
+  - spaCy `en_core_web_sm` for entity extraction
+
+### 5) Scalability & Optimization Upgrades
+
+- Batch processing for frame inference and chat NLP operations
+- Transcript chunking for long-text robustness and memory-safe processing
+- Database write optimization with batched commits
+- Optional PostgreSQL backend support for scale-out persistence
+- Short-lived dashboard caching to improve API response performance
+
+---
+
+## ✨ Features
+
+### Core Features
+
+- Video frame extraction and analysis
+- NSFW detection with confidence scoring
+- Emotion-to-sentiment mapping for visual behavior
+- Audio extraction and speech transcription
+- Transcript moderation using NLP safety pipeline
+- Alert engine with severity and category classification
+- Local persistence with relational schema and drill-down joins
+
+### Advanced Features
+
+- Temporal stabilization for NSFW decisions
+- Face-aware, quality-aware emotion detection
+- Long transcript segmentation with confidence metadata
+- Evaluation utilities:
+  - confusion matrix generation
+  - accuracy / precision / recall / F1 metrics
+- Dual dashboards:
+  - Streamlit analytics console
+  - Flask + custom HTML operations dashboard
+- CSV/JSON export and rich filtering for investigation workflows
+
+---
+
+## 🧰 Tech Stack
+
+| Layer | Technologies |
+|---|---|
+| Frontend | HTML5, CSS3, JavaScript, Chart.js |
+| Dashboard/UI | Streamlit, Flask templates |
+| Backend | Python, Flask API endpoints |
+| AI/ML (NLP) | Hugging Face Transformers, spaCy, better-profanity |
+| AI/ML (Vision) | OpenCV, DeepFace, NSFW image classifier |
+| AI/ML (Speech/Audio) | Whisper pipeline, SpeechRecognition, librosa, pydub |
+| Database | SQLite (default), PostgreSQL (optional) |
+| Data/Plots | pandas, NumPy, Plotly |
+| Testing | unittest |
+| Dev Tools | VS Code, pip/venv, ffmpeg |
+
+---
+
+## 🏗️ System Architecture
+
+### Pipeline Flow
+
+**Video Input → Frame Extraction → Audio Extraction → Speech-to-Text → NLP → Insights**
 
 ```mermaid
 flowchart LR
-  subgraph Inputs[Input Layer]
-    MSG[Chat message batch]
-    VID[Video file]
-  end
-
-  subgraph Analysis[Analysis Layer]
-    CHAT[chat_analyzer.py<br/>profanity, pii, toxicity, sentiment, ner]
-    FRAME[video_analyzer.py<br/>frame extraction, nsfw, emotion]
-    TRANS[transcription pipeline<br/>whisper or speechrecognition fallback]
-    AUDIO[audio_analyzer.py<br/>volume, silence, speech rate, speaker heuristics]
-  end
-
-  subgraph Persistence[Alert Persistence]
-    ENGINE[alert_engine.py<br/>source tagging and severity mapping]
-    ALERTS[(SQLite: alerts table)]
-    DETAILS[(SQLite detail tables<br/>chat_alerts, video_alerts, audio_alerts)]
-  end
-
-  subgraph Ops[Orchestration and Observability]
-    MAIN[main.py<br/>pipeline orchestration and final report]
-    DASH[dashboard.py<br/>streamlit dashboard]
-    HTMLD[html_dashboard.py<br/>flask api plus custom html ui]
-    LOG[melodywings_guard.log]
-  end
-
-  MSG --> CHAT
-  VID --> FRAME
-  VID --> TRANS
-  VID --> AUDIO
-  TRANS --> CHAT
-
-  CHAT --> ENGINE
-  FRAME --> ENGINE
-  AUDIO --> ENGINE
-
-  ENGINE --> ALERTS
-  ALERTS --> DETAILS
-
-  MAIN --> ALERTS
-  MAIN --> LOG
-  ALERTS --> DASH
-  ALERTS --> HTMLD
+    A[Video Input] --> B[Frame Extraction]
+    A --> C[Audio Extraction]
+    C --> D[Speech-to-Text]
+    D --> E[NLP Safety Analysis]
+    B --> F[Vision Risk Analysis\nNSFW + Emotion]
+    E --> G[Unified Alert Engine]
+    F --> G
+    C --> H[Audio Feature Analysis]
+    H --> G
+    G --> I[(SQLite / PostgreSQL)]
+    I --> J[Insights Dashboard\nFlask + Streamlit]
 ```
 
-## Core Components
+---
 
-| File | Responsibility |
-| --- | --- |
-| main.py | Entry point. Initializes DB, runs chat/video/audio analysis, prints final report. |
-| chat_analyzer.py | Message-level safety checks using rules and transformer models. |
-| video_analyzer.py | Frame sampling, NSFW/emotion checks, transcript extraction and transcript chunk analysis. |
-| audio_analyzer.py | Audio-level behavioral feature extraction and rule-based flagging. |
-| alert_engine.py | Normalized alert logging with source-specific writers. |
-| database.py | SQLite schema creation, inserts, aggregate stats, and joined detailed retrieval. |
-| dashboard.py | Streamlit dashboard with advanced filters, analytics, drilldown, and export. |
-| html_dashboard.py | Flask API + custom HTML dashboard UI with richer visual styling. |
+## ⚙️ Installation Guide (VS Code Friendly)
 
-## Data Model (SQLite)
+### Prerequisites
 
-Primary table:
-
-1. alerts: one row per alert/event with source, severity, confidence, category, timestamp, and message.
-
-Detail tables:
-
-1. chat_alerts: profanity/PII/toxicity/sentiment/entity details.
-2. video_alerts: frame index, timestamp_sec, NSFW label/score, emotion.
-3. audio_alerts: volume stats, silence count, speech rate, background noise, speaker count.
-4. transcript_segments: reserved table for segment-level transcript confidence tracking.
-
-Database file:
-
-1. melodywings_guard.db
-
-## Prerequisites
-
-1. Python 3.10+
-2. ffmpeg available on PATH
+- Python **3.10+**
+- Git
+- ffmpeg installed on system PATH
 
 Install ffmpeg:
 
-1. Windows: winget install ffmpeg
-2. macOS: brew install ffmpeg
-3. Linux (Debian/Ubuntu): sudo apt install ffmpeg
+- Windows: `winget install ffmpeg`
+- macOS: `brew install ffmpeg`
+- Ubuntu/Debian: `sudo apt install ffmpeg`
 
-## Installation
-
-1. Open terminal in the project folder.
-2. Create and activate a virtual environment.
-3. Install dependencies.
-4. Install spaCy model.
+### Setup Steps
 
 ```bash
+# 1) Clone repository
+git clone <your-repo-url>
+cd melodywings_guard
+
+# 2) Create virtual environment
 python -m venv .venv
 
+# 3) Activate virtual environment
 # Windows PowerShell
 .\.venv\Scripts\Activate.ps1
 
 # macOS/Linux
 source .venv/bin/activate
 
+# 4) Install dependencies
 pip install -r requirements.txt
+
+# 5) Install spaCy model
 python -m spacy download en_core_web_sm
 ```
 
-## Run The Pipeline
+---
+
+## ▶️ Usage
+
+### 1) Run Full Pipeline
 
 ```bash
 python main.py
 ```
 
-Execution stages:
+What this run performs:
 
-1. Analyze SAMPLE_MESSAGES in main.py.
-2. Analyze video frames and transcript when VIDEO_PATH exists.
-3. Run audio feature analysis when audio extraction succeeds.
-4. Persist all records to SQLite.
-5. Print severity/source summary in terminal.
-6. Evaluate chat predictions against sample ground truth labels with accuracy, precision, recall, F1-score, and confusion matrix.
-7. Export interactive confusion matrix visualization to chat_confusion_matrix.html.
-8. Record video pipeline runtime metrics (effective FPS, stage latency, model inference times).
-9. Optionally evaluate frame-level video predictions when `MWG_VIDEO_FRAME_GROUND_TRUTH` is set.
+1. Chat moderation on sample messages
+2. Video frame analysis (NSFW + emotion)
+3. Audio extraction and speech transcription
+4. Transcript NLP safety analysis
+5. Audio feature anomaly analysis
+6. Alert persistence + summary metrics
+7. Confusion matrix export for chat evaluation
 
-Note:
-
-1. main.py currently uses an absolute VIDEO_PATH. Update that path in main.py or keep a valid file at the configured location.
-
-## Run The Dashboard
-
-```bash
-streamlit run dashboard.py
-```
-
-Dashboard capabilities:
-
-1. KPI row: scanned, flagged, safe, flag rate, high/critical counts.
-2. Multi-dimensional filters: source, flagged status, severity, category, reason tags, sentiment, emotion, confidence range, date range, and text search.
-3. Analytics visuals: source distribution, severity split, reason breakdown, time trend.
-4. Drilldown: record-level details for chat/transcript/video/audio fields.
-5. Export: filtered CSV and JSON downloads.
-6. Auto-refresh and manual refresh controls.
-
-## Run The HTML Dashboard
+### 2) Launch HTML Dashboard
 
 ```bash
 python html_dashboard.py
 ```
 
-Open this URL:
+Open: **http://localhost:8502**
 
-1. [http://localhost:8502](http://localhost:8502)
+### 3) Launch Streamlit Dashboard
 
-HTML dashboard capabilities:
+```bash
+streamlit run dashboard.py
+```
 
-1. Beautiful custom responsive layout (not Streamlit widgets).
-2. Server-backed filtering through REST API endpoints.
-3. KPI cards, source/severity/reason/trend charts.
-4. Click-to-inspect alert drilldown panel.
-5. CSV and JSON export of the active filtered set.
-6. Adjustable auto-refresh interval.
+### 4) Run Tests
 
-## Chat Evaluation Metrics
+```bash
+python test_chat_analyzer.py
+python test_video_analyzer.py
+```
 
-The chat analyzer now includes an evaluation layer for binary moderation quality (safe vs flagged):
+### Notes
 
-1. Accuracy
-2. Precision
-3. Recall
-4. F1-score
-5. Confusion matrix counts (TN, FP, FN, TP)
-6. Interactive confusion-matrix heatmap export (HTML)
+- Update `VIDEO_PATH` in `main.py` to your local video file before running full video analysis.
+- Output artifacts include:
+  - `melodywings_guard.db`
+  - `melodywings_guard.log`
+  - `chat_confusion_matrix.html`
 
-The default `python main.py` run evaluates `SAMPLE_MESSAGES` using `SAMPLE_CHAT_EXPECTED_FLAGS` in `main.py` and writes:
+---
 
-1. Console evaluation report (metrics + confusion matrix table)
-2. `chat_confusion_matrix.html` for visual inspection of classification behavior
-
-## Configuration Reference
-
-Static thresholds in code:
-
-1. chat_analyzer.py: TOXICITY_THRESHOLD = 0.75
-2. chat_analyzer.py: strong negative sentiment flag threshold = 0.98
-3. video_analyzer.py: NSFW_THRESHOLD = 0.70
-4. video_analyzer.py: FLAGGED_EMOTIONS = disgust, angry
-5. video_analyzer.py: LOW_RISK_EMOTIONS = fear, sad (requires NSFW corroboration)
-
-Environment variables:
-
-1. MWG_WHISPER_MODEL: override Whisper model id (default openai/whisper-base)
-2. MWG_TRANSCRIBE_LANGUAGE: optional transcription language hint
-3. MWG_SR_CHUNK_MS: chunk size for SpeechRecognition fallback
-4. MWG_SR_OVERLAP_MS: overlap between fallback chunks
-5. MWG_VIDEO_SAMPLE_FPS: target frame sampling rate (float, default 1.0)
-6. MWG_FRAME_BATCH_SIZE: NSFW inference batch size for sampled frames
-7. MWG_FRAME_RESIZE_WIDTH: resize sampled frames before inference (0 disables resize)
-8. MWG_FRAME_ENABLE_CLAHE: enable contrast normalization for challenging lighting
-9. MWG_MAX_FRAMES: optional cap for sampled frames (0 = unlimited)
-10. MWG_NSFW_TEMPORAL_ALPHA: EMA smoothing factor for NSFW temporal stabilization
-11. MWG_NSFW_CONSEC_FRAMES: minimum consecutive NSFW confirmations before frame-level NSFW alerting
-12. MWG_NSFW_HIGH_CONFIDENCE_BYPASS: bypass temporal requirement for very high NSFW confidence
-13. MWG_EMOTION_STRIDE: run emotion inference every N sampled frames
-14. MWG_EMOTION_MIN_BLUR_VARIANCE: skip emotion inference on very blurry frames
-15. MWG_EMOTION_MIN_BRIGHTNESS: skip emotion inference on extremely dark frames
-16. MWG_EMOTION_REQUIRE_FACE: require a detected face ROI before emotion inference
-17. MWG_EMOTION_MIN_FACE_AREA_RATIO: minimum face area ratio for emotion inference
-18. MWG_EMOTION_MIN_CONFIDENCE: minimum confidence to accept emotion output
-19. MWG_EMOTION_FALLBACK_FULL_FRAME: fallback to full-frame emotion inference when face ROI fails
-20. MWG_EMOTION_HOLD_FRAMES: keep last valid emotion for N frames to avoid frequent none values
-21. MWG_EMOTION_RECHECK_INTERVAL: force periodic emotion recheck on low-quality frames
-22. MWG_TRANSCRIPT_PRINT_MAX_CHARS: cap transcript preview printed to terminal
-23. MWG_VIDEO_FRAME_GROUND_TRUTH: path to JSON frame labels for video metric evaluation
-24. MWG_PRINT_FRAME_STATUS: print per-frame "Frame OK" status for non-flagged frames
-
-Video ground truth JSON formats:
-
-1. `[true, false, ...]`
-2. `[{"frame_number": 0, "flagged": false}, ...]`
-3. `{"0": false, "1": true, ...}`
-
-## Project Structure
+## 📁 Project Structure
 
 ```text
 melodywings_guard/
-├── alert_engine.py
-├── audio_analyzer.py
-├── chat_analyzer.py
-├── dashboard.py
-├── database.py
-├── main.py
-├── requirements.txt
-├── README.md
-├── melodywings_guard.db      # generated at runtime
-└── melodywings_guard.log     # generated at runtime
+├── alert_engine.py              # Unified alert logger and severity mapping
+├── audio_analyzer.py            # Audio feature extraction and anomaly rules
+├── chat_analyzer.py             # NLP moderation (toxicity, PII, sentiment, entities)
+├── dashboard.py                 # Streamlit analytics dashboard
+├── database.py                  # SQLite/PostgreSQL adapter and schema layer
+├── html_dashboard.py            # Flask API + custom HTML dashboard server
+├── main.py                      # Pipeline orchestrator entry point
+├── video_analyzer.py            # Frame/video/transcript analysis pipeline
+├── requirements.txt             # Python dependencies
+├── test_chat_analyzer.py        # Unit tests for chat analyzer
+├── test_video_analyzer.py       # Unit tests for video analyzer
+├── alerts_log.json              # Alert export/log artifact
+├── analysis_output.txt          # Pipeline run output artifact
+├── chat_confusion_matrix.html   # Chat evaluator visualization artifact
+├── static/
+│   ├── dashboard.css            # HTML dashboard styling
+│   └── dashboard.js             # HTML dashboard frontend logic
+└── templates/
+    └── dashboard.html           # HTML dashboard template
 ```
 
-## Offline and Privacy Notes
+---
 
-1. Inference runs locally after model downloads.
-2. No external API keys are required.
-3. Alert data is stored locally in SQLite.
-4. Temporary audio artifacts created during processing are cleaned up after use.
+## 📊 Performance Metrics
 
-## Troubleshooting
+### Current Measured Results
 
-| Issue | Resolution |
-| --- | --- |
-| ffmpeg not found | Install ffmpeg and ensure PATH is updated. |
-| Missing tf_keras | pip install tf-keras |
-| CUDA memory issues | Use CPU or install a suitable PyTorch build for your GPU. |
-| Dashboard shows no rows | Run python main.py first to populate SQLite data. |
-| spaCy model missing | python -m spacy download en_core_web_sm |
+| Metric | Current Value | Source |
+|---|---:|---|
+| Chat Accuracy | **1.00** | `chat_confusion_matrix.html` (TN=5, FP=0, FN=0, TP=5) |
+| Chat Precision | **1.00** | Same evaluation set |
+| Chat Recall | **1.00** | Same evaluation set |
+| Chat F1-score | **1.00** | Same evaluation set |
+| Video Effective FPS | **4.56 to 7.55** (avg **6.3**) | Historical run logs |
+| Approx. Per-frame Latency | **132 ms to 219 ms** | Derived from effective FPS |
 
-## Quick Commands
+### Improvements Over Previous Iterations
 
-```bash
-# Run analysis
-python main.py
+- Frame false-positive behavior improved significantly in logged runs:
+  - earlier worst-case observed: **180/256 flagged (70.31%)**
+  - recent tuned runs: **0 to 1/256 flagged (0.00% to 0.39%)**
+- Throughput stabilized with batched frame inference and optimized preprocessing
+- End-to-end pipeline now reports structured runtime telemetry for continuous tuning
 
-# Launch dashboard
-streamlit run dashboard.py
+### Metrics Tracked Per Run
 
-# Verify Python syntax
-python -m py_compile main.py dashboard.py alert_engine.py database.py
-```
+- Accuracy / Precision / Recall / F1 (chat, optional video GT)
+- Frame stage runtime and effective FPS
+- Average frame processing latency
+- NSFW and emotion inference timing
+- Transcript stage runtime and flagged-segment count
+
+---
+
+## 🚀 Future Enhancements
+
+- Real-time stream ingestion (WebRTC/RTSP/WebSocket pipelines)
+- Stronger multimodal models (action/context-aware risk detection)
+- Optional LSTM or temporal transformers for sequence-level behavior modeling
+- Better explainability for why an item was flagged
+- Enhanced UI with analyst workflows, saved views, and triage queues
+- Containerized deployment (Docker + CI/CD)
+- Cloud deployment profiles (Azure/AWS/GCP)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome.
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m "Add: your feature"`
+4. Push branch: `git push origin feature/your-feature`
+5. Open a Pull Request with:
+   - problem statement
+   - implementation summary
+   - test evidence/screenshots
+
+### Contribution Guidelines
+
+- Keep changes modular and well-documented
+- Add or update tests for logic changes
+- Preserve backwards compatibility where possible
+- Follow existing code style and naming conventions
+
+---
+
+## 📜 License
+
+This project is intended for educational, hackathon, and portfolio use.
+
+Recommended open-source license: **MIT License**.
+
+---
+
+## 🙌 Acknowledgements
+
+- Hugging Face Transformers ecosystem
+- OpenCV and DeepFace communities
+- spaCy NLP ecosystem
+- Streamlit and Flask maintainers
