@@ -1,0 +1,592 @@
+2026-04-02T10:18:45 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:18:45 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T10:18:45 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:18:45 | WARNING  | alert_engine | Clearing alerts_log.json ...
+2026-04-02T10:18:45 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T10:19:19 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T10:19:23 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T10:19:24 | WARNING  | huggingface_hub.file_download | Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-04-02T10:20:11 | WARNING  | huggingface_hub.file_download | Error while downloading from https://huggingface.co/unitary/toxic-bert/resolve/main/model.safetensors: HTTPSConnectionPool(host='cas-bridge.xethub.hf.co', port=443): Read timed out.
+Trying to resume download...
+2026-04-02T10:20:14 | WARNING  | huggingface_hub.file_download | Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-04-02T10:23:34 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T10:23:35 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 4/10
+2026-04-02T10:23:35 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' → D:\Melodywings\melodywings_guard\alerts_log.json
+2026-04-02T10:23:35 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T10:23:35 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T10:23:36 | WARNING  | huggingface_hub.file_download | Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-04-02T10:24:10 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:24:10 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T10:24:10 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:24:10 | WARNING  | alert_engine | Clearing alerts_log.json ...
+2026-04-02T10:24:10 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T10:24:20 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T10:24:23 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T10:24:23 | WARNING  | huggingface_hub.file_download | Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-04-02T10:26:56 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T10:27:37 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T10:27:38 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 4/10
+2026-04-02T10:27:38 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' → D:\Melodywings\melodywings_guard\alerts_log.json
+2026-04-02T10:27:38 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T10:27:38 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T10:27:39 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T10:29:33 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T10:29:33 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T10:29:33 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:29:33 | WARNING  | video_analyzer | Audio extraction failed. Skipping transcript analysis.
+2026-04-02T10:29:33 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' → D:\Melodywings\melodywings_guard\alerts_log.json
+2026-04-02T10:29:33 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T10:29:54 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T10:29:54 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T10:29:54 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:29:54 | WARNING  | video_analyzer | Audio extraction failed. Skipping transcript analysis.
+2026-04-02T10:29:54 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' → D:\Melodywings\melodywings_guard\alerts_log.json
+2026-04-02T10:29:54 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T10:39:33 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T10:39:33 | INFO     | __main__ | Database initialized.
+2026-04-02T10:39:33 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:39:33 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T10:39:33 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:39:33 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T10:39:33 | INFO     | database | All alerts cleared from database
+2026-04-02T10:39:33 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T10:39:44 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T10:39:46 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T10:39:47 | ERROR    | chat_analyzer | Failed to load toxicity model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: c8ba3d95-1e86-46b0-97a4-a238a6287447)')
+2026-04-02T10:39:47 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T10:39:48 | WARNING  | huggingface_hub.file_download | Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-04-02T10:40:20 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T10:40:20 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T10:40:21 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T10:40:21 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T10:40:21 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T10:40:22 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 7/10
+2026-04-02T10:40:22 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T10:40:22 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T10:40:22 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T10:40:23 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T10:41:47 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T10:41:47 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T10:41:47 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:41:47 | WARNING  | video_analyzer | Audio extraction failed. Skipping transcript analysis.
+2026-04-02T10:41:48 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T10:41:48 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:41:48 | WARNING  | __main__ | Audio extraction failed for audio analysis.
+2026-04-02T10:41:48 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T10:43:26 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T10:43:26 | INFO     | __main__ | Database initialized.
+2026-04-02T10:43:26 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:43:26 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T10:43:26 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:43:26 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T10:43:26 | INFO     | database | All alerts cleared from database
+2026-04-02T10:43:26 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T10:43:37 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T10:43:41 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T10:43:42 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T10:43:43 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T10:43:44 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T10:43:45 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T10:43:45 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T10:43:46 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 7/10
+2026-04-02T10:43:46 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T10:43:46 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T10:43:46 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T10:43:47 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T10:45:21 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T10:45:21 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T10:45:21 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:45:21 | WARNING  | video_analyzer | Audio extraction failed. Skipping transcript analysis.
+2026-04-02T10:45:23 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T10:45:23 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:45:23 | WARNING  | __main__ | Audio extraction failed for audio analysis.
+2026-04-02T10:45:23 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T10:46:57 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T10:46:57 | INFO     | __main__ | Database initialized.
+2026-04-02T10:46:57 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:46:57 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T10:46:57 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:46:57 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T10:46:57 | INFO     | database | All alerts cleared from database
+2026-04-02T10:46:57 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T10:47:06 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T10:47:10 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T10:47:11 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T10:47:11 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T10:47:12 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T10:47:13 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T10:47:14 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T10:47:15 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 7/10
+2026-04-02T10:47:15 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T10:47:15 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T10:47:15 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T10:47:15 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T10:48:49 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T10:48:49 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T10:48:49 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:48:49 | WARNING  | video_analyzer | Audio extraction failed. Skipping transcript analysis.
+2026-04-02T10:48:51 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T10:48:51 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:48:51 | WARNING  | __main__ | Audio extraction failed for audio analysis.
+2026-04-02T10:48:51 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T10:52:10 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T10:52:10 | INFO     | __main__ | Database initialized.
+2026-04-02T10:52:10 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:52:10 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T10:52:10 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:52:10 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T10:52:10 | INFO     | database | All alerts cleared from database
+2026-04-02T10:52:26 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T10:52:26 | INFO     | __main__ | Database initialized.
+2026-04-02T10:52:26 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:52:26 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T10:52:26 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:52:26 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T10:52:26 | INFO     | database | All alerts cleared from database
+2026-04-02T10:52:26 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T10:52:34 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T10:52:37 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T10:52:37 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T10:52:37 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T10:52:38 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T10:52:39 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T10:52:39 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T10:52:40 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 7/10
+2026-04-02T10:52:40 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T10:52:40 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T10:52:40 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T10:52:40 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T10:54:13 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T10:54:13 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T10:54:13 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:54:13 | WARNING  | video_analyzer | Audio extraction failed. Skipping transcript analysis.
+2026-04-02T10:54:14 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T10:54:14 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:54:14 | WARNING  | __main__ | Audio extraction failed for audio analysis.
+2026-04-02T10:54:14 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T10:57:43 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T10:57:43 | INFO     | __main__ | Database initialized.
+2026-04-02T10:57:43 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:57:43 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T10:57:43 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T10:57:43 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T10:57:43 | INFO     | database | All alerts cleared from database
+2026-04-02T10:57:43 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T10:57:51 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T10:57:53 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T10:57:53 | ERROR    | chat_analyzer | Failed to load toxicity model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: c15d6b31-0845-47f3-8ec6-bc7a2ba48efc)')
+2026-04-02T10:57:53 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T10:57:54 | ERROR    | chat_analyzer | Failed to load sentiment model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: 1a31add0-22ff-4028-b112-be1fb5e87ec1)')
+2026-04-02T10:57:54 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T10:57:54 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T10:57:54 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T10:57:55 | ERROR    | chat_analyzer | Failed to load toxicity model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: 97f582dc-066e-4225-be24-50147dfcd38c)')
+2026-04-02T10:57:55 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T10:57:56 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T10:57:56 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T10:57:58 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T10:57:58 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T10:57:58 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T10:57:58 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T10:57:58 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T10:57:59 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T10:59:20 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T10:59:20 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T10:59:20 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:59:20 | WARNING  | video_analyzer | Audio extraction failed. Skipping transcript analysis.
+2026-04-02T10:59:20 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T10:59:20 | ERROR    | video_analyzer | ffmpeg not found. Please install ffmpeg and add it to PATH.
+2026-04-02T10:59:20 | WARNING  | __main__ | Audio extraction failed for audio analysis.
+2026-04-02T10:59:20 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T11:11:13 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T11:11:13 | INFO     | __main__ | Database initialized.
+2026-04-02T11:11:13 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:11:13 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T11:11:13 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:11:13 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T11:11:13 | INFO     | database | All alerts cleared from database
+2026-04-02T11:11:13 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T11:11:20 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:11:23 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T11:11:24 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T11:11:24 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T11:11:25 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T11:11:25 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T11:11:26 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T11:11:26 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T11:11:26 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T11:11:26 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T11:11:26 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T11:11:27 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T11:12:44 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T11:12:44 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T11:12:44 | INFO     | video_analyzer | Attempting audio extraction and transcription with local Speech Recognition...
+2026-04-02T11:12:45 | ERROR    | video_analyzer | Missing dependency: No module named 'moviepy.editor'
+2026-04-02T11:12:45 | ERROR    | video_analyzer | Install with: pip install moviepy SpeechRecognition pydub
+2026-04-02T11:12:45 | WARNING  | video_analyzer | Transcript extraction failed. Skipping transcript analysis.
+2026-04-02T11:12:46 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T11:13:22 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T11:13:22 | INFO     | __main__ | Database initialized.
+2026-04-02T11:13:22 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:13:22 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T11:13:22 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:13:22 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T11:13:22 | INFO     | database | All alerts cleared from database
+2026-04-02T11:13:22 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T11:13:30 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:13:34 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T11:13:35 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T11:13:35 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T11:13:36 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T11:13:36 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T11:13:37 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T11:13:37 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T11:13:37 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T11:13:37 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T11:13:37 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T11:13:38 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T11:14:55 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T11:14:55 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T11:14:55 | INFO     | video_analyzer | Attempting audio extraction and transcription with local Speech Recognition...
+2026-04-02T11:14:55 | ERROR    | video_analyzer | Missing dependency: No module named 'moviepy.editor'
+2026-04-02T11:14:55 | ERROR    | video_analyzer | Install with: pip install moviepy SpeechRecognition pydub
+2026-04-02T11:14:55 | WARNING  | video_analyzer | Transcript extraction failed. Skipping transcript analysis.
+2026-04-02T11:14:56 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T11:14:56 | ERROR    | video_analyzer | moviepy not installed. Install with: pip install moviepy
+2026-04-02T11:14:56 | WARNING  | __main__ | Audio extraction failed for audio analysis.
+2026-04-02T11:14:56 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T11:14:56 | INFO     | __main__ | 
+2026-04-02T11:14:56 | INFO     | __main__ | Next steps:
+2026-04-02T11:14:56 | INFO     | __main__ |   - Run the enhanced dashboard: streamlit run dashboard_v2.py
+2026-04-02T11:14:56 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T11:14:56 | INFO     | __main__ |   - For more info: read GOOGLE_CLOUD_SETUP.md
+2026-04-02T11:16:04 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T11:16:04 | INFO     | __main__ | Database initialized.
+2026-04-02T11:16:04 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:16:04 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T11:16:04 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:16:04 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T11:16:04 | INFO     | database | All alerts cleared from database
+2026-04-02T11:16:04 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T11:16:13 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:16:17 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T11:16:18 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T11:16:18 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T11:16:19 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T11:16:19 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T11:16:20 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T11:16:20 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T11:16:20 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T11:16:20 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T11:16:21 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T11:16:21 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T11:16:22 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T11:16:22 | INFO     | __main__ | Database initialized.
+2026-04-02T11:16:22 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:16:22 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T11:16:22 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:16:22 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T11:16:22 | INFO     | database | All alerts cleared from database
+2026-04-02T11:16:22 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T11:16:41 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:16:47 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T11:16:48 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T11:16:49 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T11:16:50 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T11:16:51 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T11:16:52 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T11:16:53 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T11:16:53 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T11:16:53 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T11:16:53 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T11:16:54 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T11:18:02 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T11:18:02 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T11:18:02 | INFO     | video_analyzer | Attempting audio extraction and transcription with local Speech Recognition...
+2026-04-02T11:18:04 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T11:18:04 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp1rqqiflq.wav
+2026-04-02T11:18:06 | INFO     | video_analyzer | Transcribing audio with local Speech Recognition ...
+2026-04-02T11:18:06 | INFO     | video_analyzer | Loading speech recognizer ...
+2026-04-02T11:18:06 | INFO     | video_analyzer | Loading audio file ...
+2026-04-02T11:18:06 | INFO     | video_analyzer | Recognizing speech (Google API - free, no credentials needed) ...
+2026-04-02T11:18:30 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T11:18:30 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T11:18:30 | INFO     | video_analyzer | Attempting audio extraction and transcription with local Speech Recognition...
+2026-04-02T11:18:30 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T11:18:30 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp2fd1ugjp.wav
+2026-04-02T11:18:31 | INFO     | video_analyzer | Transcribing audio with local Speech Recognition ...
+2026-04-02T11:18:31 | INFO     | video_analyzer | Loading speech recognizer ...
+2026-04-02T11:18:31 | INFO     | video_analyzer | Loading audio file ...
+2026-04-02T11:18:31 | INFO     | video_analyzer | Recognizing speech (Google API - free, no credentials needed) ...
+2026-04-02T11:18:37 | INFO     | video_analyzer | ✓ Google API recognized: 71 chars
+2026-04-02T11:18:37 | INFO     | video_analyzer | Transcription complete. Length: 71 chars | Confidence: 85.00%
+2026-04-02T11:18:37 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Innova we are Associates of your business you do remember your business
+2026-04-02T11:18:37 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T11:18:38 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T11:18:38 | INFO     | alert_engine | Logged 1 alert(s) from source='transcript' to database
+2026-04-02T11:18:38 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T11:18:39 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp4msn43dv\extracted_audio.wav
+2026-04-02T11:19:05 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T11:19:05 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T11:19:05 | INFO     | __main__ | 
+2026-04-02T11:19:05 | INFO     | __main__ | Next steps:
+2026-04-02T11:19:05 | INFO     | __main__ |   - Run the enhanced dashboard: streamlit run dashboard_v2.py
+2026-04-02T11:19:05 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T11:19:05 | INFO     | __main__ |   - For more info: read GOOGLE_CLOUD_SETUP.md
+2026-04-02T11:19:08 | INFO     | video_analyzer | ✓ Google API recognized: 71 chars
+2026-04-02T11:19:08 | INFO     | video_analyzer | Transcription complete. Length: 71 chars | Confidence: 85.00%
+2026-04-02T11:19:08 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Innova we are Associates of your business you do remember your business
+2026-04-02T11:19:08 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T11:19:09 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T11:19:09 | INFO     | alert_engine | Logged 1 alert(s) from source='transcript' to database
+2026-04-02T11:19:09 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T11:19:09 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpes9tat6b\extracted_audio.wav
+2026-04-02T11:19:12 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T11:19:12 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T11:19:12 | INFO     | __main__ | 
+2026-04-02T11:19:12 | INFO     | __main__ | Next steps:
+2026-04-02T11:19:12 | INFO     | __main__ |   - Run the enhanced dashboard: streamlit run dashboard_v2.py
+2026-04-02T11:19:12 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T11:19:12 | INFO     | __main__ |   - For more info: read GOOGLE_CLOUD_SETUP.md
+2026-04-02T11:23:46 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T11:23:46 | INFO     | __main__ | Database initialized.
+2026-04-02T11:23:46 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:23:46 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T11:23:46 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:23:46 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T11:23:46 | INFO     | database | All alerts cleared from database
+2026-04-02T11:23:46 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T11:23:55 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:23:58 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T11:23:59 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T11:23:59 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T11:24:00 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T11:24:01 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T11:24:01 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T11:24:02 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T11:24:02 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T11:24:02 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T11:24:02 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T11:24:02 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T11:25:42 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T11:25:42 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T11:25:42 | INFO     | video_analyzer | Attempting audio extraction and transcription with local Speech Recognition...
+2026-04-02T11:25:44 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T11:25:44 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp2ypr6rn0.wav
+2026-04-02T11:25:45 | INFO     | video_analyzer | Transcribing audio with local Speech Recognition ...
+2026-04-02T11:25:45 | INFO     | video_analyzer | Loading speech recognizer ...
+2026-04-02T11:25:45 | INFO     | video_analyzer | Loading audio file ...
+2026-04-02T11:25:45 | INFO     | video_analyzer | Recognizing speech (Google API - free, no credentials needed) ...
+2026-04-02T11:26:09 | INFO     | video_analyzer | ✓ Google API recognized: 71 chars
+2026-04-02T11:26:09 | INFO     | video_analyzer | Transcription complete. Length: 71 chars | Confidence: 85.00%
+2026-04-02T11:26:09 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Innova we are Associates of your business you do remember your business
+2026-04-02T11:26:09 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T11:26:10 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T11:26:10 | INFO     | alert_engine | Logged 1 alert(s) from source='transcript' to database
+2026-04-02T11:26:10 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T11:26:11 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpvp4oxi9g\extracted_audio.wav
+2026-04-02T11:26:15 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T11:26:15 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T11:26:15 | INFO     | __main__ | 
+2026-04-02T11:26:15 | INFO     | __main__ | Next steps:
+2026-04-02T11:26:15 | INFO     | __main__ |   - Run the enhanced dashboard: streamlit run dashboard_v2.py
+2026-04-02T11:26:15 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T11:26:15 | INFO     | __main__ |   - For more info: read GOOGLE_CLOUD_SETUP.md
+2026-04-02T11:30:33 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T11:30:33 | INFO     | __main__ | Database initialized.
+2026-04-02T11:30:33 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:30:33 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T11:30:33 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:30:33 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T11:30:33 | INFO     | database | All alerts cleared from database
+2026-04-02T11:30:33 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T11:30:44 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:30:47 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T11:30:47 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T11:30:47 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T11:30:48 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T11:30:49 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T11:30:49 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T11:30:50 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T11:30:50 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T11:30:50 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T11:30:50 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T11:30:51 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T11:32:16 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T11:32:16 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T11:32:16 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T11:32:17 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T11:32:17 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpvl_7649s.wav
+2026-04-02T11:32:18 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T11:32:18 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T11:32:20 | WARNING  | huggingface_hub.file_download | Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-04-02T11:32:36 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T11:32:36 | INFO     | video_analyzer | Transcribing with Whisper (chunked): chunk=30s stride=5s
+2026-04-02T11:32:36 | WARNING  | video_analyzer | Whisper transcription failed: ffmpeg was not found but is required to load audio files from filename
+2026-04-02T11:32:36 | WARNING  | video_analyzer | Whisper unavailable/failed. Falling back to chunked SpeechRecognition.
+2026-04-02T11:32:36 | INFO     | video_analyzer | Loading speech recognizer ...
+2026-04-02T11:32:36 | INFO     | video_analyzer | SpeechRecognition fallback chunking: duration=256.0s chunk=30.0s overlap=1.2s
+2026-04-02T11:32:52 | INFO     | video_analyzer | SpeechRecognition fallback progress: 5 chunk(s) processed
+2026-04-02T11:33:08 | INFO     | video_analyzer | Transcription complete via speech_recognition. Length: 112 chars | Confidence: 82.00%
+2026-04-02T11:33:08 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Innova we are Associates of your business you do remember your business partner I'm sorry I didn't get your name
+2026-04-02T11:33:08 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T11:33:10 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T11:33:10 | INFO     | alert_engine | Logged 1 alert(s) from source='transcript' to database
+2026-04-02T11:33:10 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T11:33:11 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpmtcqayj8\extracted_audio.wav
+2026-04-02T11:33:15 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T11:33:15 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T11:33:15 | INFO     | __main__ | 
+2026-04-02T11:33:15 | INFO     | __main__ | Next steps:
+2026-04-02T11:33:15 | INFO     | __main__ |   - Run the enhanced dashboard: streamlit run dashboard_v2.py
+2026-04-02T11:33:15 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T11:33:15 | INFO     | __main__ |   - For more info: read GOOGLE_CLOUD_SETUP.md
+2026-04-02T11:35:32 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T11:35:32 | INFO     | __main__ | Database initialized.
+2026-04-02T11:35:32 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:35:32 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T11:35:32 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:35:32 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T11:35:32 | INFO     | database | All alerts cleared from database
+2026-04-02T11:35:32 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T11:35:43 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:35:46 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T11:35:47 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T11:35:47 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T11:35:48 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T11:35:49 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T11:35:49 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T11:35:50 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T11:35:50 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T11:35:50 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T11:35:50 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T11:35:51 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T11:37:11 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T11:37:11 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T11:37:11 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T11:37:12 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T11:37:12 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpqcz4j813.wav
+2026-04-02T11:37:13 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T11:37:13 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T11:37:15 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T11:37:18 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T11:38:06 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T11:38:06 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T11:38:06 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T11:38:10 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T11:38:10 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T11:38:10 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T11:38:12 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmp49xkvk_k\extracted_audio.wav
+2026-04-02T11:38:13 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T11:38:13 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T11:38:13 | INFO     | __main__ | 
+2026-04-02T11:38:13 | INFO     | __main__ | Next steps:
+2026-04-02T11:38:13 | INFO     | __main__ |   - Run the enhanced dashboard: streamlit run dashboard_v2.py
+2026-04-02T11:38:13 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T11:38:13 | INFO     | __main__ |   - For more info: read GOOGLE_CLOUD_SETUP.md
+2026-04-02T11:39:40 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T11:39:40 | INFO     | __main__ | Database initialized.
+2026-04-02T11:39:40 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:39:40 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T11:39:40 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:39:40 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T11:39:40 | INFO     | database | All alerts cleared from database
+2026-04-02T11:39:40 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T11:39:51 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:39:54 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T11:39:55 | ERROR    | chat_analyzer | Failed to load toxicity model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: c75908f1-2edd-4b64-aea1-0fa452c438dd)')
+2026-04-02T11:39:55 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T11:39:56 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T11:39:57 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T11:39:57 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T11:39:57 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:39:58 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T11:39:58 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T11:39:58 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T11:39:58 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T11:39:58 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T11:39:59 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T11:41:24 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T11:41:24 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T11:41:24 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T11:41:25 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T11:41:25 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpuwkodh9c.wav
+2026-04-02T11:41:26 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T11:41:26 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T11:41:28 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T11:41:30 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T11:42:18 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T11:42:18 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T11:42:18 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T11:42:26 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T11:42:26 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T11:42:26 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T11:42:27 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpjpx11q3e\extracted_audio.wav
+2026-04-02T11:42:28 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T11:42:28 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T11:42:28 | INFO     | __main__ | 
+2026-04-02T11:42:28 | INFO     | __main__ | Next steps:
+2026-04-02T11:42:28 | INFO     | __main__ |   - Run the enhanced dashboard: streamlit run dashboard_v2.py
+2026-04-02T11:42:28 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T11:42:28 | INFO     | __main__ |   - For more info: read GOOGLE_CLOUD_SETUP.md
+2026-04-02T11:52:02 | INFO     | database | Database schema initialized: D:\Melodywings\melodywings_guard\melodywings_guard.db
+2026-04-02T11:52:02 | INFO     | __main__ | Database initialized.
+2026-04-02T11:52:02 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:52:02 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T11:52:02 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T11:52:02 | WARNING  | alert_engine | Clearing all alerts from database...
+2026-04-02T11:52:02 | INFO     | database | All alerts cleared from database
+2026-04-02T11:52:02 | INFO     | chat_analyzer | Analyzing 10 chat message(s)...
+2026-04-02T11:52:16 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:52:19 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T11:52:20 | ERROR    | chat_analyzer | Failed to load toxicity model: (ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)), '(Request ID: e2407adb-3c8b-4548-b105-1ea9f26547a8)')
+2026-04-02T11:52:20 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T11:52:21 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T11:52:22 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T11:52:22 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T11:52:22 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T11:52:23 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T11:52:24 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/10
+2026-04-02T11:52:24 | INFO     | alert_engine | Logged 10 alert(s) from source='chat' to database
+2026-04-02T11:52:24 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T11:52:24 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection ...
+2026-04-02T11:52:25 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T11:54:07 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T11:54:07 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 180
+2026-04-02T11:54:07 | INFO     | video_analyzer | Attempting audio extraction and robust transcription...
+2026-04-02T11:54:08 | INFO     | video_analyzer | Extracting audio from video ...
+2026-04-02T11:54:08 | INFO     | video_analyzer | Writing audio to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpwave_ge9.wav
+2026-04-02T11:54:09 | INFO     | video_analyzer | Transcribing extracted audio ...
+2026-04-02T11:54:09 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T11:54:11 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T11:54:14 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T11:55:02 | INFO     | video_analyzer | Transcription complete via whisper. Length: 2453 chars | Confidence: 92.00%
+2026-04-02T11:55:02 | INFO     | video_analyzer | TRANSCRIPT EXTRACTED: Hey, can you tell him? You know who we are? We're associates of your business partner, Marcellus Wallace. You do remember your business partner, don't you? Let me take a while, I'll give you. Your bread, right? Yeah, I thought so. You remember your business partner, Marcellus Wallace. Don't you, Brett? Yeah, I remember. Good. Looks like me and Vincent called you boys in breakfast. Sorry about that. Jada. Hamburgers. Hamburgers. The cornerstone of any nutritious breakfast. What kind of hamburgers? Jada, cheeseburgers. No, no, no, no, no. Where'd you get them? McDonald's, Wendy's, Jack in the Box, where? Big Kahuna Burger. Big Kahuna Burger. That's that Hawaiian burger joint. I hear they got some tasty burgers. I ain't no have one myself. How are they? You good? You mind if I try one of you? This is yours here, right? Yeah. This is a tasty burger. Vincent, you ever had a big conuna burger? Morning, mate, they're real tasty. Well, if you like burgers, you're going to try some time. Me? I can't usually get them because my girlfriends are vegetarian, but pretty much makes me a vegetarian. I do love the taste of a good burger. You know what they call a quarter pound of a cheese in France? No. Tell him Vincent. Royale with cheese. Royale with cheese. You know why they call it that? Because of the metric system. Check out the big brain on bread! You're a smart motherfucker, that's right. The metric system. Sinister. Sprite me. That's right, good. You mind if I have some of your tasty beverage to wash this family? Go right ahead. Eddie, it's the spot. You, lock the seagull. You know why we here? Won't you tell me, ma'am, Benzue, what do you got to shit here? It's over there. I don't remember asking you a goddamn thing. You were saying, it's in the comfort. No, the one by your knees. I'm sorry. I didn't get your name. I got yours. Vincent, right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. Oh. I'm sorry. I didn't get your name. I got yours. Vincent. Right? But I never got your name. My name's Pitt. I knew I had something to talk to you way out of this shit. No, no, no. I just want you to know. I just want you to know how sorry we are, that things got so fucked up with us and Mr. Wallace. We got into this thing with the best intentions, really. I never... Oh, I'm sorry. Did I break your concentration? I didn't mean to. Please.
+2026-04-02T11:55:02 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T11:55:06 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T11:55:06 | INFO     | alert_engine | Logged 9 alert(s) from source='transcript' to database
+2026-04-02T11:55:06 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T11:55:07 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpt8urjc7_\extracted_audio.wav
+2026-04-02T11:55:09 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T11:55:09 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T11:55:09 | INFO     | __main__ | 
+2026-04-02T11:55:09 | INFO     | __main__ | Next steps:
+2026-04-02T11:55:09 | INFO     | __main__ |   - Run the dashboard: streamlit run dashboard.py
+2026-04-02T11:55:09 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T11:55:09 | INFO     | __main__ |   - For setup and usage: read README.md
