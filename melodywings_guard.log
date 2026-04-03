@@ -2203,3 +2203,51 @@ pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/
 2026-04-02T18:15:06 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
 2026-04-02T18:15:06 | INFO     | __main__ |   - View detailed charts and analytics
 2026-04-02T18:15:06 | INFO     | __main__ |   - For setup and usage: read README.md
+2026-04-02T19:20:50 | INFO     | database | Database backend initialized: sqlite (D:\Melodywings\melodywings_guard\melodywings_guard.db)
+2026-04-02T19:20:50 | INFO     | __main__ | Database initialized.
+2026-04-02T19:20:50 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T19:20:50 | INFO     | __main__ | MelodyWings Guard — Starting Content Safety Pipeline
+2026-04-02T19:20:50 | INFO     | __main__ | ════════════════════════════════════════════════════════════
+2026-04-02T19:20:50 | INFO     | __main__ | Run ID: b5527fbe-c065-4e99-8a99-18f98377906e
+2026-04-02T19:20:50 | INFO     | __main__ | Preserving previous runs. Set MWG_CLEAR_ON_RUN=true to clear before execution.
+2026-04-02T19:20:50 | INFO     | chat_analyzer | Analyzing 36 chat message(s)...
+2026-04-02T19:20:57 | INFO     | chat_analyzer | Loading toxicity model: unitary/toxic-bert ...
+2026-04-02T19:21:00 | WARNING  | tensorflow | From C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-04-02T19:21:00 | INFO     | chat_analyzer | Toxicity model loaded successfully.
+2026-04-02T19:21:02 | INFO     | chat_analyzer | Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...
+2026-04-02T19:21:03 | INFO     | chat_analyzer | Sentiment model loaded successfully.
+2026-04-02T19:21:04 | INFO     | chat_analyzer | Loading spaCy NER model: en_core_web_sm ...
+2026-04-02T19:21:04 | INFO     | chat_analyzer | spaCy NER model loaded successfully.
+2026-04-02T19:21:05 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 17/36
+2026-04-02T19:21:05 | INFO     | alert_engine | Logged 36 alert(s) from source='chat' to database
+2026-04-02T19:21:06 | WARNING  | py.warnings | C:\Users\UMANG JAISWAL N\AppData\Roaming\Python\Python313\site-packages\pygame\pkgdata.py:25: UserWarning:
+
+pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+
+
+2026-04-02T19:21:07 | INFO     | video_analyzer | Extracting audio from video using moviepy...
+2026-04-02T19:21:08 | INFO     | video_analyzer | Audio extracted successfully to: C:\Users\UMANGJ~1\AppData\Local\Temp\tmpxud0s0gw\extracted_audio.wav
+2026-04-02T19:21:08 | INFO     | video_analyzer | Loading Whisper ASR model: openai/whisper-base (device=cpu) ...
+2026-04-02T19:21:10 | INFO     | video_analyzer | Whisper ASR model loaded successfully.
+2026-04-02T19:21:13 | INFO     | video_analyzer | Transcribing with Whisper (long-form): duration=256.0s
+2026-04-02T19:22:05 | INFO     | video_analyzer | Starting video analysis: D:\319cf974-f244-4575-9fa7-5040020427d5.mp4
+2026-04-02T19:22:06 | INFO     | video_analyzer | Loading NSFW model: Falconsai/nsfw_image_detection (device=cpu) ...
+2026-04-02T19:22:07 | INFO     | video_analyzer | NSFW model loaded successfully.
+2026-04-02T19:22:49 | INFO     | video_analyzer | Frame extraction complete. Total sampled frames: 256
+2026-04-02T19:22:49 | INFO     | video_analyzer | Frame analysis done. Total: 256 | Flagged: 19 | Effective FPS: 5.89
+2026-04-02T19:22:49 | INFO     | video_analyzer | Using shared precomputed audio transcription payload.
+2026-04-02T19:22:49 | INFO     | video_analyzer | Transcript extracted (2453 chars).
+2026-04-02T19:22:49 | INFO     | video_analyzer | Running chat analysis on transcript ...
+2026-04-02T19:22:49 | INFO     | chat_analyzer | Analyzing 90 chat message(s)...
+2026-04-02T19:22:54 | INFO     | chat_analyzer | Chat analysis complete. Flagged: 6/90
+2026-04-02T19:22:54 | INFO     | alert_engine | Logged 256 alert(s) from source='video_frame' to database
+2026-04-02T19:22:54 | INFO     | alert_engine | Logged 90 alert(s) from source='transcript' to database
+2026-04-02T19:22:55 | INFO     | audio_analyzer | Audio flagged: multiple_long_pauses(51), multiple_speakers(4)
+2026-04-02T19:22:55 | INFO     | __main__ | MelodyWings Guard pipeline complete.
+2026-04-02T19:22:55 | INFO     | __main__ | 
+2026-04-02T19:22:55 | INFO     | __main__ | Next steps:
+2026-04-02T19:22:55 | INFO     | __main__ |   - Run HTML dashboard: python html_dashboard.py
+2026-04-02T19:22:55 | INFO     | __main__ |   - Or Streamlit dashboard: streamlit run dashboard.py
+2026-04-02T19:22:55 | INFO     | __main__ |   - View detailed charts and analytics
+2026-04-02T19:22:55 | INFO     | __main__ |   - For setup and usage: read README.md

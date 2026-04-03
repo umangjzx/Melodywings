@@ -97,6 +97,32 @@ class SQLiteAdapter(DatabaseAdapter):
 
         cursor.execute(
             """
+            CREATE TABLE IF NOT EXISTS flagged_frames (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                run_id TEXT,
+                frame_path TEXT NOT NULL,
+                timestamp_sec REAL,
+                label TEXT,
+                confidence REAL,
+                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS validation_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                frame_id INTEGER NOT NULL,
+                user_feedback TEXT NOT NULL,
+                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY(frame_id) REFERENCES flagged_frames(id) ON DELETE CASCADE
+            )
+            """
+        )
+
+        cursor.execute(
+            """
             CREATE TABLE IF NOT EXISTS chat_alerts (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 run_id TEXT,
@@ -166,6 +192,8 @@ class SQLiteAdapter(DatabaseAdapter):
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_source ON alerts(source)")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_timestamp ON alerts(timestamp)")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_flagged ON alerts(flagged)")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_flagged_frames_run_id ON flagged_frames(run_id)")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_validation_logs_frame_id ON validation_logs(frame_id)")
         self.conn.commit()
 
     def ensure_column(self, table: str, column: str, column_definition: str) -> None:
@@ -248,6 +276,32 @@ class PostgreSQLAdapter(DatabaseAdapter):
 
         cursor.execute(
             """
+            CREATE TABLE IF NOT EXISTS flagged_frames (
+                id SERIAL PRIMARY KEY,
+                run_id TEXT,
+                frame_path TEXT NOT NULL,
+                timestamp_sec DOUBLE PRECISION,
+                label TEXT,
+                confidence DOUBLE PRECISION,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS validation_logs (
+                id SERIAL PRIMARY KEY,
+                frame_id INTEGER NOT NULL,
+                user_feedback TEXT NOT NULL,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT fk_validation_frame FOREIGN KEY (frame_id) REFERENCES flagged_frames(id) ON DELETE CASCADE
+            )
+            """
+        )
+
+        cursor.execute(
+            """
             CREATE TABLE IF NOT EXISTS chat_alerts (
                 id SERIAL PRIMARY KEY,
                 run_id TEXT,
@@ -317,6 +371,8 @@ class PostgreSQLAdapter(DatabaseAdapter):
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_source ON alerts(source)")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_timestamp ON alerts(timestamp)")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_flagged ON alerts(flagged)")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_flagged_frames_run_id ON flagged_frames(run_id)")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_validation_logs_frame_id ON validation_logs(frame_id)")
         self.conn.commit()
 
     def ensure_column(self, table: str, column: str, column_definition: str) -> None:
@@ -405,11 +461,64 @@ class AlertDatabase:
         self._adapter.ensure_column("audio_alerts", "run_id", "TEXT")
         self._adapter.ensure_column("transcript_segments", "run_id", "TEXT")
 
+        if self.backend == "postgres":
+            self._adapter.execute(
+                """
+                CREATE TABLE IF NOT EXISTS flagged_frames (
+                    id SERIAL PRIMARY KEY,
+                    run_id TEXT,
+                    frame_path TEXT NOT NULL,
+                    timestamp_sec DOUBLE PRECISION,
+                    label TEXT,
+                    confidence DOUBLE PRECISION,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+                )
+                """
+            )
+
+            self._adapter.execute(
+                """
+                CREATE TABLE IF NOT EXISTS validation_logs (
+                    id SERIAL PRIMARY KEY,
+                    frame_id INTEGER NOT NULL,
+                    user_feedback TEXT NOT NULL,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+                )
+                """
+            )
+        else:
+            self._adapter.execute(
+                """
+                CREATE TABLE IF NOT EXISTS flagged_frames (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    run_id TEXT,
+                    frame_path TEXT NOT NULL,
+                    timestamp_sec REAL,
+                    label TEXT,
+                    confidence REAL,
+                    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                )
+                """
+            )
+
+            self._adapter.execute(
+                """
+                CREATE TABLE IF NOT EXISTS validation_logs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    frame_id INTEGER NOT NULL,
+                    user_feedback TEXT NOT NULL,
+                    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                )
+                """
+            )
+
         self._adapter.execute("CREATE INDEX IF NOT EXISTS idx_alerts_run_id ON alerts(run_id)")
         self._adapter.execute("CREATE INDEX IF NOT EXISTS idx_chat_alerts_run_id ON chat_alerts(run_id)")
         self._adapter.execute("CREATE INDEX IF NOT EXISTS idx_video_alerts_run_id ON video_alerts(run_id)")
         self._adapter.execute("CREATE INDEX IF NOT EXISTS idx_audio_alerts_run_id ON audio_alerts(run_id)")
         self._adapter.execute("CREATE INDEX IF NOT EXISTS idx_transcript_segments_run_id ON transcript_segments(run_id)")
+        self._adapter.execute("CREATE INDEX IF NOT EXISTS idx_flagged_frames_run_id ON flagged_frames(run_id)")
+        self._adapter.execute("CREATE INDEX IF NOT EXISTS idx_validation_logs_frame_id ON validation_logs(frame_id)")
         self._adapter.commit()
 
     @staticmethod
@@ -753,6 +862,140 @@ class AlertDatabase:
             if commit:
                 self._adapter.commit()
 
+    def insert_flagged_frame(
+        self,
+        frame_path: str,
+        timestamp_sec: float,
+        label: str,
+        confidence: float,
+        run_id: Optional[str] = None,
+        commit: bool = True,
+    ) -> int:
+        """Insert a flagged frame record and return its ID."""
+        with self._lock:
+            if self.backend == "postgres":
+                row = self._adapter.execute(
+                    """
+                    INSERT INTO flagged_frames
+                    (run_id, frame_path, timestamp_sec, label, confidence)
+                    VALUES (?, ?, ?, ?, ?)
+                    RETURNING id
+                    """,
+                    (run_id, frame_path, timestamp_sec, label, confidence),
+                )
+                if commit:
+                    self._adapter.commit()
+                if not row:
+                    raise RuntimeError("Insert succeeded but no flagged frame ID was returned")
+                return int(row[0])
+
+            cursor = self._adapter.execute(
+                """
+                INSERT INTO flagged_frames
+                (run_id, frame_path, timestamp_sec, label, confidence)
+                VALUES (?, ?, ?, ?, ?)
+                """,
+                (run_id, frame_path, timestamp_sec, label, confidence),
+            )
+            if commit:
+                self._adapter.commit()
+            frame_id = getattr(cursor, "lastrowid", None)
+            if frame_id is None:
+                raise RuntimeError("Insert succeeded but no flagged frame ID was returned")
+            return int(frame_id)
+
+    def insert_validation_log(
+        self,
+        frame_id: int,
+        user_feedback: str,
+        commit: bool = True,
+    ) -> int:
+        """Insert a validation log entry and return its ID."""
+        with self._lock:
+            if self.backend == "postgres":
+                row = self._adapter.execute(
+                    """
+                    INSERT INTO validation_logs
+                    (frame_id, user_feedback)
+                    VALUES (?, ?)
+                    RETURNING id
+                    """,
+                    (frame_id, user_feedback),
+                )
+                if commit:
+                    self._adapter.commit()
+                if not row:
+                    raise RuntimeError("Insert succeeded but no validation log ID was returned")
+                return int(row[0])
+
+            cursor = self._adapter.execute(
+                """
+                INSERT INTO validation_logs
+                (frame_id, user_feedback)
+                VALUES (?, ?)
+                """,
+                (frame_id, user_feedback),
+            )
+            if commit:
+                self._adapter.commit()
+            log_id = getattr(cursor, "lastrowid", None)
+            if log_id is None:
+                raise RuntimeError("Insert succeeded but no validation log ID was returned")
+            return int(log_id)
+
+    def get_flagged_frames(
+        self,
+        run_id: Optional[str] = None,
+        labels: Optional[list[str]] = None,
+        limit: Optional[int] = None,
+    ) -> list[dict]:
+        """Return flagged frame records with optional filters."""
+        query = "SELECT * FROM flagged_frames WHERE 1=1"
+        params: list[Any] = []
+
+        if run_id:
+            query += " AND run_id = ?"
+            params.append(run_id)
+
+        if labels:
+            placeholders = ", ".join(["?"] * len(labels))
+            query += f" AND label IN ({placeholders})"
+            params.extend(labels)
+
+        query += " ORDER BY timestamp_sec ASC"
+
+        if limit is not None:
+            query += " LIMIT ?"
+            params.append(limit)
+
+        with self._lock:
+            return self._adapter.fetchall(query, params)
+
+    def get_validation_summary(self, frame_ids: list[int]) -> dict[int, dict[str, int]]:
+        """Return validation counts keyed by frame_id."""
+        if not frame_ids:
+            return {}
+
+        placeholders = ", ".join(["?"] * len(frame_ids))
+        query = (
+            "SELECT frame_id, user_feedback, COUNT(*) AS total "
+            f"FROM validation_logs WHERE frame_id IN ({placeholders}) "
+            "GROUP BY frame_id, user_feedback"
+        )
+
+        with self._lock:
+            rows = self._adapter.fetchall(query, frame_ids)
+
+        summary: dict[int, dict[str, int]] = {}
+        for row in rows:
+            frame_id = int(row.get("frame_id", 0))
+            if frame_id not in summary:
+                summary[frame_id] = {"correct": 0, "incorrect": 0}
+            feedback = str(row.get("user_feedback") or "").lower()
+            if feedback in summary[frame_id]:
+                summary[frame_id][feedback] = int(row.get("total", 0))
+        return summary
+
     def get_all_alerts(
         self,
         source: Optional[str] = None,
@@ -826,6 +1069,8 @@ class AlertDatabase:
     def clear_all_alerts(self):
         """Delete all alerts from the database."""
         with self._lock:
+            self._adapter.execute("DELETE FROM validation_logs")
+            self._adapter.execute("DELETE FROM flagged_frames")
             self._adapter.execute("DELETE FROM transcript_segments")
             self._adapter.execute("DELETE FROM chat_alerts")
             self._adapter.execute("DELETE FROM video_alerts")

@@ -6,6 +6,10 @@ const state = {
     refreshTimer: null,
     isFetching: false,
     pendingRefresh: false,
+    activeRunId: null,
+    statusTimer: null,
+    flaggedItems: [],
+    selectedFlagId: null,
     pageContext: {
         slug: "overview",
         title: "Operational Safety Console",
@@ -15,6 +19,7 @@ const state = {
 
 const PAGE_FILTERS = {
     overview: ["reason", "sentiment", "emotion"],
+    upload: ["reason", "sentiment", "emotion"],
     chat: ["reason", "sentiment"],
     video: ["reason", "emotion"],
     audio: ["reason"],
@@ -53,6 +58,11 @@ function apiUrl(path, queryString = "") {
 }
 
 const elements = {
+    uploadForm: document.getElementById("uploadForm"),
+    videoFileInput: document.getElementById("videoFileInput"),
+    uploadStatus: document.getElementById("uploadStatus"),
+    uploadVideo: document.getElementById("uploadVideo"),
+    videoStatus: document.getElementById("videoStatus"),
     runIdSelect: document.getElementById("runIdSelect"),
     sourceSelect: document.getElementById("sourceSelect"),
     sourceScopeHint: document.getElementById("sourceScopeHint"),
@@ -89,6 +99,20 @@ const elements = {
     kpiHighCritical: document.getElementById("kpiHighCritical"),
     kpiAvgConf: document.getElementById("kpiAvgConf"),
     sourceSummaryStrip: document.getElementById("sourceSummaryStrip"),
+    runProgressMeta: document.getElementById("runProgressMeta"),
+    runProgressFill: document.getElementById("runProgressFill"),
+    runProgressDetail: document.getElementById("runProgressDetail"),
+    flaggedItemsGrid: document.getElementById("flaggedItemsGrid"),
+    flagFilterNsfw: document.getElementById("flagFilterNsfw"),
+    flagFilterEmotion: document.getElementById("flagFilterEmotion"),
+    flagFilterAudio: document.getElementById("flagFilterAudio"),
+    flagFilterText: document.getElementById("flagFilterText"),
+    frameInspectorMeta: document.getElementById("frameInspectorMeta"),
+    frameInspectorContent: document.getElementById("frameInspectorContent"),
+    transcriptList: document.getElementById("transcriptList"),
+    transcriptSearch: document.getElementById("transcriptSearch"),
+    transcriptFlaggedOnly: document.getElementById("transcriptFlaggedOnly"),
+    transcriptRefreshBtn: document.getElementById("transcriptRefreshBtn"),
 };
 
 function setStatus(text) {
@@ -208,9 +232,12 @@ function updateFilterOptions(options) {
 function buildQueryString() {
     const params = new URLSearchParams();
     const forcedSources = getForcedSources();
+    const isUploadPage = String(state.pageContext.slug || "").toLowerCase() === "upload";
 
     if (URL_RUN_ID) {
         params.append("run_id", URL_RUN_ID);
+    } else if (isUploadPage && state.activeRunId) {
+        params.append("run_id", state.activeRunId);
     } else {
         getSelectedFilterValues(elements.runIdSelect).forEach((value) => params.append("run_id", value));
     }
@@ -428,6 +455,392 @@ function escapeHtml(value) {
         .replaceAll("'", "&#039;");
 }
 
+function setUploadStatus(text, isError = false) {
+    if (!elements.uploadStatus) {
+        return;
+    }
+    elements.uploadStatus.textContent = text;
+    elements.uploadStatus.classList.toggle("status-error", isError);
+}
+
+function setUploadVideoSource(runId) {
+    if (!elements.uploadVideo) {
+        return;
+    }
+    if (!runId) {
+        elements.uploadVideo.removeAttribute("src");
+        elements.uploadVideo.load();
+        if (elements.videoStatus) {
+            elements.videoStatus.textContent = "Waiting for upload";
+        }
+        return;
+    }
+
+    elements.uploadVideo.src = apiUrl(`/video/${runId}`);
+    elements.uploadVideo.load();
+    elements.uploadVideo.play().catch(() => {});
+    if (elements.videoStatus) {
+        elements.videoStatus.textContent = "Previewing uploaded video";
+    }
+}
+
+function getActiveRunId() {
+    return state.activeRunId || URL_RUN_ID || "";
+}
+
+function setRunProgress(percent, metaText, detailText) {
+    if (elements.runProgressFill) {
+        elements.runProgressFill.style.width = `${Math.max(0, Math.min(100, percent))}%`;
+    }
+    if (elements.runProgressMeta) {
+        elements.runProgressMeta.textContent = metaText || "";
+    }
+    if (elements.runProgressDetail) {
+        elements.runProgressDetail.textContent = detailText || "";
+    }
+}
+
+function getFlagFilterTypes() {
+    const types = [];
+    if (elements.flagFilterNsfw?.checked) {
+        types.push("nsfw");
+    }
+    if (elements.flagFilterEmotion?.checked) {
+        types.push("emotion");
+    }
+    if (elements.flagFilterAudio?.checked) {
+        types.push("audio");
+    }
+    if (elements.flagFilterText?.checked) {
+        types.push("text");
+    }
+    return types;
+}
+
+function formatTimestamp(seconds) {
+    if (seconds == null || Number.isNaN(Number(seconds))) {
+        return "n/a";
+    }
+    return `${Number(seconds).toFixed(2)}s`;
+}
+
+function renderFlaggedItems(items) {
+    if (!elements.flaggedItemsGrid) {
+        return;
+    }
+
+    if (!items.length) {
+        elements.flaggedItemsGrid.innerHTML = '<div class="flagged-empty">No flagged items for current filters.</div>';
+        return;
+    }
+
+    elements.flaggedItemsGrid.innerHTML = items
+        .map((item) => {
+            const isVideo = item.item_type === "video_frame";
+            const thumbnail = isVideo && item.frame_url
+                ? `<img src="${escapeHtml(item.frame_url)}" alt="Flagged frame" />`
+                : `<div class="flagged-placeholder">${escapeHtml(item.item_type)}</div>`;
+            const validation = item.validation || {};
+            const correct = Number(validation.correct || 0);
+            const incorrect = Number(validation.incorrect || 0);
+            return `
+                <article class="flag-card" data-flag-id="${item.id}">
+                    <div class="flag-thumb">${thumbnail}</div>
+                    <div class="flag-meta">
+                        <h4>${escapeHtml(item.label || item.item_type)}</h4>
+                        ${isVideo ? `<p>Time ${formatTimestamp(item.timestamp_sec)}</p>` : ``}
+                        <p>Confidence ${(Number(item.confidence || 0)).toFixed(4)}</p>
+                        ${item.message ? `<p class="flag-message">${escapeHtml(item.message)}</p>` : ``}
+                        ${item.reason_text ? `<p class="flag-reason">${escapeHtml(item.reason_text)}</p>` : ``}
+                        ${isVideo ? `<p class="flag-validation">${correct} correct · ${incorrect} incorrect</p>` : ``}
+                    </div>
+                </article>
+            `;
+        })
+        .join("");
+
+    Array.from(elements.flaggedItemsGrid.querySelectorAll(".flag-card")).forEach((card) => {
+        card.addEventListener("click", () => {
+            const id = Number(card.dataset.flagId || 0);
+            const selected = items.find((item) => Number(item.id) === id);
+            state.selectedFlagId = id;
+            renderFrameInspector(selected || null);
+        });
+    });
+}
+
+function renderTranscript(items) {
+    if (!elements.transcriptList) {
+        return;
+    }
+
+    if (!items.length) {
+        elements.transcriptList.innerHTML = '<div class="transcript-empty">No transcript segments yet.</div>';
+        return;
+    }
+
+    elements.transcriptList.innerHTML = items
+        .map((item) => {
+            const badgeClass = item.flagged ? "badge-flagged" : "badge-safe";
+            const badgeText = item.flagged ? "FLAGGED" : "SAFE";
+            const start = formatSeconds(item.segment_start_time);
+            const end = formatSeconds(item.segment_end_time);
+            return `
+                <article class="transcript-item ${item.flagged ? "is-flagged" : ""}">
+                    <div class="transcript-meta">
+                        <span class="transcript-time">${start} - ${end}</span>
+                        <span class="badge ${badgeClass}">${badgeText}</span>
+                        <span class="transcript-confidence">Conf ${(Number(item.segment_confidence || 0)).toFixed(3)}</span>
+                    </div>
+                    <p class="transcript-text">${escapeHtml(item.segment_text || "")}</p>
+                    <p class="transcript-reasons">${escapeHtml(item.reason_text || "safe")}</p>
+                </article>
+            `;
+        })
+        .join("");
+}
+
+async function fetchTranscript() {
+    if (!elements.transcriptList) {
+        return;
+    }
+
+    const params = new URLSearchParams();
+    const runId = getActiveRunId();
+    if (runId) {
+        params.set("run_id", runId);
+    }
+    const search = elements.transcriptSearch?.value || "";
+    if (search) {
+        params.set("search", search);
+    }
+    if (elements.transcriptFlaggedOnly?.checked) {
+        params.set("flagged", "true");
+    }
+
+    try {
+        const response = await fetch(apiUrl("/api/transcript", params.toString()));
+        if (!response.ok) {
+            throw new Error(`API error ${response.status}`);
+        }
+        const payload = await response.json();
+        renderTranscript(payload.items || []);
+    } catch (error) {
+        elements.transcriptList.innerHTML = `
+            <div class="transcript-empty">Unable to load transcript (${escapeHtml(error.message)}).</div>
+        `;
+    }
+}
+
+function renderFrameInspector(item) {
+    if (!elements.frameInspectorContent || !elements.frameInspectorMeta) {
+        return;
+    }
+
+    if (!item) {
+        elements.frameInspectorMeta.textContent = "No selection";
+        elements.frameInspectorContent.textContent = "Select a flagged item to inspect details.";
+        return;
+    }
+
+    elements.frameInspectorMeta.textContent = `ID ${item.id} · ${item.item_type}`;
+
+    if (item.item_type !== "video_frame") {
+        elements.frameInspectorContent.innerHTML = `
+            <p><strong>Type:</strong> ${escapeHtml(item.item_type)}</p>
+            <p><strong>Confidence:</strong> ${(Number(item.confidence || 0)).toFixed(4)}</p>
+            <p><strong>Details:</strong> ${escapeHtml(item.message || item.reason_text || "")}</p>
+        `;
+        return;
+    }
+
+    const validation = item.validation || {};
+    const correct = Number(validation.correct || 0);
+    const incorrect = Number(validation.incorrect || 0);
+
+    elements.frameInspectorContent.innerHTML = `
+        <div class="frame-inspector-grid">
+            <div class="frame-preview">
+                <img src="${escapeHtml(item.frame_url)}" alt="Flagged frame preview" />
+            </div>
+            <div class="frame-details">
+                <p><strong>Timestamp:</strong> ${formatTimestamp(item.timestamp_sec)}</p>
+                <p><strong>Label:</strong> ${escapeHtml(item.label || "flagged")}</p>
+                <p><strong>Confidence:</strong> ${(Number(item.confidence || 0)).toFixed(4)}</p>
+                <p><strong>Validation:</strong> ${correct} correct · ${incorrect} incorrect</p>
+                <div class="validation-actions">
+                    <button class="btn btn-primary" data-feedback="correct">Correct</button>
+                    <button class="btn btn-secondary" data-feedback="incorrect">Incorrect</button>
+                </div>
+                <div id="validationStatus" class="status-text"></div>
+            </div>
+        </div>
+    `;
+
+    const buttons = elements.frameInspectorContent.querySelectorAll("[data-feedback]");
+    buttons.forEach((button) => {
+        button.addEventListener("click", async () => {
+            const feedback = button.dataset.feedback;
+            const statusEl = elements.frameInspectorContent.querySelector("#validationStatus");
+            if (statusEl) {
+                statusEl.textContent = "Saving feedback...";
+            }
+
+            try {
+                const response = await fetch(apiUrl("/validate"), {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ frame_id: item.id, user_feedback: feedback }),
+                });
+                if (!response.ok) {
+                    throw new Error(`API error ${response.status}`);
+                }
+                const payload = await response.json();
+                if (statusEl) {
+                    statusEl.textContent = "Feedback saved.";
+                }
+                const summary = payload.summary || {};
+                item.validation = summary;
+                renderFrameInspector(item);
+                fetchFlaggedItems();
+            } catch (error) {
+                if (statusEl) {
+                    statusEl.textContent = `Failed to save: ${error.message}`;
+                }
+            }
+        });
+    });
+}
+
+async function fetchFlaggedItems() {
+    if (!elements.flaggedItemsGrid) {
+        return;
+    }
+
+    const params = new URLSearchParams();
+    const runId = getActiveRunId();
+    if (runId) {
+        params.set("run_id", runId);
+    }
+    getFlagFilterTypes().forEach((type) => params.append("type", type));
+
+    try {
+        const response = await fetch(apiUrl("/api/flagged-items", params.toString()));
+        if (!response.ok) {
+            throw new Error(`API error ${response.status}`);
+        }
+        const payload = await response.json();
+        state.flaggedItems = payload.items || [];
+        renderFlaggedItems(state.flaggedItems);
+
+        if (state.selectedFlagId) {
+            const selected = state.flaggedItems.find((item) => Number(item.id) === state.selectedFlagId);
+            if (selected) {
+                renderFrameInspector(selected);
+            }
+        }
+    } catch (error) {
+        elements.flaggedItemsGrid.innerHTML = `
+            <div class="flagged-empty">Unable to load flagged items (${escapeHtml(error.message)}).</div>
+        `;
+    }
+}
+
+async function uploadVideo(file) {
+    if (!file) {
+        setUploadStatus("Please choose a video file.", true);
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("video", file);
+
+    setUploadStatus("Uploading...", false);
+
+    try {
+        const response = await fetch(apiUrl("/upload"), {
+            method: "POST",
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error(`API error ${response.status}`);
+        }
+
+        const payload = await response.json();
+        state.activeRunId = payload.run_id;
+        setUploadStatus(`Upload complete. Run ID ${payload.run_id}`, false);
+        setUploadVideoSource(payload.run_id);
+        if (elements.runIdSelect && !elements.runIdSelect.disabled) {
+            const option = document.createElement("option");
+            option.value = payload.run_id;
+            option.textContent = payload.run_id;
+            option.selected = true;
+            elements.runIdSelect.appendChild(option);
+        }
+        startStatusPolling();
+        fetchFlaggedItems();
+        fetchTranscript();
+        fetchDashboardData();
+    } catch (error) {
+        setUploadStatus(`Upload failed: ${error.message}`, true);
+    }
+}
+
+async function fetchRunStatus() {
+    const runId = getActiveRunId();
+    if (!runId) {
+        return;
+    }
+
+    try {
+        const response = await fetch(apiUrl(`/status/${runId}`));
+        if (!response.ok) {
+            throw new Error(`API error ${response.status}`);
+        }
+
+        const status = await response.json();
+        const progress = Number(status.progress || 0);
+        const processed = status.processed_frames ?? 0;
+        const total = status.total_frames ?? 0;
+        const stage = status.stage || "running";
+        const current = status.current_frame;
+
+        let detail = `Stage: ${stage}`;
+        if (current) {
+            detail = `Frame ${current.frame_number} @ ${formatTimestamp(current.timestamp_sec)} | ${current.label || ""}`;
+        }
+        setRunProgress(progress, `${processed}/${total} frames`, detail);
+
+        if (status.status === "complete") {
+            setRunProgress(100, `${processed}/${total} frames`, "Processing complete");
+            stopStatusPolling();
+            fetchDashboardData();
+            fetchFlaggedItems();
+            fetchTranscript();
+        }
+        if (status.status === "error") {
+            setRunProgress(progress, "Error", status.message || "Processing failed");
+            stopStatusPolling();
+        }
+    } catch (error) {
+        setRunProgress(0, "Status unavailable", error.message);
+    }
+}
+
+function startStatusPolling() {
+    stopStatusPolling();
+    state.statusTimer = setInterval(fetchRunStatus, 2000);
+    fetchRunStatus();
+}
+
+function stopStatusPolling() {
+    if (state.statusTimer) {
+        clearInterval(state.statusTimer);
+        state.statusTimer = null;
+    }
+}
+
 function formatEntities(entities) {
     if (!Array.isArray(entities) || !entities.length) {
         return "none";
@@ -613,6 +1026,8 @@ async function fetchDashboardData() {
 
         elements.snapshotText.textContent = `Showing ${payload.filtered_records} of ${payload.total_records} records | Updated ${formatNow(payload.generated_at)}`;
         setStatus("Updated successfully");
+        fetchFlaggedItems();
+        fetchTranscript();
     } catch (error) {
         setStatus(`Failed to load: ${error.message}. Start backend with: python html_dashboard.py`);
     } finally {
@@ -736,6 +1151,22 @@ function resetFilters() {
 }
 
 function registerEvents() {
+    if (elements.uploadForm) {
+        elements.uploadForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const file = elements.videoFileInput?.files?.[0];
+            uploadVideo(file);
+        });
+    }
+
+    if (elements.videoFileInput) {
+        elements.videoFileInput.addEventListener("change", () => {
+            const file = elements.videoFileInput?.files?.[0];
+            if (file) {
+                setUploadStatus(`Selected: ${file.name}`, false);
+            }
+        });
+    }
     elements.applyBtn.addEventListener("click", () => {
         setupAutoRefresh();
         fetchDashboardData();
@@ -748,11 +1179,60 @@ function registerEvents() {
     elements.autoRefreshToggle.addEventListener("change", setupAutoRefresh);
     elements.refreshSeconds.addEventListener("change", setupAutoRefresh);
 
+    [
+        elements.flagFilterNsfw,
+        elements.flagFilterEmotion,
+        elements.flagFilterAudio,
+        elements.flagFilterText,
+    ].forEach((checkbox) => {
+        if (!checkbox) {
+            return;
+        }
+        checkbox.addEventListener("change", () => {
+            fetchFlaggedItems();
+        });
+    });
+
     elements.searchInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
             fetchDashboardData();
         }
     });
+
+    if (elements.transcriptSearch) {
+        elements.transcriptSearch.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                fetchTranscript();
+            }
+        });
+    }
+
+    if (elements.transcriptFlaggedOnly) {
+        elements.transcriptFlaggedOnly.addEventListener("change", () => {
+            fetchTranscript();
+        });
+    }
+
+    if (elements.transcriptRefreshBtn) {
+        elements.transcriptRefreshBtn.addEventListener("click", () => {
+            fetchTranscript();
+        });
+    }
+
+    if (elements.runIdSelect) {
+        elements.runIdSelect.addEventListener("change", () => {
+            const selected = getSelectedValues(elements.runIdSelect);
+            state.activeRunId = selected.length === 1 ? selected[0] : null;
+            fetchFlaggedItems();
+            fetchTranscript();
+            setUploadVideoSource(state.activeRunId);
+            if (state.activeRunId) {
+                startStatusPolling();
+            } else {
+                stopStatusPolling();
+            }
+        });
+    }
 }
 
 function init() {
@@ -760,6 +1240,12 @@ function init() {
     registerEvents();
     setupAutoRefresh();
     fetchDashboardData();
+    fetchFlaggedItems();
+    fetchTranscript();
+    if (getActiveRunId()) {
+        setUploadVideoSource(getActiveRunId());
+        startStatusPolling();
+    }
 }
 
 window.addEventListener("DOMContentLoaded", init);

@@ -12,11 +12,12 @@ Analyzes video content for:
 
 import json
 import logging
+import math
 import os
 import tempfile
 import time
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Callable, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +34,8 @@ _nsfw_pipeline = None
 _whisper_asr_pipeline = None
 _face_detector = None
 _last_video_analysis_metrics: dict[str, Any] = {}
+
+DEFAULT_FRAME_OUTPUT_DIR = Path(__file__).parent / "static" / "frames"
 
 
 def _read_env_int(name: str, default: int, minimum: int = 0) -> int:
@@ -88,6 +91,64 @@ def _safe_div(numerator: float, denominator: float) -> float:
     if denominator == 0:
         return 0.0
     return numerator / denominator
+
+
+def _sanitize_run_id(run_id: Optional[str]) -> str:
+    """Normalize run_id for filesystem-safe frame filenames."""
+    if not run_id:
+        return "run"
+    return "".join(ch if ch.isalnum() or ch in {"-", "_"} else "_" for ch in str(run_id))
+
+
+def _ensure_frame_output_dir(output_dir: Optional[Path] = None) -> Path:
+    """Ensure the frame output directory exists."""
+    target = output_dir or DEFAULT_FRAME_OUTPUT_DIR
+    target.mkdir(parents=True, exist_ok=True)
+    return target
+
+
+def _estimate_sampled_frames(video_path: str, sample_fps: float) -> Optional[int]:
+    """Estimate total sampled frames for progress tracking."""
+    try:
+        import cv2
+
+        cap = cv2.VideoCapture(video_path)
+        if not cap.isOpened():
+            return None
+        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+        video_fps = float(cap.get(cv2.CAP_PROP_FPS) or 0.0)
+        cap.release()
+
+        if total_frames <= 0 or video_fps <= 0:
+            return None
+
+        interval = max(1, int(round(video_fps / max(0.1, float(sample_fps)))))
+        return int(math.floor((total_frames - 1) / interval) + 1) if total_frames > 0 else None
+    except Exception:
+        return None
+
+
+def _save_flagged_frame(
+    frame,
+    frame_number: int,
+    run_id: Optional[str],
+    output_dir: Optional[Path] = None,
+) -> Optional[str]:
+    """Persist a flagged frame image and return relative static path."""
+    try:
+        import cv2
+
+        target_dir = _ensure_frame_output_dir(output_dir)
+        safe_run_id = _sanitize_run_id(run_id)
+        filename = f"{safe_run_id}_frame_{frame_number:06d}.jpg"
+        output_path = target_dir / filename
+
+        if cv2.imwrite(str(output_path), frame):
+            return f"frames/{filename}"
+        return None
+    except Exception as exc:
+        logger.debug(f"Failed to save flagged frame: {exc}")
+        return None
 
 
 def get_last_video_analysis_metrics() -> dict[str, Any]:
@@ -756,6 +817,18 @@ def _build_frame_result(
         reasons.append(f"emotion:surprise_transition")
 
     flagged = len(reasons) > 0
+    flag_label: Optional[str] = None
+    flag_confidence: Optional[float] = None
+    if flagged:
+        if any(reason.startswith("nsfw:") for reason in reasons):
+            flag_label = "nsfw"
+            flag_confidence = float(nsfw_score)
+        elif emotion:
+            flag_label = str(emotion)
+            flag_confidence = 1.0
+        else:
+            flag_label = "flagged"
+            flag_confidence = float(nsfw_score)
     result = {
         "frame_number": frame_number,
         "timestamp_sec": timestamp_sec,
@@ -769,6 +842,8 @@ def _build_frame_result(
         "flagged": flagged,
         "reasons": reasons,
         "frame_quality": frame_quality or {},
+        "flag_label": flag_label,
+        "flag_confidence": flag_confidence,
     }
 
     if flagged:
@@ -1204,7 +1279,14 @@ def transcribe_audio(audio_path: str) -> tuple[Optional[str], Optional[list]]:
 # FULL VIDEO ANALYSIS PIPELINE
 # ─────────────────────────────────────────────
 
-def analyze_video(video_path: str, shared_audio: Optional[dict] = None) -> tuple[list[dict], list[dict]]:
+def analyze_video(
+    video_path: str,
+    shared_audio: Optional[dict] = None,
+    progress_callback: Optional[Callable[[dict[str, Any]], None]] = None,
+    run_id: Optional[str] = None,
+    save_flagged_frames: bool = False,
+    frame_output_dir: Optional[Path] = None,
+) -> tuple[list[dict], list[dict]]:
     """
     Runs the complete video safety analysis pipeline.
 
@@ -1215,6 +1297,10 @@ def analyze_video(video_path: str, shared_audio: Optional[dict] = None) -> tuple
     Args:
         video_path: Absolute or relative path to the video file.
         shared_audio: Optional precomputed payload with keys: transcript, word_data.
+        progress_callback: Optional callback invoked per frame for progress reporting.
+        run_id: Optional run identifier for frame persistence.
+        save_flagged_frames: If True, persist flagged frames under static/frames.
+        frame_output_dir: Optional override for flagged frame output directory.
 
     Returns:
         A tuple of (frame_results, transcript_results):
@@ -1235,6 +1321,19 @@ def analyze_video(video_path: str, shared_audio: Optional[dict] = None) -> tuple
                 "total_seconds": 0.0,
             }
         )
+        if progress_callback:
+            try:
+                progress_callback(
+                    {
+                        "stage": "error",
+                        "total_frames": 0,
+                        "processed_frames": 0,
+                        "current_frame": None,
+                        "message": "video_not_found",
+                    }
+                )
+            except Exception:
+                pass
         return [], []
 
     logger.info(f"Starting video analysis: {video_path}")
@@ -1245,6 +1344,22 @@ def analyze_video(video_path: str, shared_audio: Optional[dict] = None) -> tuple
     frame_batch_size = _read_env_int("MWG_FRAME_BATCH_SIZE", 8, minimum=1)
     emotion_stride = _read_env_int("MWG_EMOTION_STRIDE", 1, minimum=1)
     sample_fps = _read_env_float("MWG_VIDEO_SAMPLE_FPS", 1.0, minimum=0.1)
+    total_frames_estimate = _estimate_sampled_frames(video_path, sample_fps)
+    processed_frames = 0
+    output_dir = _ensure_frame_output_dir(frame_output_dir) if save_flagged_frames else None
+
+    if progress_callback:
+        try:
+            progress_callback(
+                {
+                    "stage": "frames",
+                    "total_frames": total_frames_estimate,
+                    "processed_frames": processed_frames,
+                    "current_frame": None,
+                }
+            )
+        except Exception:
+            pass
 
     frame_stage_start = time.perf_counter()
     preprocess_seconds = 0.0
@@ -1286,6 +1401,7 @@ def analyze_video(video_path: str, shared_audio: Optional[dict] = None) -> tuple
         nonlocal nsfw_consecutive_hits
         nonlocal nsfw_inference_seconds
         nonlocal smoothed_nsfw_score
+        nonlocal processed_frames
         if not batch:
             return
 
@@ -1294,7 +1410,7 @@ def analyze_video(video_path: str, shared_audio: Optional[dict] = None) -> tuple
         nsfw_predictions = classify_nsfw_batch(nsfw_inputs)
         nsfw_inference_seconds += time.perf_counter() - nsfw_start
 
-        for idx, (frame_number, timestamp_sec, _raw_frame, preprocessed_frame, quality) in enumerate(batch):
+        for idx, (frame_number, timestamp_sec, raw_frame, preprocessed_frame, quality) in enumerate(batch):
             raw_nsfw_label, raw_nsfw_score = nsfw_predictions[idx]
             raw_nsfw_score = float(raw_nsfw_score or 0.0)
             smoothed_nsfw_score = (
@@ -1375,7 +1491,39 @@ def analyze_video(video_path: str, shared_audio: Optional[dict] = None) -> tuple
                 nsfw_consecutive_hits=nsfw_consecutive_hits,
             )
             result["nsfw_label_raw"] = raw_nsfw_label
+            if save_flagged_frames and result.get("flagged"):
+                frame_path = _save_flagged_frame(
+                    raw_frame,
+                    frame_number=frame_number,
+                    run_id=run_id,
+                    output_dir=output_dir,
+                )
+                if frame_path:
+                    result["frame_path"] = frame_path
             frame_results.append(result)
+            processed_frames += 1
+
+            if progress_callback:
+                try:
+                    progress_callback(
+                        {
+                            "stage": "frames",
+                            "total_frames": total_frames_estimate,
+                            "processed_frames": processed_frames,
+                            "current_frame": {
+                                "frame_number": frame_number,
+                                "timestamp_sec": timestamp_sec,
+                                "nsfw_label": result.get("nsfw_label"),
+                                "nsfw_score": result.get("nsfw_score"),
+                                "emotion": result.get("emotion"),
+                                "flagged": result.get("flagged"),
+                                "label": result.get("flag_label"),
+                                "confidence": result.get("flag_confidence"),
+                            },
+                        }
+                    )
+                except Exception:
+                    pass
 
     for frame_number, timestamp_sec, raw_frame in extract_frames(
         video_path,
@@ -1412,6 +1560,19 @@ def analyze_video(video_path: str, shared_audio: Optional[dict] = None) -> tuple
     transcription_engine = "none"
 
     transcript_stage_start = time.perf_counter()
+    if progress_callback:
+        try:
+            progress_callback(
+                {
+                    "stage": "transcript",
+                    "total_frames": total_frames_estimate,
+                    "processed_frames": processed_frames,
+                    "current_frame": None,
+                }
+            )
+        except Exception:
+            pass
+
     if shared_audio is not None:
         transcript = shared_audio.get("transcript")
         word_data = shared_audio.get("word_data")
@@ -1490,6 +1651,19 @@ def analyze_video(video_path: str, shared_audio: Optional[dict] = None) -> tuple
         "total_seconds": round(total_seconds, 3),
     }
     _set_last_video_analysis_metrics(metrics)
+
+    if progress_callback:
+        try:
+            progress_callback(
+                {
+                    "stage": "complete",
+                    "total_frames": total_frames_estimate,
+                    "processed_frames": processed_frames,
+                    "current_frame": None,
+                }
+            )
+        except Exception:
+            pass
 
     return frame_results, transcript_results
 

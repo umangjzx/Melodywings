@@ -6,7 +6,7 @@
     <title>MelodyWings Guard | HTML Safety Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Spline+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 </head>
@@ -14,6 +14,7 @@
     <div class="bg-grid"></div>
     <div class="bg-orb orb-a"></div>
     <div class="bg-orb orb-b"></div>
+    <div class="bg-noise"></div>
 
     <div class="app-shell">
         <aside class="sidebar reveal">
@@ -37,6 +38,13 @@
                     {% endfor %}
                 </nav>
             </div>
+
+            {% if page_context.slug == "upload" %}
+            <div class="filter-section upload-status-section">
+                <h2>Upload Status</h2>
+                <div id="uploadStatus" class="status-text">No upload yet.</div>
+            </div>
+            {% endif %}
 
             <div class="filter-section">
                 <h2>Core Filters</h2>
@@ -142,6 +150,26 @@
                 <div id="snapshotText" class="snapshot-text">Loading data...</div>
             </header>
 
+            {% if page_context.slug == "upload" %}
+            <section class="panel upload-panel reveal delay-2">
+                <div class="panel-head">
+                    <h3>Upload Control Center</h3>
+                    <span class="panel-meta">MP4, AVI, MOV, MKV</span>
+                </div>
+                <form id="uploadForm" class="upload-form upload-panel-form">
+                    <label class="upload-drop" for="videoFileInput">
+                        <input id="videoFileInput" name="video" type="file" accept="video/*" />
+                        <span class="upload-title">Drop a video here or click to browse</span>
+                        <span class="upload-sub">We will start analysis as soon as the file is uploaded.</span>
+                    </label>
+                    <div class="upload-actions">
+                        <button id="uploadBtn" class="btn btn-primary" type="submit">Upload + Analyze</button>
+                        <span id="uploadHint" class="status-text">Maximize results with high-resolution video.</span>
+                    </div>
+                </form>
+            </section>
+            {% endif %}
+
             <section class="focus-strip reveal delay-2">
                 {% if page_context.slug == "chat" %}
                 <article class="focus-card">
@@ -182,6 +210,19 @@
                     <h3>Speech Dynamics</h3>
                     <p>Track speech rate, ambient noise, and speaker-count anomalies.</p>
                 </article>
+                {% elif page_context.slug == "upload" %}
+                <article class="focus-card">
+                    <h3>Upload Intake</h3>
+                    <p>Drop new videos into the pipeline and start analysis instantly.</p>
+                </article>
+                <article class="focus-card">
+                    <h3>Progress Signals</h3>
+                    <p>Follow frame-by-frame processing with live status updates.</p>
+                </article>
+                <article class="focus-card">
+                    <h3>Human Validation</h3>
+                    <p>Review flagged frames and mark outcomes to refine accuracy.</p>
+                </article>
                 {% else %}
                 <article class="focus-card">
                     <h3>Chat Stream</h3>
@@ -197,6 +238,29 @@
                 </article>
                 {% endif %}
             </section>
+
+            {% if page_context.slug == "upload" %}
+            <section class="panel run-panel reveal delay-3">
+                <div class="panel-head">
+                    <h3>Run Progress</h3>
+                    <span id="runProgressMeta">Idle</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="runProgressFill" class="progress-fill" style="width: 0%"></div>
+                </div>
+                <div id="runProgressDetail" class="progress-detail">Upload a video to begin processing.</div>
+            </section>
+
+            <section class="panel video-panel reveal delay-3">
+                <div class="panel-head">
+                    <h3>Live Video Preview</h3>
+                    <span id="videoStatus" class="panel-meta">Waiting for upload</span>
+                </div>
+                <div class="video-shell">
+                    <video id="uploadVideo" controls muted playsinline></video>
+                </div>
+            </section>
+            {% endif %}
 
             <section class="kpi-grid reveal delay-3">
                 <article class="kpi-card">
@@ -226,6 +290,47 @@
                 <article class="source-pill source-pill-empty">Loading source health...</article>
             </section>
 
+            {% if page_context.slug == "upload" %}
+            <section class="panel upload-insights reveal delay-4">
+                <div class="panel-head">
+                    <h3>Upload Insights</h3>
+                    <span class="panel-meta">Reason mix, severity, and trend</span>
+                </div>
+                <div class="chart-grid">
+                    <article id="sourcePanel" class="panel">
+                        <h3>Records by Source</h3>
+                        <canvas id="sourceChart"></canvas>
+                    </article>
+                    <article class="panel">
+                        <h3>Severity Split</h3>
+                        <canvas id="severityChart"></canvas>
+                    </article>
+                    <article class="panel">
+                        <h3>Top Reasons</h3>
+                        <canvas id="reasonChart"></canvas>
+                    </article>
+                    <article class="panel">
+                        <h3>Trend Over Time</h3>
+                        <canvas id="trendChart"></canvas>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel transcript-panel reveal delay-5">
+                <div class="panel-head">
+                    <h3>Transcript Review</h3>
+                    <div class="transcript-controls">
+                        <input id="transcriptSearch" type="text" placeholder="Search transcript text..." />
+                        <label class="transcript-toggle">
+                            <input id="transcriptFlaggedOnly" type="checkbox" />
+                            Flagged only
+                        </label>
+                        <button id="transcriptRefreshBtn" class="btn btn-ghost" type="button">Refresh</button>
+                    </div>
+                </div>
+                <div id="transcriptList" class="transcript-list"></div>
+            </section>
+            {% else %}
             <section class="chart-grid reveal delay-4">
                 <article id="sourcePanel" class="panel">
                     <h3>Records by Source</h3>
@@ -244,6 +349,32 @@
                     <canvas id="trendChart"></canvas>
                 </article>
             </section>
+            {% endif %}
+
+            {% if page_context.slug == "upload" %}
+            <section class="panel flagged-panel reveal delay-5">
+                <div class="panel-head">
+                    <h3>Flagged Frames & Events</h3>
+                    <div class="flag-filter-row">
+                        <label><input id="flagFilterNsfw" type="checkbox" checked />NSFW</label>
+                        <label><input id="flagFilterEmotion" type="checkbox" checked />Emotion</label>
+                        <label><input id="flagFilterAudio" type="checkbox" checked />Audio</label>
+                        <label><input id="flagFilterText" type="checkbox" checked />Text</label>
+                    </div>
+                </div>
+                <div id="flaggedItemsGrid" class="flagged-grid"></div>
+            </section>
+
+            <section class="panel frame-panel reveal delay-5">
+                <div class="panel-head">
+                    <h3>Frame Inspector</h3>
+                    <span id="frameInspectorMeta">No selection</span>
+                </div>
+                <div id="frameInspectorContent" class="frame-inspector">
+                    Select a flagged item to inspect details.
+                </div>
+            </section>
+            {% endif %}
 
             <section class="panel table-panel reveal delay-5">
                 <div class="panel-head">
@@ -269,7 +400,7 @@
                 </div>
             </section>
 
-            <section class="panel reveal delay-5">
+            <section class="panel detail-panel reveal delay-5">
                 <div class="panel-head">
                     <h3>Alert Drilldown</h3>
                     <span id="detailId">No selection</span>

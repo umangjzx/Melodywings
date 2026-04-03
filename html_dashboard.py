@@ -20,8 +20,10 @@ from typing import Any
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 
 from database import get_db
+from upload_module import upload_bp
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
+app.register_blueprint(upload_bp)
 
 MODULE_PAGES: dict[str, dict[str, Any]] = {
     "overview": {
@@ -31,6 +33,14 @@ MODULE_PAGES: dict[str, dict[str, Any]] = {
         "description": "Monitor all signals in one place and drill down into risky events quickly.",
         "sources": [],
         "accent": "overview",
+    },
+    "upload": {
+        "slug": "upload",
+        "title": "Upload & Review",
+        "subtitle": "Upload new videos, track progress, and validate flagged frames",
+        "description": "Ingest new runs and review flagged moments with human validation.",
+        "sources": [],
+        "accent": "upload",
     },
     "chat": {
         "slug": "chat",
@@ -586,7 +596,7 @@ def dashboard_root() -> Any:
 def dashboard_page(page_slug: str) -> str:
     """Serve module-specific HTML dashboard page."""
     page_context = _get_page_context(page_slug)
-    nav_pages = [MODULE_PAGES[key] for key in ("overview", "chat", "video", "audio")]
+    nav_pages = [MODULE_PAGES[key] for key in ("overview", "upload", "chat", "video", "audio")]
     return render_template(
         "dashboard.html",
         page_context=page_context,
