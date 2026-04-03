@@ -3,7 +3,7 @@
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python" /></a>
   <a href="#"><img src="https://img.shields.io/badge/AI%2FML-Transformers%20%7C%20DeepFace-FF6F61" alt="AI/ML" /></a>
-  <a href="#"><img src="https://img.shields.io/badge/Backend-Flask%20%7C%20Streamlit-0E1117" alt="Backend" /></a>
+    <a href="#"><img src="https://img.shields.io/badge/Backend-Flask-0E1117" alt="Backend" /></a>
   <a href="#"><img src="https://img.shields.io/badge/Database-SQLite%20%7C%20PostgreSQL-336791" alt="Database" /></a>
   <a href="#"><img src="https://img.shields.io/badge/Status-Production%20Ready%20Prototype-2EA44F" alt="Status" /></a>
 </p>
@@ -22,7 +22,8 @@ MelodyWings Guard is a **production-ready** safety analysis system designed to i
 - **🗣️ Transcribes speech to text** using best-effort ASR (Whisper + fallback)
 - **💬 Applies NLP safety checks** (toxicity, profanity, PII, sentiment, entities)
 - **⚠️ Generates unified alerts** with severity-based scoring and confidence metadata
-- **📊 Powers dual dashboards** for investigation, analytics, and export workflows
+- **📊 Powers the HTML dashboard** for investigation, analytics, and export workflows
+- **Upload & Review page** for live upload, progress, transcript review, flagged frames, and validation
 
 ---
 
@@ -80,10 +81,11 @@ graph TD
         VIDEO_TABLE[("video_alerts<br/>Frame-specific")]
         AUDIO_TABLE[("audio_alerts<br/>Audio features")]
         TRANSCRIPT_TABLE[("transcript_segments<br/>Speech segments")]
+        FLAGGED_FRAMES[("flagged_frames<br/>Frame evidence")]
+        VALIDATION_LOGS[("validation_logs<br/>Human feedback")]
     end
 
     subgraph Dashboard["📊 Intelligence Layer"]
-        STREAMLIT["Streamlit Dashboard<br/>Advanced filters<br/>Analytics + export"]
         FLASK["Flask HTML Dashboard<br/>REST API backend<br/>Custom charts"]
         EXPORT["Export Engine<br/>CSV / JSON<br/>Evaluation reports"]
     end
@@ -126,23 +128,17 @@ graph TD
 
     ALERT --> MAIN_ALERTS
     FRAME_RESULTS --> VIDEO_TABLE
+    FRAME_RESULTS --> FLAGGED_FRAMES
     CHAT_RESULTS --> CHAT_TABLE
     AUDIO_RESULTS --> AUDIO_TABLE
     TRANSCRIPT --> TRANSCRIPT_TABLE
-
-    MAIN_ALERTS --> STREAMLIT
-    CHAT_TABLE --> STREAMLIT
-    VIDEO_TABLE --> STREAMLIT
-    AUDIO_TABLE --> STREAMLIT
-    TRANSCRIPT_TABLE --> STREAMLIT
 
     MAIN_ALERTS --> FLASK
     CHAT_TABLE --> FLASK
     VIDEO_TABLE --> FLASK
     AUDIO_TABLE --> FLASK
     TRANSCRIPT_TABLE --> FLASK
-
-    STREAMLIT --> EXPORT
+    FLASK --> VALIDATION_LOGS
     FLASK --> EXPORT
 
     style Input fill:#e1f5ff
@@ -173,8 +169,8 @@ graph TD
 | NLP | Sentiment | Text | {sentiment, score} | distilbert-sst-2 |
 | NLP | Entity Recognition | Text | [entities] | spaCy en_core_web_sm |
 | Engine | Alert Aggregator | Analysis results | Unified alert record | Custom rule engine |
-| Storage | Relational DB | Alerts | Queryable joined views | SQLite/PostgreSQL |
-| Dashboard | Analytics Console | DB queries | Charts, filters, exports | Streamlit + Flask |
+| Storage | Relational DB | Alerts + evidence | Alerts, flagged_frames, validation_logs | SQLite/PostgreSQL |
+| Dashboard | Analytics Console | DB queries | Charts, filters, exports | Flask + Chart.js |
 
 ### Data Flow Layers
 
@@ -234,7 +230,6 @@ graph TD
                      ▼
         ┌────────────────────────────┐
         │  DASHBOARDS & EXPORTS      │
-        │  ├─ Streamlit Console      │
         │  ├─ Flask HTML Dashboard   │
         │  ├─ REST API               │
         │  └─ CSV/JSON Export        │
@@ -268,10 +263,48 @@ graph TD
 
 ### Dashboard & Visibility
 
-- ✅ **Streamlit Dashboard** — Advanced multi-dimensional filtering, trend analytics, CSV/JSON export
 - ✅ **Flask HTML Dashboard** — Custom-styled UI with REST API, real-time refresh, responsive design
-- ✅ **Dual Keyboard Modalities** — Both streaming (Streamlit) and static (HTML) dashboards
+- ✅ **Upload & Review Page** — Live upload, progress, video preview, transcript review, and validation
 - ✅ **Evaluation Reporting** — Confusion matrices, accuracy/precision/recall/F1 metrics, profiling
+
+---
+
+## Upload & Review Workflow (HTML Dashboard)
+
+1. Start the HTML dashboard:
+
+```bash
+python html_dashboard.py
+```
+
+2. Open the Upload & Review page:
+
+```
+http://localhost:8502/dashboard/upload
+```
+
+3. Upload a video and monitor:
+    - Live progress via `/status/<run_id>`
+    - Video preview via `/video/<run_id>`
+    - Flagged frames + validation controls
+    - Transcript Review panel with search and flagged-only filter
+
+### Key Paths
+
+- `uploads/` — Uploaded video files
+- `static/frames/` — Saved flagged-frame thumbnails
+
+---
+
+## HTML Dashboard API (Selected)
+
+- `POST /upload` — Upload a video, returns `run_id`
+- `GET /status/<run_id>` — Run progress + current frame info
+- `GET /video/<run_id>` — Stream uploaded video for preview
+- `GET /api/flagged-items` — Flagged frames + audio/text events
+- `GET /api/transcript` — Transcript segments for the run
+- `POST /validate` — Human feedback (correct/incorrect) for a flagged frame
+- `GET /api/dashboard-data` — Charts + KPI data
 
 ### Scalability & Deployment
 
@@ -343,6 +376,15 @@ graph TD
 - **Optional PostgreSQL Backend** — Via environment variable for multi-instance deployments
 - **Dashboard Caching** — 2-second TTL on alert queries to reduce DB load
 
+### 6️⃣ Upload & Review Experience
+
+- **Dedicated Upload Module** — Upload routes isolated in `upload_module.py`
+- **Live Progress Polling** — `status` API powers real-time progress bar
+- **Video Preview While Processing** — Upload page streams the current run
+- **Flagged Frame Evidence** — Persisted in `flagged_frames` with thumbnails
+- **Human Validation Logs** — Stored in `validation_logs` for QA
+- **Transcript Review Panel** — Search, filter, and inspect transcript segments
+
 ---
 
 ## 🧰 Tech Stack & Dependencies
@@ -351,7 +393,7 @@ graph TD
 |---|---|---|
 | **Frontend** | Web UI | HTML5, CSS3, JavaScript (ES6+), Chart.js |
 | **Frontend** | Responsive Design | CSS Grid, Flexbox, media queries |
-| **Dashboard** | Streaming Analytics | Streamlit 1.28+, Plotly 5.17+ |
+| **Dashboard** | HTML Analytics | Flask 3.0+, Chart.js 4.4+ |
 | **Dashboard** | Custom UI | Flask 3.0+, Jinja2 templating |
 | **Backend** | REST API | Flask 3.0+ with JSON endpoints |
 | **Backend** | Concurrency | Python threading, asyncio |
@@ -451,24 +493,7 @@ python main.py
 - `melodywings_guard.log` — Detailed execution log
 - `chat_confusion_matrix.html` — Interactive evaluation visualization
 
-### 2) Launch Streamlit Dashboard
-
-```bash
-# Start Streamlit server
-streamlit run dashboard.py
-
-# Opens at http://localhost:8501 (auto-detected)
-```
-
-**Features:**
-- Multi-dimensional filtering (source, severity, reason, sentiment, emotion, date, text search)
-- KPI row with flag rates and high/critical counts
-- Trend analysis, reason breakdown, source distribution charts
-- Per-alert drilldown with all joined details
-- CSV/JSON export for filtered results
-- Auto-refresh with configurable intervals
-
-### 3) Launch Flask HTML Dashboard
+### 2) Launch Flask HTML Dashboard
 
 ```bash
 # Start Flask server
@@ -478,7 +503,7 @@ python html_dashboard.py
 ```
 
 **Features:**
-- Beautiful, responsive custom HTML UI (not Streamlit widgets)
+- Beautiful, responsive custom HTML UI
 - REST API backend for flexibility
 - Real-time KPI cards and charts (Chart.js)
 - Page-based navigation (Overview, Chat, Video, Audio)
@@ -486,7 +511,7 @@ python html_dashboard.py
 - CSV/JSON export with filtering
 - Configurable auto-refresh interval
 
-### 4) Run Unit Tests
+### 3) Run Unit Tests
 
 ```bash
 # Test chat analyzer
@@ -530,7 +555,6 @@ melodywings_guard/
 ├── 📄 audio_analyzer.py                # Audio feature extraction and anomaly detection
 ├── 📄 alert_engine.py                  # Unified alert logger and severity mapping
 ├── 📄 database.py                      # SQLite/PostgreSQL adapter and schema
-├── 📄 dashboard.py                     # Streamlit analytics dashboard
 ├── 📄 html_dashboard.py                # Flask API + custom HTML dashboard
 ├── 📄 requirements.txt                 # Python dependencies
 ├── 📄 test_chat_analyzer.py            # Unit tests for chat analyzer
@@ -689,7 +713,6 @@ This project stands on the shoulders of exceptional open-source ecosystems:
 - **[OpenCV](https://opencv.org/)** — Computer vision foundation
 - **[DeepFace](https://github.com/serengp/deepface)** — Facial recognition and emotion analysis
 - **[spaCy](https://spacy.io/)** — Industrial-strength NLP
-- **[Streamlit](https://streamlit.io/)** — Rapid dashboard prototyping
 - **[Flask](https://flask.palletsprojects.com/)** — Lightweight web framework
 - **[OpenAI Whisper](https://github.com/openai/whisper)** — Robust speech-to-text
 - **[librosa](https://librosa.org/)** — Audio analysis and music information retrieval

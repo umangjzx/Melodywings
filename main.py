@@ -394,7 +394,7 @@ def print_final_summary(
     print("╠" + "═" * 68 + "╣")
     print(f"║  Database       : melodywings_guard.db" + " " * 29 + "║")
     print(f"║  Python log     : melodywings_guard.log" + " " * 27 + "║")
-    print(f"║  Dashboard      : streamlit run dashboard.py" + " " * 22 + "║")
+    print(f"║  Dashboard      : python html_dashboard.py" + " " * 19 + "║")
     print("╚" + "═" * 68 + "╝\n")
 
 
@@ -465,7 +465,6 @@ def main() -> None:
     logger.info("")
     logger.info("Next steps:")
     logger.info("  - Run HTML dashboard: python html_dashboard.py")
-    logger.info("  - Or Streamlit dashboard: streamlit run dashboard.py")
     logger.info("  - View detailed charts and analytics")
     logger.info("  - For setup and usage: read README.md")
 
