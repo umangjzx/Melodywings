@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MelodyWings Guard | Safety Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/dashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+</head>
+<body class="theme-overview">
+    <div class="bg-grid"></div>
+    <div class="bg-orb orb-a"></div>
+    <div class="bg-orb orb-b"></div>
+    <div class="bg-noise"></div>
+
+    <div class="app-shell">
+        <aside class="sidebar reveal">
+            <div class="brand-block">
+                <div class="brand-pill">MWG</div>
+                <h1>MelodyWings Guard</h1>
+                <p>Unified moderation command center</p>
+            </div>
+
+            <div class="filter-section nav-section">
+                <h2>Analysis Pages</h2>
+                <nav class="module-nav" aria-label="Module pages">
+                    
+                    <a
+                        class="module-link active"
+                        href="/dashboard/overview"
+                    >
+                        <span class="module-link-title">Operational Safety Console</span>
+                        <span class="module-link-sub">Unified safety telemetry across chat, video, and audio analyzers</span>
+                    </a>
+                    
+                    <a
+                        class="module-link "
+                        href="/dashboard/upload"
+                    >
+                        <span class="module-link-title">Upload &amp; Review</span>
+                        <span class="module-link-sub">Upload new videos, track progress, and validate flagged frames</span>
+                    </a>
+                    
+                    <a
+                        class="module-link "
+                        href="/dashboard/chat"
+                    >
+                        <span class="module-link-title">Chat Analysis</span>
+                        <span class="module-link-sub">Toxicity, profanity, PII, and sentiment monitoring</span>
+                    </a>
+                    
+                    <a
+                        class="module-link "
+                        href="/dashboard/video"
+                    >
+                        <span class="module-link-title">Video Analysis</span>
+                        <span class="module-link-sub">Frame-level NSFW and emotion safety intelligence</span>
+                    </a>
+                    
+                    <a
+                        class="module-link "
+                        href="/dashboard/audio"
+                    >
+                        <span class="module-link-title">Audio Analysis</span>
+                        <span class="module-link-sub">Acoustic behavior, silence, and noise pattern monitoring</span>
+                    </a>
+                    
+                </nav>
+            </div>
+
+            
+
+            <div class="filter-section">
+                <h2>Operations Filters</h2>
+                <label for="runIdSelect">Run ID</label>
+                <select id="runIdSelect" multiple size="4"></select>
+
+                <label for="sourceSelect">Source Scope</label>
+                <select id="sourceSelect" multiple size="4"></select>
+                <p id="sourceScopeHint" class="scope-hint"></p>
+
+                <label for="statusSelect">Flag Status</label>
+                <select id="statusSelect">
+                    <option value="all">All</option>
+                    <option value="flagged">Flagged only</option>
+                    <option value="safe">Safe only</option>
+                </select>
+
+                <label for="severitySelect">Severity</label>
+                <select id="severitySelect" multiple size="4"></select>
+
+                <label for="categorySelect">Category</label>
+                <select id="categorySelect" multiple size="4"></select>
+            </div>
+
+            <div class="filter-section">
+                <h2>Language Signals</h2>
+                <div class="field-group" data-filter-key="reason">
+                    <label for="reasonSelect">Reason Tags</label>
+                    <select id="reasonSelect" multiple size="6"></select>
+                </div>
+
+                <div class="field-group" data-filter-key="sentiment">
+                    <label for="sentimentSelect">Sentiment</label>
+                    <select id="sentimentSelect" multiple size="3"></select>
+                </div>
+
+                <div class="field-group" data-filter-key="emotion">
+                    <label for="emotionSelect">Emotion</label>
+                    <select id="emotionSelect" multiple size="4"></select>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h2>Precision Controls</h2>
+                <div class="inline-inputs">
+                    <div>
+                        <label for="confidenceMin">Confidence Min</label>
+                        <input id="confidenceMin" type="number" min="0" max="1" step="0.01" value="0" />
+                    </div>
+                    <div>
+                        <label for="confidenceMax">Confidence Max</label>
+                        <input id="confidenceMax" type="number" min="0" max="1" step="0.01" value="1" />
+                    </div>
+                </div>
+
+                <div class="inline-inputs">
+                    <div>
+                        <label for="startDate">Start Date</label>
+                        <input id="startDate" type="date" />
+                    </div>
+                    <div>
+                        <label for="endDate">End Date</label>
+                        <input id="endDate" type="date" />
+                    </div>
+                </div>
+
+                <label for="searchInput">Text Search</label>
+                <input id="searchInput" type="text" placeholder="search message, reason, category..." />
+
+                <label for="limitInput">Table Limit</label>
+                <input id="limitInput" type="number" min="10" max="10000" step="10" value="1000" />
+            </div>
+
+            <div class="filter-section">
+                <h2>Live Sync</h2>
+                <div class="toggle-row">
+                    <label for="autoRefreshToggle">Auto Refresh</label>
+                    <input id="autoRefreshToggle" type="checkbox" checked />
+                </div>
+                <label for="refreshSeconds">Interval (seconds)</label>
+                <input id="refreshSeconds" type="number" min="2" max="60" step="1" value="5" />
+            </div>
+
+            <div class="button-cluster">
+                <button id="applyBtn" class="btn btn-primary">Apply Filters</button>
+                <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                <button id="exportCsvBtn" class="btn btn-ghost">Export CSV</button>
+                <button id="exportJsonBtn" class="btn btn-ghost">Export JSON</button>
+            </div>
+
+            <div id="statusText" class="status-text">Ready</div>
+        </aside>
+
+        <main class="main-area">
+            <header class="hero hero-overview reveal delay-1">
+                <p class="hero-kicker">OVERVIEW DASHBOARD</p>
+                <h2>Operational Safety Console</h2>
+                <p>Unified safety telemetry across chat, video, and audio analyzers</p>
+                <div class="hero-chips">
+                    <span class="hero-chip">Scope: all</span>
+                    <span class="hero-chip">Live safety telemetry</span>
+                </div>
+                <div id="snapshotText" class="snapshot-text">Loading data...</div>
+            </header>
+
+            
+
+            <section class="focus-strip reveal delay-2">
+                
+                <article class="focus-card">
+                    <h3>Chat Stream</h3>
+                    <p>Text safety with toxicity, profanity, PII, and sentiment intelligence.</p>
+                </article>
+                <article class="focus-card">
+                    <h3>Video Stream</h3>
+                    <p>Frame-level NSFW and emotion signals over time.</p>
+                </article>
+                <article class="focus-card">
+                    <h3>Audio Stream</h3>
+                    <p>Loudness, silence, and speech pattern safety checks.</p>
+                </article>
+                
+            </section>
+
+            
+
+            <section class="kpi-grid reveal delay-3">
+                <article class="kpi-card">
+                    <h3>Scanned</h3>
+                    <p id="kpiTotal">0</p>
+                </article>
+                <article class="kpi-card danger">
+                    <h3>Flagged</h3>
+                    <p id="kpiFlagged">0</p>
+                </article>
+                <article class="kpi-card safe">
+                    <h3>Safe</h3>
+                    <p id="kpiSafe">0</p>
+                </article>
+                <article class="kpi-card">
+                    <h3>Flag Rate</h3>
+                    <p id="kpiFlagRate">0%</p>
+                </article>
+                <article class="kpi-card">
+                    <h3>High/Critical</h3>
+                    <p id="kpiHighCritical">0</p>
+                    <small id="kpiAvgConf">Avg conf 0.00</small>
+                </article>
+            </section>
+
+            <section class="source-summary reveal delay-4" id="sourceSummaryStrip">
+                <article class="source-pill source-pill-empty">Loading source health...</article>
+            </section>
+
+            
+            <section class="chart-grid reveal delay-4">
+                <article id="sourcePanel" class="panel">
+                    <h3>Records by Source</h3>
+                    <canvas id="sourceChart"></canvas>
+                </article>
+                <article class="panel">
+                    <h3>Severity Split</h3>
+                    <canvas id="severityChart"></canvas>
+                </article>
+                <article class="panel">
+                    <h3>Top Reasons</h3>
+                    <canvas id="reasonChart"></canvas>
+                </article>
+                <article class="panel">
+                    <h3>Trend Over Time</h3>
+                    <canvas id="trendChart"></canvas>
+                </article>
+            </section>
+            
+
+            
+
+            <section class="panel table-panel reveal delay-5">
+                <div class="panel-head">
+                    <h3>Filtered Alert Log</h3>
+                    <span id="tableMeta">0 records</span>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Timestamp</th>
+                                <th>Source</th>
+                                <th>Flagged</th>
+                                <th>Severity</th>
+                                <th>Confidence</th>
+                                <th>Reasons</th>
+                                <th>Preview</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alertsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel detail-panel reveal delay-5">
+                <div class="panel-head">
+                    <h3>Alert Drilldown</h3>
+                    <span id="detailId">No selection</span>
+                </div>
+                <div id="detailContent" class="detail-content">
+                    Select a table row to view complete details.
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        window.MWG_API_BASE_URL = "http://127.0.0.1:8502";
+        window.MWG_MAX_UPLOAD_MB = Number("512") || 512;
+        window.MWG_API_AUTH_REQUIRED = "0" === "1";
+        window.MWG_API_AUTH_QUERY_PARAM = "api_key";
+        const pageContextRaw = `{"accent": "overview", "description": "Monitor all signals in one place and drill down into risky events quickly.", "slug": "overview", "source_label": "all", "sources": [], "subtitle": "Unified safety telemetry across chat, video, and audio analyzers", "title": "Operational Safety Console"}`;
+        try {
+            window.MWG_PAGE_CONTEXT = JSON.parse(pageContextRaw || "{}");
+        } catch (error) {
+            window.MWG_PAGE_CONTEXT = {};
+        }
+    </script>
+    <script src="/static/dashboard.js"></script>
+</body>
+</html>

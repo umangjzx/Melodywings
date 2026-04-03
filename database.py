@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 import sqlite3
 import threading
 from abc import ABC, abstractmethod
@@ -18,6 +19,27 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence
 
 logger = logging.getLogger(__name__)
+
+_IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+
+
+def _validate_sql_identifier(value: str, kind: str) -> str:
+    """Validate SQL identifiers used in DDL statements."""
+    candidate = str(value or "").strip()
+    if not _IDENTIFIER_PATTERN.fullmatch(candidate):
+        raise ValueError(f"Invalid SQL {kind} identifier: {value!r}")
+    return candidate
+
+
+def _validate_column_definition(definition: str) -> str:
+    """Reject dangerous characters/tokens in DDL column definitions."""
+    candidate = str(definition or "").strip()
+    if not candidate:
+        raise ValueError("Column definition must not be empty")
+    forbidden_tokens = (";", "--", "/*", "*/")
+    if any(token in candidate for token in forbidden_tokens):
+        raise ValueError("Invalid column definition token")
+    return candidate
 
 DEFAULT_SQLITE_DB_PATH = Path(__file__).parent / "melodywings_guard.db"
 DEFAULT_BACKEND = os.getenv("DB_BACKEND", "sqlite").strip().lower()
@@ -197,11 +219,15 @@ class SQLiteAdapter(DatabaseAdapter):
         self.conn.commit()
 
     def ensure_column(self, table: str, column: str, column_definition: str) -> None:
+        safe_table = _validate_sql_identifier(table, "table")
+        safe_column = _validate_sql_identifier(column, "column")
+        safe_definition = _validate_column_definition(column_definition)
+
         cursor = self.conn.cursor()
-        cursor.execute(f"PRAGMA table_info({table})")
+        cursor.execute(f"PRAGMA table_info({safe_table})")
         existing_columns = {str(row[1]).lower() for row in cursor.fetchall()}
-        if column.lower() not in existing_columns:
-            cursor.execute(f"ALTER TABLE {table} ADD COLUMN {column} {column_definition}")
+        if safe_column.lower() not in existing_columns:
+            cursor.execute(f"ALTER TABLE {safe_table} ADD COLUMN {safe_column} {safe_definition}")
             self.conn.commit()
 
     def execute(self, query: str, params: Optional[Sequence[Any]] = None):
@@ -376,6 +402,10 @@ class PostgreSQLAdapter(DatabaseAdapter):
         self.conn.commit()
 
     def ensure_column(self, table: str, column: str, column_definition: str) -> None:
+        safe_table = _validate_sql_identifier(table, "table")
+        safe_column = _validate_sql_identifier(column, "column")
+        safe_definition = _validate_column_definition(column_definition)
+
         query = """
             SELECT 1
             FROM information_schema.columns
@@ -383,10 +413,10 @@ class PostgreSQLAdapter(DatabaseAdapter):
             LIMIT 1
         """
         with self.conn.cursor() as cursor:
-            cursor.execute(query, (table, column))
+            cursor.execute(query, (safe_table, safe_column))
             exists = cursor.fetchone() is not None
             if not exists:
-                cursor.execute(f"ALTER TABLE {table} ADD COLUMN {column} {column_definition}")
+                cursor.execute(f"ALTER TABLE {safe_table} ADD COLUMN {safe_column} {safe_definition}")
         self.conn.commit()
 
     def execute(self, query: str, params: Optional[Sequence[Any]] = None):

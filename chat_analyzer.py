@@ -13,6 +13,7 @@ Analyzes chat messages for:
 import re
 import logging
 import os
+import threading
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import Optional
@@ -27,6 +28,7 @@ _toxicity_pipeline = None
 _sentiment_pipeline = None
 _nlp_model = None
 _profanity_engine = None
+_model_load_lock = threading.Lock()
 
 _stage_health_status: dict[str, str] = {
     "nlp": "available",
@@ -82,22 +84,26 @@ def _get_toxicity_pipeline():
     global _toxicity_pipeline
     if _toxicity_pipeline is not None:
         return _toxicity_pipeline
-    try:
-        from transformers import pipeline
-        logger.info("Loading toxicity model: unitary/toxic-bert ...")
-        _toxicity_pipeline = pipeline(
-            "text-classification",
-            model="unitary/toxic-bert",
-            top_k=1,
-        )
-        logger.info("Toxicity model loaded successfully.")
-        _mark_stage("toxicity", "available")
-    except Exception as exc:
-        logger.error(f"Failed to load toxicity model: {exc}")
-        _mark_stage("toxicity", "unavailable")
-        _toxicity_pipeline = None
-        if _strict_mode_enabled():
-            raise RuntimeError("STRICT mode: toxicity model failed to load") from exc
+
+    with _model_load_lock:
+        if _toxicity_pipeline is not None:
+            return _toxicity_pipeline
+        try:
+            from transformers import pipeline
+            logger.info("Loading toxicity model: unitary/toxic-bert ...")
+            _toxicity_pipeline = pipeline(
+                "text-classification",
+                model="unitary/toxic-bert",
+                top_k=1,
+            )
+            logger.info("Toxicity model loaded successfully.")
+            _mark_stage("toxicity", "available")
+        except Exception as exc:
+            logger.error(f"Failed to load toxicity model: {exc}")
+            _mark_stage("toxicity", "unavailable")
+            _toxicity_pipeline = None
+            if _strict_mode_enabled():
+                raise RuntimeError("STRICT mode: toxicity model failed to load") from exc
     return _toxicity_pipeline
 
 
@@ -109,21 +115,25 @@ def _get_sentiment_pipeline():
     global _sentiment_pipeline
     if _sentiment_pipeline is not None:
         return _sentiment_pipeline
-    try:
-        from transformers import pipeline
-        logger.info("Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...")
-        _sentiment_pipeline = pipeline(
-            "sentiment-analysis",
-            model="distilbert-base-uncased-finetuned-sst-2-english",
-        )
-        logger.info("Sentiment model loaded successfully.")
-        _mark_stage("sentiment", "available")
-    except Exception as exc:
-        logger.error(f"Failed to load sentiment model: {exc}")
-        _mark_stage("sentiment", "unavailable")
-        _sentiment_pipeline = None
-        if _strict_mode_enabled():
-            raise RuntimeError("STRICT mode: sentiment model failed to load") from exc
+
+    with _model_load_lock:
+        if _sentiment_pipeline is not None:
+            return _sentiment_pipeline
+        try:
+            from transformers import pipeline
+            logger.info("Loading sentiment model: distilbert-base-uncased-finetuned-sst-2-english ...")
+            _sentiment_pipeline = pipeline(
+                "sentiment-analysis",
+                model="distilbert-base-uncased-finetuned-sst-2-english",
+            )
+            logger.info("Sentiment model loaded successfully.")
+            _mark_stage("sentiment", "available")
+        except Exception as exc:
+            logger.error(f"Failed to load sentiment model: {exc}")
+            _mark_stage("sentiment", "unavailable")
+            _sentiment_pipeline = None
+            if _strict_mode_enabled():
+                raise RuntimeError("STRICT mode: sentiment model failed to load") from exc
     return _sentiment_pipeline
 
 
@@ -135,18 +145,22 @@ def _get_nlp_model():
     global _nlp_model
     if _nlp_model is not None:
         return _nlp_model
-    try:
-        import spacy
-        logger.info("Loading spaCy NER model: en_core_web_sm ...")
-        _nlp_model = spacy.load("en_core_web_sm")
-        logger.info("spaCy NER model loaded successfully.")
-        _mark_stage("ner", "available")
-    except Exception as exc:
-        logger.error(f"Failed to load spaCy model: {exc}")
-        _mark_stage("ner", "unavailable")
-        _nlp_model = None
-        if _strict_mode_enabled():
-            raise RuntimeError("STRICT mode: spaCy NER model failed to load") from exc
+
+    with _model_load_lock:
+        if _nlp_model is not None:
+            return _nlp_model
+        try:
+            import spacy
+            logger.info("Loading spaCy NER model: en_core_web_sm ...")
+            _nlp_model = spacy.load("en_core_web_sm")
+            logger.info("spaCy NER model loaded successfully.")
+            _mark_stage("ner", "available")
+        except Exception as exc:
+            logger.error(f"Failed to load spaCy model: {exc}")
+            _mark_stage("ner", "unavailable")
+            _nlp_model = None
+            if _strict_mode_enabled():
+                raise RuntimeError("STRICT mode: spaCy NER model failed to load") from exc
     return _nlp_model
 
 
@@ -155,17 +169,21 @@ def _get_profanity_engine():
     global _profanity_engine
     if _profanity_engine is not None:
         return _profanity_engine
-    try:
-        from better_profanity import profanity
-        profanity.load_censor_words()
-        _profanity_engine = profanity
-        _mark_stage("profanity", "available")
-    except Exception as exc:
-        logger.error(f"Failed to load profanity engine: {exc}")
-        _mark_stage("profanity", "unavailable")
-        _profanity_engine = None
-        if _strict_mode_enabled():
-            raise RuntimeError("STRICT mode: profanity engine failed to load") from exc
+
+    with _model_load_lock:
+        if _profanity_engine is not None:
+            return _profanity_engine
+        try:
+            from better_profanity import profanity
+            profanity.load_censor_words()
+            _profanity_engine = profanity
+            _mark_stage("profanity", "available")
+        except Exception as exc:
+            logger.error(f"Failed to load profanity engine: {exc}")
+            _mark_stage("profanity", "unavailable")
+            _profanity_engine = None
+            if _strict_mode_enabled():
+                raise RuntimeError("STRICT mode: profanity engine failed to load") from exc
     return _profanity_engine
 
 

@@ -541,6 +541,26 @@ DB_BACKEND=postgres DB_POSTGRES_DSN="postgresql://user:pass@host/db" python main
 
 # Enable strict mode (fail on any model load error)
 STRICT=true python main.py
+
+# Protect dashboard/API endpoints with token auth
+MWG_REQUIRE_API_AUTH=true MWG_API_AUTH_TOKEN=change-me python html_dashboard.py
+
+# Set max upload size (MB) for /upload endpoint
+MWG_MAX_UPLOAD_MB=512 python html_dashboard.py
+```
+
+### Security Controls (Dashboard/API)
+
+- `MWG_REQUIRE_API_AUTH` — Set to `true` to require API auth on upload/API/status/video routes.
+- `MWG_API_AUTH_TOKEN` — Shared bearer token (also enables auth if set).
+- `MWG_API_AUTH_QUERY_PARAM` — Query parameter used to bootstrap browser auth cookie (default: `api_key`).
+- `MWG_API_AUTH_COOKIE_NAME` — Cookie name for persisted browser auth token (default: `mwg_api_token`).
+- `MWG_MAX_UPLOAD_MB` — Maximum accepted upload size in MB (default: `512`).
+
+When auth is enabled, open dashboard URLs with the token once to establish the cookie:
+
+```text
+http://localhost:8502/dashboard/upload?api_key=change-me
 ```
 
 ---

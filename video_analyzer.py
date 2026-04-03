@@ -15,6 +15,7 @@ import logging
 import math
 import os
 import tempfile
+import threading
 import time
 from pathlib import Path
 from typing import Any, Callable, Optional
@@ -33,6 +34,7 @@ logger = logging.getLogger(__name__)
 _nsfw_pipeline = None
 _whisper_asr_pipeline = None
 _face_detector = None
+_model_load_lock = threading.Lock()
 _last_video_analysis_metrics: dict[str, Any] = {}
 
 DEFAULT_FRAME_OUTPUT_DIR = Path(__file__).parent / "static" / "frames"
@@ -170,23 +172,27 @@ def _get_nsfw_pipeline():
     global _nsfw_pipeline
     if _nsfw_pipeline is not None:
         return _nsfw_pipeline
-    try:
-        import torch
-        from transformers import pipeline
 
-        device = 0 if torch.cuda.is_available() else -1
-        device_name = "cuda" if device == 0 else "cpu"
+    with _model_load_lock:
+        if _nsfw_pipeline is not None:
+            return _nsfw_pipeline
+        try:
+            import torch
+            from transformers import pipeline
 
-        logger.info(f"Loading NSFW model: Falconsai/nsfw_image_detection (device={device_name}) ...")
-        _nsfw_pipeline = pipeline(
-            "image-classification",
-            model="Falconsai/nsfw_image_detection",
-            device=device,
-        )
-        logger.info("NSFW model loaded successfully.")
-    except Exception as exc:
-        logger.error(f"Failed to load NSFW model: {exc}")
-        _nsfw_pipeline = None
+            device = 0 if torch.cuda.is_available() else -1
+            device_name = "cuda" if device == 0 else "cpu"
+
+            logger.info(f"Loading NSFW model: Falconsai/nsfw_image_detection (device={device_name}) ...")
+            _nsfw_pipeline = pipeline(
+                "image-classification",
+                model="Falconsai/nsfw_image_detection",
+                device=device,
+            )
+            logger.info("NSFW model loaded successfully.")
+        except Exception as exc:
+            logger.error(f"Failed to load NSFW model: {exc}")
+            _nsfw_pipeline = None
     return _nsfw_pipeline
 
 
@@ -224,9 +230,15 @@ def _extract_nsfw_probability(raw_prediction: object) -> tuple[str, float]:
 
     for candidate in candidates:
         label = _normalize_nsfw_label(str(candidate.get("label", "")))
-        try:
-            score = float(candidate.get("score", 0.0))
-        except (TypeError, ValueError):
+        score_raw = candidate.get("score", 0.0)
+        if isinstance(score_raw, (int, float)):
+            score = float(score_raw)
+        elif isinstance(score_raw, str):
+            try:
+                score = float(score_raw)
+            except ValueError:
+                score = 0.0
+        else:
             score = 0.0
 
         score = max(0.0, min(1.0, score))
@@ -261,23 +273,27 @@ def _get_whisper_asr_pipeline():
         return _whisper_asr_pipeline
 
     model_id = os.getenv("MWG_WHISPER_MODEL", "openai/whisper-base")
-    try:
-        import torch
-        from transformers import pipeline
 
-        device = 0 if torch.cuda.is_available() else -1
-        device_name = "cuda" if device == 0 else "cpu"
+    with _model_load_lock:
+        if _whisper_asr_pipeline is not None:
+            return _whisper_asr_pipeline
+        try:
+            import torch
+            from transformers import pipeline
 
-        logger.info(f"Loading Whisper ASR model: {model_id} (device={device_name}) ...")
-        _whisper_asr_pipeline = pipeline(
-            "automatic-speech-recognition",
-            model=model_id,
-            device=device,
-        )
-        logger.info("Whisper ASR model loaded successfully.")
-    except Exception as exc:
-        logger.warning(f"Unable to initialize Whisper ASR model '{model_id}': {exc}")
-        _whisper_asr_pipeline = None
+            device = 0 if torch.cuda.is_available() else -1
+            device_name = "cuda" if device == 0 else "cpu"
+
+            logger.info(f"Loading Whisper ASR model: {model_id} (device={device_name}) ...")
+            _whisper_asr_pipeline = pipeline(
+                "automatic-speech-recognition",
+                model=model_id,
+                device=device,
+            )
+            logger.info("Whisper ASR model loaded successfully.")
+        except Exception as exc:
+            logger.warning(f"Unable to initialize Whisper ASR model '{model_id}': {exc}")
+            _whisper_asr_pipeline = None
 
     return _whisper_asr_pipeline
 
@@ -565,17 +581,25 @@ def _get_face_detector():
     if _face_detector is not None:
         return _face_detector
 
-    try:
-        import cv2
+    with _model_load_lock:
+        if _face_detector is not None:
+            return _face_detector
+        try:
+            import cv2
 
-        cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-        detector = cv2.CascadeClassifier(cascade_path)
-        if detector.empty():
-            raise RuntimeError("OpenCV Haar cascade failed to initialize")
-        _face_detector = detector
-    except Exception as exc:
-        logger.warning(f"Face detector unavailable. Emotion detection may be degraded: {exc}")
-        _face_detector = None
+            cv2_data = getattr(cv2, "data", None)
+            haarcascades_path = str(getattr(cv2_data, "haarcascades", "") or "")
+            if not haarcascades_path:
+                raise RuntimeError("OpenCV haarcascade path unavailable")
+
+            cascade_path = haarcascades_path + "haarcascade_frontalface_default.xml"
+            detector = cv2.CascadeClassifier(cascade_path)
+            if detector.empty():
+                raise RuntimeError("OpenCV Haar cascade failed to initialize")
+            _face_detector = detector
+        except Exception as exc:
+            logger.warning(f"Face detector unavailable. Emotion detection may be degraded: {exc}")
+            _face_detector = None
 
     return _face_detector
 
@@ -623,9 +647,14 @@ def _extract_largest_face_roi(frame):
 
 def _normalize_emotion_probability(raw_value: object) -> float:
     """Normalize model probability from either [0,1] or [0,100] scale."""
-    try:
+    if isinstance(raw_value, (int, float)):
         score = float(raw_value)
-    except (TypeError, ValueError):
+    elif isinstance(raw_value, str):
+        try:
+            score = float(raw_value)
+        except ValueError:
+            return 0.0
+    else:
         return 0.0
 
     if score > 1.0:
@@ -697,7 +726,7 @@ def detect_emotion(frame) -> Optional[str]:
     try:
         from deepface import DeepFace
 
-        inputs: list[object] = []
+        inputs: list[Any] = []
         face_roi = _extract_largest_face_roi(frame)
         if face_roi is not None:
             inputs.append(face_roi)
@@ -1192,12 +1221,12 @@ def transcribe_with_speech_recognition(audio_path: str) -> tuple[Optional[str], 
                 chunk_conf = 0.0
 
                 try:
-                    chunk_text = recognizer.recognize_google(audio_data)
+                    chunk_text = recognizer.recognize_google(audio_data)  # type: ignore[attr-defined]
                     chunk_conf = 0.82
                 except sr.RequestError:
                     # Fallback to Sphinx (offline recognition).
                     try:
-                        chunk_text = recognizer.recognize_sphinx(audio_data)
+                        chunk_text = recognizer.recognize_sphinx(audio_data)  # type: ignore[attr-defined]
                         chunk_conf = 0.65
                     except Exception:
                         chunk_text = None
@@ -1600,8 +1629,12 @@ def analyze_video(
             transcript,
             word_data or [],
         )
+        confidence_inputs: list[Optional[float]] = [
+            float(value) if isinstance(value, (int, float)) else None
+            for value in confidences
+        ]
         try:
-            transcript_results = analyze_messages(sentences, whisper_confidences=confidences)
+            transcript_results = analyze_messages(sentences, whisper_confidences=confidence_inputs)
             for index, result in enumerate(transcript_results):
                 meta = segment_meta[index] if index < len(segment_meta) else {}
                 result["segment_start_time"] = meta.get("start_time")
@@ -1609,7 +1642,7 @@ def analyze_video(
                 result["segment_confidence"] = float(
                     meta.get(
                         "confidence",
-                        confidences[index] if index < len(confidences) else transcription_confidence,
+                        confidence_inputs[index] if index < len(confidence_inputs) else transcription_confidence,
                     )
                 )
         except Exception as exc:

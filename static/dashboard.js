@@ -43,10 +43,20 @@ const API_BASE = (() => {
     return "";
 })();
 
+const API_AUTH_TOKEN = String(window.MWG_API_AUTH_TOKEN || "").trim();
+const API_AUTH_REQUIRED = Boolean(window.MWG_API_AUTH_REQUIRED);
+const API_AUTH_QUERY_PARAM = String(window.MWG_API_AUTH_QUERY_PARAM || "api_key").trim() || "api_key";
+const MAX_UPLOAD_MB = Math.max(1, Number(window.MWG_MAX_UPLOAD_MB || 512));
+const MAX_UPLOAD_BYTES = MAX_UPLOAD_MB * 1024 * 1024;
+const ALLOWED_UPLOAD_EXTENSIONS = new Set([".mp4", ".avi", ".mov", ".mkv", ".flv", ".wmv", ".webm"]);
+
 const URL_RUN_ID = (() => {
     const params = new URLSearchParams(window.location.search || "");
     return String(params.get("run_id") || "").trim();
 })();
+
+const PAGE_SLUG = String(state.pageContext.slug || "overview").toLowerCase();
+const IS_UPLOAD_PAGE = PAGE_SLUG === "upload";
 
 function apiUrl(path, queryString = "") {
     const normalizedPath = path.startsWith("/") ? path : `/${path}`;
@@ -55,6 +65,38 @@ function apiUrl(path, queryString = "") {
         return `${base}${normalizedPath}?${queryString}`;
     }
     return `${base}${normalizedPath}`;
+}
+
+function buildApiHeaders(extraHeaders = {}) {
+    const headers = { ...extraHeaders };
+    if (API_AUTH_TOKEN) {
+        headers.Authorization = `Bearer ${API_AUTH_TOKEN}`;
+    }
+    return headers;
+}
+
+function validateUploadFile(file) {
+    if (!file) {
+        return "Please choose a video file.";
+    }
+
+    const fileName = String(file.name || "").trim();
+    const lowerName = fileName.toLowerCase();
+    const extension = lowerName.includes(".") ? lowerName.slice(lowerName.lastIndexOf(".")) : "";
+    if (!ALLOWED_UPLOAD_EXTENSIONS.has(extension)) {
+        return `Unsupported file type. Allowed: ${Array.from(ALLOWED_UPLOAD_EXTENSIONS).join(", ")}.`;
+    }
+
+    if (Number(file.size || 0) > MAX_UPLOAD_BYTES) {
+        return `File too large. Max allowed size is ${MAX_UPLOAD_MB} MB.`;
+    }
+
+    const mimeType = String(file.type || "").toLowerCase();
+    if (mimeType && !mimeType.startsWith("video/")) {
+        return `Invalid MIME type: ${mimeType}. Please upload a video file.`;
+    }
+
+    return null;
 }
 
 const elements = {
@@ -196,8 +238,12 @@ function setMultiSelectOptions(selectElement, values, preserveSelection) {
 function updateFilterOptions(options) {
     const preserve = state.initializedOptions;
     const forcedSources = getForcedSources();
+    const activeRunId = getActiveRunId();
 
-    if (URL_RUN_ID) {
+    if (IS_UPLOAD_PAGE) {
+        setMultiSelectOptions(elements.runIdSelect, activeRunId ? [activeRunId] : [], false);
+        elements.runIdSelect.disabled = true;
+    } else if (URL_RUN_ID) {
         setMultiSelectOptions(elements.runIdSelect, [URL_RUN_ID], false);
         elements.runIdSelect.disabled = true;
     } else {
@@ -232,12 +278,14 @@ function updateFilterOptions(options) {
 function buildQueryString() {
     const params = new URLSearchParams();
     const forcedSources = getForcedSources();
-    const isUploadPage = String(state.pageContext.slug || "").toLowerCase() === "upload";
+    const activeRunId = getActiveRunId();
 
-    if (URL_RUN_ID) {
+    if (IS_UPLOAD_PAGE) {
+        if (activeRunId) {
+            params.append("run_id", activeRunId);
+        }
+    } else if (URL_RUN_ID) {
         params.append("run_id", URL_RUN_ID);
-    } else if (isUploadPage && state.activeRunId) {
-        params.append("run_id", state.activeRunId);
     } else {
         getSelectedFilterValues(elements.runIdSelect).forEach((value) => params.append("run_id", value));
     }
@@ -270,6 +318,22 @@ function renderKpis(metrics) {
     elements.kpiFlagRate.textContent = `${(metrics.flag_rate ?? 0).toFixed(2)}%`;
     elements.kpiHighCritical.textContent = metrics.high_critical ?? 0;
     elements.kpiAvgConf.textContent = `Avg conf ${(metrics.avg_confidence_flagged ?? 0).toFixed(4)}`;
+}
+
+function formatChartMinute(isoString) {
+    if (!isoString) {
+        return "";
+    }
+    const dt = new Date(isoString);
+    if (Number.isNaN(dt.getTime())) {
+        return String(isoString);
+    }
+    return dt.toLocaleString([], {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
 }
 
 function renderCharts(chartData) {
@@ -389,6 +453,148 @@ function renderCharts(chartData) {
         state.charts.trend.data.datasets[1].data = trendSafe;
         state.charts.trend.update("none");
     }
+
+    const sourceFlagRateData = chartData.source_flag_rate || [];
+    const sourceFlagRateLabels = sourceFlagRateData.map((item) => item.label);
+    const sourceFlagRateValues = sourceFlagRateData.map((item) => item.flag_rate);
+    if (!state.charts.flagRate) {
+        state.charts.flagRate = new Chart(document.getElementById("flagRateChart"), {
+            type: "bar",
+            data: {
+                labels: sourceFlagRateLabels,
+                datasets: [{
+                    label: "Flag rate (%)",
+                    data: sourceFlagRateValues,
+                    backgroundColor: "rgba(217, 93, 57, 0.82)",
+                    borderColor: "#d95d39",
+                    borderWidth: 1,
+                    borderRadius: 8,
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const index = Number(context.dataIndex || 0);
+                                const chartRows = context.chart.$sourceFlagRate || [];
+                                const row = chartRows[index] || {};
+                                const rate = Number(row.flag_rate || 0).toFixed(2);
+                                return `${rate}% (${row.flagged || 0}/${row.total || 0} flagged)`;
+                            },
+                        },
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: (value) => `${value}%`,
+                        },
+                    },
+                },
+            },
+        });
+        state.charts.flagRate.$sourceFlagRate = sourceFlagRateData;
+    } else {
+        state.charts.flagRate.data.labels = sourceFlagRateLabels;
+        state.charts.flagRate.data.datasets[0].data = sourceFlagRateValues;
+        state.charts.flagRate.$sourceFlagRate = sourceFlagRateData;
+        state.charts.flagRate.update("none");
+    }
+
+    const confidenceDistribution = chartData.confidence_distribution || [];
+    const confidenceLabels = confidenceDistribution.map((item) => item.bucket);
+    const confidenceFlagged = confidenceDistribution.map((item) => item.flagged);
+    const confidenceSafe = confidenceDistribution.map((item) => item.safe);
+    if (!state.charts.confidenceDist) {
+        state.charts.confidenceDist = new Chart(document.getElementById("confidenceDistChart"), {
+            type: "bar",
+            data: {
+                labels: confidenceLabels,
+                datasets: [
+                    {
+                        label: "Flagged",
+                        data: confidenceFlagged,
+                        backgroundColor: "rgba(217, 93, 57, 0.82)",
+                        borderColor: "#d95d39",
+                        borderWidth: 1,
+                        borderRadius: 6,
+                    },
+                    {
+                        label: "Safe",
+                        data: confidenceSafe,
+                        backgroundColor: "rgba(14, 143, 131, 0.78)",
+                        borderColor: "#0e8f83",
+                        borderWidth: 1,
+                        borderRadius: 6,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: "bottom" } },
+                scales: {
+                    x: { stacked: true },
+                    y: { beginAtZero: true, stacked: true },
+                },
+            },
+        });
+    } else {
+        state.charts.confidenceDist.data.labels = confidenceLabels;
+        state.charts.confidenceDist.data.datasets[0].data = confidenceFlagged;
+        state.charts.confidenceDist.data.datasets[1].data = confidenceSafe;
+        state.charts.confidenceDist.update("none");
+    }
+
+    const confidenceTrend = chartData.confidence_trend || [];
+    const confidenceTrendLabels = confidenceTrend.map((item) => formatChartMinute(item.minute));
+    const avgConfidenceValues = confidenceTrend.map((item) => item.avg_confidence);
+    const avgFlaggedConfidenceValues = confidenceTrend.map((item) => item.avg_flagged_confidence);
+    if (!state.charts.confidenceTrend) {
+        state.charts.confidenceTrend = new Chart(document.getElementById("confidenceTrendChart"), {
+            type: "line",
+            data: {
+                labels: confidenceTrendLabels,
+                datasets: [
+                    {
+                        label: "Avg confidence (all)",
+                        data: avgConfidenceValues,
+                        borderColor: "#1f6aa5",
+                        backgroundColor: "rgba(31, 106, 165, 0.18)",
+                        pointRadius: 2,
+                        tension: 0.24,
+                    },
+                    {
+                        label: "Avg confidence (flagged)",
+                        data: avgFlaggedConfidenceValues,
+                        borderColor: "#d95d39",
+                        backgroundColor: "rgba(217, 93, 57, 0.2)",
+                        pointRadius: 2,
+                        tension: 0.24,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: "bottom" } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: 1,
+                    },
+                },
+            },
+        });
+    } else {
+        state.charts.confidenceTrend.data.labels = confidenceTrendLabels;
+        state.charts.confidenceTrend.data.datasets[0].data = avgConfidenceValues;
+        state.charts.confidenceTrend.data.datasets[1].data = avgFlaggedConfidenceValues;
+        state.charts.confidenceTrend.update("none");
+    }
 }
 
 function sourceLabel(sourceKey) {
@@ -485,7 +691,46 @@ function setUploadVideoSource(runId) {
 }
 
 function getActiveRunId() {
+    if (IS_UPLOAD_PAGE) {
+        return state.activeRunId || "";
+    }
     return state.activeRunId || URL_RUN_ID || "";
+}
+
+function clearUploadRunViews() {
+    state.records = [];
+    state.selectedId = null;
+    state.flaggedItems = [];
+    state.selectedFlagId = null;
+
+    if (elements.snapshotText) {
+        elements.snapshotText.textContent = "Upload a video to start analysis. Old history is hidden on this page.";
+    }
+
+    setRunProgress(0, "Idle", "Upload a video to begin processing.");
+    renderFlaggedItems([]);
+    renderFrameInspector(null);
+    renderTranscript([]);
+
+    if (
+        state.charts.source ||
+        state.charts.severity ||
+        state.charts.reason ||
+        state.charts.trend ||
+        state.charts.flagRate ||
+        state.charts.confidenceDist ||
+        state.charts.confidenceTrend
+    ) {
+        renderCharts({
+            sources: [],
+            severities: [],
+            reasons: [],
+            trend: [],
+            source_flag_rate: [],
+            confidence_distribution: [],
+            confidence_trend: [],
+        });
+    }
 }
 
 function setRunProgress(percent, metaText, detailText) {
@@ -607,6 +852,11 @@ async function fetchTranscript() {
 
     const params = new URLSearchParams();
     const runId = getActiveRunId();
+    if (IS_UPLOAD_PAGE && !runId) {
+        renderTranscript([]);
+        return;
+    }
+
     if (runId) {
         params.set("run_id", runId);
     }
@@ -619,8 +869,13 @@ async function fetchTranscript() {
     }
 
     try {
-        const response = await fetch(apiUrl("/api/transcript", params.toString()));
+        const response = await fetch(apiUrl("/api/transcript", params.toString()), {
+            headers: buildApiHeaders(),
+        });
         if (!response.ok) {
+            if (response.status === 401 && API_AUTH_REQUIRED) {
+                throw new Error(`Unauthorized. Reopen dashboard with ?${API_AUTH_QUERY_PARAM}=<token>.`);
+            }
             throw new Error(`API error ${response.status}`);
         }
         const payload = await response.json();
@@ -689,7 +944,7 @@ function renderFrameInspector(item) {
             try {
                 const response = await fetch(apiUrl("/validate"), {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: buildApiHeaders({ "Content-Type": "application/json" }),
                     body: JSON.stringify({ frame_id: item.id, user_feedback: feedback }),
                 });
                 if (!response.ok) {
@@ -719,13 +974,23 @@ async function fetchFlaggedItems() {
 
     const params = new URLSearchParams();
     const runId = getActiveRunId();
+    if (IS_UPLOAD_PAGE && !runId) {
+        state.flaggedItems = [];
+        state.selectedFlagId = null;
+        renderFlaggedItems([]);
+        renderFrameInspector(null);
+        return;
+    }
+
     if (runId) {
         params.set("run_id", runId);
     }
     getFlagFilterTypes().forEach((type) => params.append("type", type));
 
     try {
-        const response = await fetch(apiUrl("/api/flagged-items", params.toString()));
+        const response = await fetch(apiUrl("/api/flagged-items", params.toString()), {
+            headers: buildApiHeaders(),
+        });
         if (!response.ok) {
             throw new Error(`API error ${response.status}`);
         }
@@ -737,6 +1002,9 @@ async function fetchFlaggedItems() {
             const selected = state.flaggedItems.find((item) => Number(item.id) === state.selectedFlagId);
             if (selected) {
                 renderFrameInspector(selected);
+            } else {
+                state.selectedFlagId = null;
+                renderFrameInspector(null);
             }
         }
     } catch (error) {
@@ -747,8 +1015,9 @@ async function fetchFlaggedItems() {
 }
 
 async function uploadVideo(file) {
-    if (!file) {
-        setUploadStatus("Please choose a video file.", true);
+    const uploadError = validateUploadFile(file);
+    if (uploadError) {
+        setUploadStatus(uploadError, true);
         return;
     }
 
@@ -760,10 +1029,14 @@ async function uploadVideo(file) {
     try {
         const response = await fetch(apiUrl("/upload"), {
             method: "POST",
+            headers: buildApiHeaders(),
             body: formData,
         });
 
         if (!response.ok) {
+            if (response.status === 401 && API_AUTH_REQUIRED) {
+                throw new Error(`Unauthorized. Reopen dashboard with ?${API_AUTH_QUERY_PARAM}=<token>.`);
+            }
             throw new Error(`API error ${response.status}`);
         }
 
@@ -771,16 +1044,12 @@ async function uploadVideo(file) {
         state.activeRunId = payload.run_id;
         setUploadStatus(`Upload complete. Run ID ${payload.run_id}`, false);
         setUploadVideoSource(payload.run_id);
-        if (elements.runIdSelect && !elements.runIdSelect.disabled) {
-            const option = document.createElement("option");
-            option.value = payload.run_id;
-            option.textContent = payload.run_id;
-            option.selected = true;
-            elements.runIdSelect.appendChild(option);
+        if (elements.runIdSelect) {
+            setMultiSelectOptions(elements.runIdSelect, [payload.run_id], false);
+            elements.runIdSelect.disabled = true;
         }
+        setupAutoRefresh();
         startStatusPolling();
-        fetchFlaggedItems();
-        fetchTranscript();
         fetchDashboardData();
     } catch (error) {
         setUploadStatus(`Upload failed: ${error.message}`, true);
@@ -794,8 +1063,13 @@ async function fetchRunStatus() {
     }
 
     try {
-        const response = await fetch(apiUrl(`/status/${runId}`));
+        const response = await fetch(apiUrl(`/status/${runId}`), {
+            headers: buildApiHeaders(),
+        });
         if (!response.ok) {
+            if (response.status === 401 && API_AUTH_REQUIRED) {
+                throw new Error(`Unauthorized. Reopen dashboard with ?${API_AUTH_QUERY_PARAM}=<token>.`);
+            }
             throw new Error(`API error ${response.status}`);
         }
 
@@ -816,8 +1090,6 @@ async function fetchRunStatus() {
             setRunProgress(100, `${processed}/${total} frames`, "Processing complete");
             stopStatusPolling();
             fetchDashboardData();
-            fetchFlaggedItems();
-            fetchTranscript();
         }
         if (status.status === "error") {
             setRunProgress(progress, "Error", status.message || "Processing failed");
@@ -984,6 +1256,11 @@ function formatNow(isoString) {
 }
 
 async function fetchDashboardData() {
+    if (IS_UPLOAD_PAGE && !getActiveRunId()) {
+        clearUploadRunViews();
+        return;
+    }
+
     if (state.isFetching) {
         state.pendingRefresh = true;
         return;
@@ -995,8 +1272,13 @@ async function fetchDashboardData() {
 
     try {
         const queryString = buildQueryString();
-        const response = await fetch(apiUrl("/api/dashboard-data", queryString));
+        const response = await fetch(apiUrl("/api/dashboard-data", queryString), {
+            headers: buildApiHeaders(),
+        });
         if (!response.ok) {
+            if (response.status === 401 && API_AUTH_REQUIRED) {
+                throw new Error(`Unauthorized. Reopen dashboard with ?${API_AUTH_QUERY_PARAM}=<token>.`);
+            }
             throw new Error(`API error ${response.status}`);
         }
 
@@ -1112,6 +1394,10 @@ function setupAutoRefresh() {
         return;
     }
 
+    if (IS_UPLOAD_PAGE && !getActiveRunId()) {
+        return;
+    }
+
     const seconds = Math.max(2, Number(elements.refreshSeconds.value || 5));
     state.refreshTimer = setInterval(() => {
         fetchDashboardData();
@@ -1163,7 +1449,13 @@ function registerEvents() {
         elements.videoFileInput.addEventListener("change", () => {
             const file = elements.videoFileInput?.files?.[0];
             if (file) {
-                setUploadStatus(`Selected: ${file.name}`, false);
+                const uploadError = validateUploadFile(file);
+                if (uploadError) {
+                    setUploadStatus(uploadError, true);
+                } else {
+                    const fileMb = (Number(file.size || 0) / (1024 * 1024)).toFixed(2);
+                    setUploadStatus(`Selected: ${file.name} (${fileMb} MB)`, false);
+                }
             }
         });
     }
@@ -1237,8 +1529,26 @@ function registerEvents() {
 
 function init() {
     applyPageLayout();
+
+    if (elements.uploadStatus && API_AUTH_REQUIRED && !API_AUTH_TOKEN) {
+        setUploadStatus(`Auth enabled. Open with ?${API_AUTH_QUERY_PARAM}=<token> if API calls fail.`, false);
+    }
+
+    const uploadHint = document.getElementById("uploadHint");
+    if (uploadHint) {
+        uploadHint.textContent = `Accepted formats: ${Array.from(ALLOWED_UPLOAD_EXTENSIONS).join(", ")} | Max ${MAX_UPLOAD_MB} MB.`;
+    }
+
     registerEvents();
     setupAutoRefresh();
+
+    if (IS_UPLOAD_PAGE && !getActiveRunId()) {
+        clearUploadRunViews();
+        setUploadVideoSource("");
+        stopStatusPolling();
+        return;
+    }
+
     fetchDashboardData();
     fetchFlaggedItems();
     fetchTranscript();

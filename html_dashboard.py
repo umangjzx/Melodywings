@@ -13,14 +13,17 @@ from __future__ import annotations
 
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
+import hmac
+import os
 import threading
 import time
 from typing import Any
+from urllib.parse import quote_plus
 
-from flask import Flask, jsonify, redirect, render_template, request, url_for
+from flask import Flask, jsonify, make_response, redirect, render_template, request, url_for
 
 from database import get_db
-from upload_module import upload_bp
+from upload_module import MAX_UPLOAD_MB, upload_bp
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.register_blueprint(upload_bp)
@@ -77,10 +80,88 @@ DEFAULT_LIMIT = 1000
 MAX_LIMIT = 10000
 CACHE_TTL_SECONDS = 2.0
 
+
+def _read_env_bool(name: str, default: bool = False) -> bool:
+    """Read boolean environment variable safely."""
+    fallback = "true" if default else "false"
+    raw_value = os.getenv(name, fallback).strip().lower()
+    return raw_value in {"1", "true", "yes", "on"}
+
+
+API_AUTH_TOKEN = os.getenv("MWG_API_AUTH_TOKEN", "").strip()
+REQUIRE_API_AUTH = _read_env_bool("MWG_REQUIRE_API_AUTH", False) or bool(API_AUTH_TOKEN)
+API_AUTH_QUERY_PARAM = os.getenv("MWG_API_AUTH_QUERY_PARAM", "api_key").strip() or "api_key"
+API_AUTH_COOKIE_NAME = os.getenv("MWG_API_AUTH_COOKIE_NAME", "mwg_api_token").strip() or "mwg_api_token"
+
 _cache_lock = threading.Lock()
 _cached_rows: list[dict[str, Any]] = []
 _cached_options: dict[str, list[str]] = {}
 _cache_expiry = 0.0
+
+
+def _requires_api_auth(path: str) -> bool:
+    """Return True when the request path targets a sensitive API endpoint."""
+    normalized = (path or "/").rstrip("/") or "/"
+    if normalized.startswith("/api"):
+        return True
+    if normalized in {"/upload", "/validate"}:
+        return True
+    if normalized.startswith("/status/"):
+        return True
+    if normalized.startswith("/video/"):
+        return True
+    return False
+
+
+def _extract_request_token() -> str:
+    """Extract bearer/API-key token from request headers."""
+    authorization = str(request.headers.get("Authorization") or "").strip()
+    if authorization.lower().startswith("bearer "):
+        return authorization[7:].strip()
+    header_key = str(request.headers.get("X-API-Key") or "").strip()
+    if header_key:
+        return header_key
+
+    query_key = str(request.args.get(API_AUTH_QUERY_PARAM) or "").strip()
+    if query_key:
+        return query_key
+
+    return str(request.cookies.get(API_AUTH_COOKIE_NAME) or "").strip()
+
+
+@app.before_request
+def enforce_api_auth() -> Any:
+    """Protect API and upload endpoints with optional token-based auth."""
+    if not _requires_api_auth(request.path):
+        return None
+
+    if not REQUIRE_API_AUTH:
+        return None
+
+    if not API_AUTH_TOKEN:
+        return (
+            jsonify(
+                {
+                    "error": "server_auth_misconfigured",
+                    "message": "Set MWG_API_AUTH_TOKEN when MWG_REQUIRE_API_AUTH is enabled.",
+                }
+            ),
+            503,
+        )
+
+    provided_token = _extract_request_token()
+    if provided_token and hmac.compare_digest(provided_token, API_AUTH_TOKEN):
+        return None
+
+    return (
+        jsonify(
+            {
+                "error": "unauthorized",
+                "message": "Provide Authorization: Bearer <token> or X-API-Key.",
+            }
+        ),
+        401,
+    )
 
 
 def _safe_float(value: Any, default: float | None = None) -> float | None:
@@ -511,6 +592,9 @@ def _compute_metrics(rows: list[dict[str, Any]]) -> dict[str, float | int]:
 def _build_chart_data(rows: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
     """Build chart payloads for frontend visualizations."""
     source_counts = Counter(row.get("source", "unknown") for row in rows)
+    source_flagged_counts = Counter(
+        row.get("source", "unknown") for row in rows if row.get("flagged")
+    )
     severity_counts = Counter(row.get("severity", "low") for row in rows)
 
     reason_counts = Counter()
@@ -541,6 +625,76 @@ def _build_chart_data(rows: list[dict[str, Any]]) -> dict[str, list[dict[str, An
         for minute, counts in sorted(trend_map.items())
     ]
 
+    confidence_buckets = ["0.00-0.20", "0.20-0.40", "0.40-0.60", "0.60-0.80", "0.80-1.00"]
+    confidence_distribution_map: dict[str, dict[str, int]] = {
+        bucket: {"flagged": 0, "safe": 0} for bucket in confidence_buckets
+    }
+
+    for row in rows:
+        confidence = _safe_float(row.get("confidence"), 0.0) or 0.0
+        confidence = min(1.0, max(0.0, confidence))
+        bucket_index = min(int(confidence * len(confidence_buckets)), len(confidence_buckets) - 1)
+        bucket_key = confidence_buckets[bucket_index]
+
+        if row.get("flagged"):
+            confidence_distribution_map[bucket_key]["flagged"] += 1
+        else:
+            confidence_distribution_map[bucket_key]["safe"] += 1
+
+    source_flag_rate = []
+    for label, total in sorted(source_counts.items(), key=lambda item: item[1], reverse=True):
+        flagged = int(source_flagged_counts.get(label, 0))
+        source_flag_rate.append(
+            {
+                "label": label,
+                "total": int(total),
+                "flagged": flagged,
+                "safe": max(0, int(total) - flagged),
+                "flag_rate": round((flagged / total * 100.0) if total else 0.0, 2),
+            }
+        )
+
+    confidence_trend_map: dict[str, dict[str, float | int]] = defaultdict(
+        lambda: {
+            "sum_all": 0.0,
+            "count_all": 0,
+            "sum_flagged": 0.0,
+            "count_flagged": 0,
+        }
+    )
+
+    for row in rows:
+        ts_dt = row.get("_timestamp_dt")
+        if not ts_dt:
+            continue
+
+        key = ts_dt.replace(second=0, microsecond=0).isoformat()
+        confidence = _safe_float(row.get("confidence"), 0.0) or 0.0
+        confidence_trend_map[key]["sum_all"] += confidence
+        confidence_trend_map[key]["count_all"] += 1
+
+        if row.get("flagged"):
+            confidence_trend_map[key]["sum_flagged"] += confidence
+            confidence_trend_map[key]["count_flagged"] += 1
+
+    confidence_trend = []
+    for minute, values in sorted(confidence_trend_map.items()):
+        all_count = int(values["count_all"])
+        flagged_count = int(values["count_flagged"])
+
+        avg_confidence = round(float(values["sum_all"]) / all_count, 4) if all_count else 0.0
+        avg_flagged_confidence = (
+            round(float(values["sum_flagged"]) / flagged_count, 4) if flagged_count else None
+        )
+
+        confidence_trend.append(
+            {
+                "minute": minute,
+                "avg_confidence": avg_confidence,
+                "avg_flagged_confidence": avg_flagged_confidence,
+            }
+        )
+
     return {
         "sources": [
             {"label": label, "value": value}
@@ -555,6 +709,16 @@ def _build_chart_data(rows: list[dict[str, Any]]) -> dict[str, list[dict[str, An
             for label, value in reason_counts.most_common(12)
         ],
         "trend": trend_points,
+        "source_flag_rate": source_flag_rate,
+        "confidence_distribution": [
+            {
+                "bucket": bucket,
+                "flagged": values["flagged"],
+                "safe": values["safe"],
+            }
+            for bucket, values in confidence_distribution_map.items()
+        ],
+        "confidence_trend": confidence_trend,
     }
 
 
@@ -583,25 +747,51 @@ def _get_page_context(page_slug: str) -> dict[str, Any]:
 @app.get("/")
 def index() -> Any:
     """Redirect root path to dashboard overview page."""
-    return redirect(url_for("dashboard_page", page_slug="overview"))
+    api_key = str(request.args.get(API_AUTH_QUERY_PARAM) or "").strip()
+    target = url_for("dashboard_page", page_slug="overview")
+    if api_key:
+        target = f"{target}?{API_AUTH_QUERY_PARAM}={quote_plus(api_key)}"
+    return redirect(target)
 
 
 @app.get("/dashboard")
 def dashboard_root() -> Any:
     """Redirect short dashboard path to overview page."""
-    return redirect(url_for("dashboard_page", page_slug="overview"))
+    api_key = str(request.args.get(API_AUTH_QUERY_PARAM) or "").strip()
+    target = url_for("dashboard_page", page_slug="overview")
+    if api_key:
+        target = f"{target}?{API_AUTH_QUERY_PARAM}={quote_plus(api_key)}"
+    return redirect(target)
 
 
 @app.get("/dashboard/<page_slug>")
-def dashboard_page(page_slug: str) -> str:
+def dashboard_page(page_slug: str) -> Any:
     """Serve module-specific HTML dashboard page."""
     page_context = _get_page_context(page_slug)
     nav_pages = [MODULE_PAGES[key] for key in ("overview", "upload", "chat", "video", "audio")]
-    return render_template(
-        "dashboard.html",
-        page_context=page_context,
-        nav_pages=nav_pages,
+    response = make_response(
+        render_template(
+            "dashboard.html",
+            page_context=page_context,
+            nav_pages=nav_pages,
+            max_upload_mb=MAX_UPLOAD_MB,
+            api_auth_enabled=REQUIRE_API_AUTH,
+            api_auth_query_param=API_AUTH_QUERY_PARAM,
+        )
     )
+
+    query_token = str(request.args.get(API_AUTH_QUERY_PARAM) or "").strip()
+    if query_token:
+        response.set_cookie(
+            API_AUTH_COOKIE_NAME,
+            query_token,
+            max_age=24 * 60 * 60,
+            httponly=True,
+            samesite="Lax",
+            secure=False,
+        )
+
+    return response
 
 
 @app.get("/api/dashboard-data")

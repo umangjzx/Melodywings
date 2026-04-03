@@ -27,6 +27,30 @@ UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 ALLOWED_VIDEO_EXTS = {".mp4", ".avi", ".mov", ".mkv", ".flv", ".wmv", ".webm"}
+ALLOWED_VIDEO_MIME_TYPES = {
+    "application/octet-stream",
+    "video/avi",
+    "video/mp4",
+    "video/mpeg",
+    "video/quicktime",
+    "video/webm",
+    "video/x-flv",
+    "video/x-matroska",
+    "video/x-ms-asf",
+    "video/x-msvideo",
+}
+
+
+def _read_env_int(name: str, default: int, minimum: int = 0) -> int:
+    raw_value = os.getenv(name, str(default)).strip()
+    try:
+        return max(minimum, int(raw_value))
+    except ValueError:
+        return default
+
+
+MAX_UPLOAD_MB = _read_env_int("MWG_MAX_UPLOAD_MB", 512, minimum=1)
+MAX_UPLOAD_BYTES = MAX_UPLOAD_MB * 1024 * 1024
 
 RUN_STATUS: dict[str, dict[str, Any]] = {}
 RUN_STATUS_LOCK = threading.Lock()
@@ -138,6 +162,22 @@ def _get_args_list(args: Any, key: str) -> list[str]:
 def _allowed_video_file(filename: str) -> bool:
     ext = Path(filename or "").suffix.lower()
     return ext in ALLOWED_VIDEO_EXTS
+
+
+def _estimate_upload_size_bytes(file_storage: Any) -> int | None:
+    """Estimate uploaded file size from in-memory stream when available."""
+    stream = getattr(file_storage, "stream", None)
+    if stream is None:
+        return None
+
+    try:
+        current_pos = stream.tell()
+        stream.seek(0, os.SEEK_END)
+        size = int(stream.tell())
+        stream.seek(current_pos)
+        return max(0, size)
+    except Exception:
+        return None
 
 
 def _init_run_status(run_id: str, video_path: str) -> None:
@@ -263,6 +303,10 @@ def _process_video_run(run_id: str, video_path: str) -> None:
 
 @upload_bp.post("/upload")
 def upload_video() -> Any:
+    request_size = int(request.content_length or 0)
+    if request_size > MAX_UPLOAD_BYTES:
+        return jsonify({"error": "file_too_large", "max_upload_mb": MAX_UPLOAD_MB}), 413
+
     if "video" not in request.files:
         return jsonify({"error": "missing_video_file"}), 400
 
@@ -270,11 +314,22 @@ def upload_video() -> Any:
     if not file or not file.filename:
         return jsonify({"error": "empty_filename"}), 400
 
+    estimated_size = _estimate_upload_size_bytes(file)
+    if estimated_size is not None and estimated_size > MAX_UPLOAD_BYTES:
+        return jsonify({"error": "file_too_large", "max_upload_mb": MAX_UPLOAD_MB}), 413
+
     if not _allowed_video_file(file.filename):
         return jsonify({"error": "unsupported_file_type"}), 400
 
+    mime_type = str(file.mimetype or "").lower().strip()
+    if mime_type and mime_type not in ALLOWED_VIDEO_MIME_TYPES:
+        return jsonify({"error": "unsupported_mime_type", "mime_type": mime_type}), 400
+
     run_id = uuid.uuid4().hex
     filename = secure_filename(file.filename)
+    if not filename:
+        return jsonify({"error": "invalid_filename"}), 400
+
     save_path = UPLOAD_DIR / f"{run_id}_{filename}"
     file.save(save_path)
 
